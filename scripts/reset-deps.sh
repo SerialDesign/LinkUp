@@ -11,3 +11,6 @@ cd frontend
 
 # Remove the node_modules directory
 rm -rf node_modules
+
+# Remove the Expo folder
+rm -rf .expo
