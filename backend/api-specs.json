@@ -1,0 +1,97 @@
+{
+  "name": "linkup",
+  "folders": [],
+  "requests": [
+    {
+      "v": "1",
+      "endpoint": "http://localhost:8000/library/create",
+      "name": "create library",
+      "params": [],
+      "headers": [],
+      "method": "POST",
+      "auth": {
+        "authActive": true,
+        "authType": "none"
+      },
+      "preRequestScript": "",
+      "testScript": "",
+      "body": {
+        "body": "{\n\t\"userId\": \"user123\",\n\t\"libraryId\": \"example123\",\n  \t\"libraryName\": \"name\",\n\t\"links\": [{\n\t\t\t\"url\": \"url\",\n\t\t\t\"description\": \"desc\"\n\t\t},\n\t\t{\n\t\t\t\"url\": \"url\",\n\t\t\t\"description\": \"desc\"\n\t\t},\n\t\t{\n\t\t\t\"url\": \"url\",\n\t\t\t\"description\": \"desc\"\n\t\t}\n\t]\n}",
+        "contentType": "application/json"
+      }
+    },
+    {
+      "method": "POST",
+      "testScript": "",
+      "preRequestScript": "",
+      "body": {
+        "body": "{\n  \"userId\": \"id\"\n}",
+        "contentType": "application/json"
+      },
+      "endpoint": "http://localhost:8000/library/{libraryid}/copy",
+      "v": "1",
+      "params": [],
+      "headers": [],
+      "auth": {
+        "authActive": true,
+        "authType": "none"
+      },
+      "name": "copy library"
+    },
+    {
+      "v": "1",
+      "endpoint": "http://localhost:8000/library/example123",
+      "name": "get library",
+      "params": [],
+      "headers": [],
+      "method": "GET",
+      "auth": {
+        "authType": "none",
+        "authActive": true
+      },
+      "preRequestScript": "",
+      "testScript": "",
+      "body": {
+        "body": null,
+        "contentType": null
+      }
+    },
+    {
+      "v": "1",
+      "endpoint": "http://localhost:8000/user123/libraries",
+      "name": "get all libraries",
+      "params": [],
+      "headers": [],
+      "method": "GET",
+      "auth": {
+        "authType": "none",
+        "authActive": true
+      },
+      "preRequestScript": "",
+      "testScript": "",
+      "body": {
+        "contentType": null,
+        "body": null
+      }
+    },
+    {
+      "v": "1",
+      "endpoint": "http://localhost:8000/health",
+      "name": "check health",
+      "params": [],
+      "headers": [],
+      "method": "GET",
+      "auth": {
+        "authActive": true,
+        "authType": "none"
+      },
+      "preRequestScript": "",
+      "testScript": "",
+      "body": {
+        "contentType": null,
+        "body": null
+      }
+    }
+  ],
+  "v": 1
+}
