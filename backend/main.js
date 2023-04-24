@@ -47,6 +47,40 @@ app.post('/library/create', (req, res) => {
   })
 })
 
+// Add links to a library
+app.post('/library/:libraryId/links/create', (req, res) => {
+  const newLinks = req.body.links
+  fs.readFile(DB_FILE, (err, data) => {
+    if (err) {
+      console.error(err)
+      return res.status(500).send('Error reading from database')
+    }
+
+    let database = JSON.parse(data)
+
+    const filteredDatabase = database.filter(
+      (library) => library.libraryId === req.params.libraryId
+    )
+
+    if (filteredDatabase.length === 0) {
+      return res.status(404).send('Library not found')
+    }
+
+    const library = filteredDatabase[0]
+
+    library.links.push(...newLinks)
+
+    fs.writeFile(DB_FILE, JSON.stringify(database), (err) => {
+      if (err) {
+        console.error(err)
+        return res.status(500).send('Error writing to database')
+      }
+
+      res.send(`Links added to library with ID: ${library.libraryId}`)
+    })
+  })
+})
+
 // Get a library by ID
 app.get('/library/:libraryId', (req, res) => {
   fs.readFile(DB_FILE, (err, data) => {
