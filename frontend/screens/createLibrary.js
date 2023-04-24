@@ -2,6 +2,7 @@ import { View } from 'react-native'
 import { Button, Icon } from '@rneui/themed'
 import { Input } from '@rneui/base'
 import { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 export default function CreateLibrary() {
   const [_name, _setName] = useState('')
@@ -13,7 +14,7 @@ export default function CreateLibrary() {
     const endpointUrl = 'http://localhost:8000/library/create'
     const payload = {
       userId: 'user12345',
-      libraryId: 'example123456',
+      libraryId: uuidv4(),
       libraryName: libraryName,
       links: [
         {

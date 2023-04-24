@@ -15,7 +15,7 @@ if (!fs.existsSync(DB_FILE)) {
   fs.writeFileSync(DB_FILE, '[]')
 }
 
-// create health check endpoint
+// Health check endpoint
 app.get('/health', (_req, res) => {
   res.send('OK')
 })
