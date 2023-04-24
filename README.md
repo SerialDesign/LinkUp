@@ -3,6 +3,11 @@
 - Frontend folder -> React Native with Expo
 - Backend folder -> Express API for creating Link Libraries and adding Links
 
+## Prerequisites
+
+- XCode is needed for iOS Simulator
+- You have to use NPM (pnpm does not work!)
+
 ## Quick Start
 
 1. Install all dependencies in both folders via `bash ./scripts/install-deps.sh`
