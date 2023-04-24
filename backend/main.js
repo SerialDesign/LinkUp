@@ -23,6 +23,8 @@ app.get('/health', (_req, res) => {
 // Create a new library, get ID back
 app.post('/library/create', (req, res) => {
   const newLibrary = req.body
+  newLibrary.links = []
+
   fs.readFile(DB_FILE, (err, data) => {
     if (err) {
       console.error(err)

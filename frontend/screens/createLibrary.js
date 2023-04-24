@@ -3,6 +3,7 @@ import { Button, Icon } from '@rneui/themed'
 import { Input } from '@rneui/base'
 import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
+import 'react-native-get-random-values'
 
 export default function CreateLibrary() {
   const [_name, _setName] = useState('')
@@ -16,20 +17,6 @@ export default function CreateLibrary() {
       userId: 'user12345',
       libraryId: uuidv4(),
       libraryName: libraryName,
-      links: [
-        {
-          url: 'url',
-          description: 'desc',
-        },
-        {
-          url: 'url',
-          description: 'desc',
-        },
-        {
-          url: 'url',
-          description: 'desc',
-        },
-      ],
     }
 
     fetch(endpointUrl, {
