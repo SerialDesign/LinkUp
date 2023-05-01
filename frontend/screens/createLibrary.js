@@ -35,9 +35,18 @@ export default function CreateLibrary() {
         <Input
           placeholder="Name der Bibliothek"
           onChangeText={setLibraryName}
+          clearButtonMode="while-editing"
         />
-        <Input placeholder="Beschreibung" onChangeText={setLibraryDesc} />
-        <Input placeholder="#Labels" onChangeText={setLibraryLabels} />
+        <Input
+          placeholder="Beschreibung"
+          onChangeText={setLibraryDesc}
+          clearButtonMode="while-editing"
+        />
+        <Input
+          placeholder="#Labels"
+          onChangeText={setLibraryLabels}
+          clearButtonMode="while-editing"
+        />
 
         <Button
           title=""
