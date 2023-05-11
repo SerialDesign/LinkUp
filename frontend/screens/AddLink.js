@@ -53,7 +53,23 @@ export default function AddLink() {
 }
 
 const saveLinkToLibrary = () => {
-  Alert.alert('Connecting to Binance ...')
+  const endpointUrl = 'http://localhost:8000/library/8a4a10c8-6feb-42fb-b432-a24486475496/links/add'
+  const payload = {
+    links: [
+      {
+        url: 'https://www.google.com',
+        description: 'Google'
+      }
+    ]
+  }
+
+  fetch(endpointUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  })
 }
 
 const styles = StyleSheet.create({

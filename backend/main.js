@@ -48,7 +48,7 @@ app.post('/library/create', (req, res) => {
 })
 
 // Add links to a library
-app.post('/library/:libraryId/links/create', (req, res) => {
+app.post('/library/:libraryId/links/add', (req, res) => {
   const newLinks = req.body.links
   fs.readFile(DB_FILE, (err, data) => {
     if (err) {
