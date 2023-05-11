@@ -17,7 +17,7 @@ export default function App() {
       >
         <Header />
         <CreateLibrary />
-        {/* <AddLink /> */}
+        <AddLink />
       </View>
       {/* <View style={{ backgroundColor: "#495E57" }}><Header /></View> */}
     </SafeAreaProvider>

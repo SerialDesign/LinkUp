@@ -4,6 +4,8 @@ import { Dropdown } from 'react-native-element-dropdown'
 import { StyleSheet } from 'react-native'
 import { useState } from 'react'
 import AntDesign from '@expo/vector-icons/AntDesign'
+import { Button } from '@rneui/base'
+import { Alert } from 'react-native'
 
 export default function AddLink() {
   const [value, setValue] = useState(null)
@@ -45,8 +47,13 @@ export default function AddLink() {
           <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
         )}
       />
+      <Button onPress={saveLinkToLibrary}>Link hinzufügen</Button>
     </ScrollView>
   )
+}
+
+const saveLinkToLibrary = () => {
+  Alert.alert('Connecting to Binance ...')
 }
 
 const styles = StyleSheet.create({
