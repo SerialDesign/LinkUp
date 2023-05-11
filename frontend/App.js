@@ -5,6 +5,7 @@ import WelcomeScreen from './screens/WelcomeScreen'
 import Header from './screens/Header'
 import CreateLibrary from './screens/createLibrary'
 import AddLink from './screens/AddLink'
+import LoginScreen from './screens/LoginScreen'
 
 export default function App() {
   return (
@@ -16,8 +17,9 @@ export default function App() {
         }}
       >
         <Header />
-        <CreateLibrary />
-        <AddLink />
+        {/* <CreateLibrary /> */}
+        {/* <AddLink /> */}
+        <LoginScreen />
       </View>
       {/* <View style={{ backgroundColor: "#495E57" }}><Header /></View> */}
     </SafeAreaProvider>
