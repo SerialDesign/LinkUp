@@ -18,3 +18,7 @@
    - 3.2. `bash ./scripts/start-app.sh -i` to start the iOS app
 
 4. **Optional:** Reset all dependencies via `bash ./scripts/reset-deps.sh`
+
+## API
+
+- https://hoppscotch.io/ for API specs

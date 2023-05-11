@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Button, Icon } from "@rneui/themed";
 import { Input } from "@rneui/base";
 import { useState } from "react";
@@ -66,4 +66,10 @@ export default function CreateLibrary() {
       </View>
     </View>
   );
+
+  const styles = StyleSheet.create({
+    root: {
+      backgroundColor: "#f12",
+    },
+  });
 }
