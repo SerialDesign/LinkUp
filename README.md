@@ -21,4 +21,4 @@
 
 ## API
 
-- https://hoppscotch.io/ for API specs
+- <https://hoppscotch.io> for API specs
