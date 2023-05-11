@@ -5,7 +5,6 @@ import { Alert } from 'react-native'
 
 export default function LoginScreen() {
   const [user, onChangeUser] = React.useState('')
-  // const [password, onChangeNumber] = React.useState('')
 
   const login = () => {
     Alert.alert('Logging in as user.. ', user)
@@ -20,15 +19,7 @@ export default function LoginScreen() {
         onChangeText={onChangeUser}
         value={user === '' ? null : user}
         placeholder="username"
-        // keyboardType="numeric"
       />
-      {/* <TextInput
-        style={styles.input}
-        onChangeText={onChangeNumber}
-        value={password}
-        placeholder="useless password"
-        secureTextEntry="true"
-      /> */}
       <Button onPress={login}>Login</Button>
     </ScrollView>
   )
