@@ -4,8 +4,12 @@ import { Button } from '@rneui/base'
 import { Alert } from 'react-native'
 
 export default function LoginScreen() {
-  const [user, onChangeUser] = React.useState('Username')
-  const [password, onChangeNumber] = React.useState('')
+  const [user, onChangeUser] = React.useState('')
+  // const [password, onChangeNumber] = React.useState('')
+
+  const login = () => {
+    Alert.alert('Logging in as user.. ', user)
+  }
 
   return (
     <ScrollView style={styles.container}>
@@ -14,7 +18,7 @@ export default function LoginScreen() {
       <TextInput
         style={styles.input}
         onChangeText={onChangeUser}
-        value={user}
+        value={user === '' ? null : user}
         placeholder="username"
         // keyboardType="numeric"
       />
@@ -28,10 +32,6 @@ export default function LoginScreen() {
       <Button onPress={login}>Login</Button>
     </ScrollView>
   )
-}
-
-const login = () => {
-  Alert.alert('logging in as user.. ', user)
 }
 
 const styles = StyleSheet.create({
