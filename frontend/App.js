@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import WelcomeScreen from './screens/WelcomeScreen'
 import Header from './screens/Header'
-import CreateLibrary from './screens/createLibrary'
+import CreateLibrary from './screens/CreateLibrary'
 import AddLink from './screens/AddLink'
 import LoginScreen from './screens/LoginScreen'
 
