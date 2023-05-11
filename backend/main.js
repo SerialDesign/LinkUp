@@ -117,6 +117,27 @@ app.get('/:userId/libraries', (req, res) => {
   })
 })
 
+// Get all links in a library
+app.get('/library/:libraryId/links', (req, res) => {
+  fs.readFile(DB_FILE, (err, data) => {
+    if (err) {
+      console.error(err)
+      return res.status(500).send('Error reading from database')
+    }
+
+    const database = JSON.parse(data)
+    const filteredDatabase = database.filter(
+      (library) => library.libraryId === req.params.libraryId
+    )
+
+    if (filteredDatabase.length === 0) {
+      return res.status(404).send('Library not found')
+    }
+
+    res.send(filteredDatabase[0].links)
+  })
+})
+
 // Start the server
 app.listen(8000, () => {
   console.log('Server is listening on port 8000')
