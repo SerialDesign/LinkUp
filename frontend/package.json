@@ -3,6 +3,7 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "android": "expo start --android",
+    "format": "prettier --write \"**/*.{js,ts,tsx,scss,json,md}\"",
     "ios": "expo start --ios",
     "start": "expo start",
     "web": "expo start --web"
@@ -21,6 +22,7 @@
     "uuid": "9.0.0"
   },
   "devDependencies": {
-    "@babel/core": "7.21.4"
+    "@babel/core": "7.21.4",
+    "prettier": "2.8.8"
   }
 }

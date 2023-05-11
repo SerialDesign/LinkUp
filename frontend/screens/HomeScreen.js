@@ -1,5 +1,5 @@
-import { ScrollView } from "react-native";
-import { Button, Icon, Text } from "@rneui/themed";
+import { ScrollView } from 'react-native'
+import { Button, Icon, Text } from '@rneui/themed'
 
 export default function HomeScreen() {
   return (
@@ -13,12 +13,12 @@ export default function HomeScreen() {
         iconProps={{}}
         iconStyle={{}}
         name="star"
-        onLongPress={() => console.log("onLongPress()")}
-        onPress={() => console.log("onPress()")}
+        onLongPress={() => console.log('onLongPress()')}
+        onPress={() => console.log('onPress()')}
         size={40}
         type="font-awesome"
       />
       <Button>Link / Sammlung hinzufügen</Button>
     </ScrollView>
-  );
+  )
 }

@@ -1,5 +1,5 @@
-import { View, Text } from "react-native";
-import React from "react";
+import { View, Text } from 'react-native'
+import React from 'react'
 
 const linklibraryBox = () => {
   return (
@@ -7,7 +7,7 @@ const linklibraryBox = () => {
       <Text>Linksammlung123</Text>
       <Text>101 Links..</Text>
     </View>
-  );
-};
+  )
+}
 
-export default linklibraryBox;
+export default linklibraryBox

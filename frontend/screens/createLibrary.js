@@ -1,33 +1,33 @@
-import { View, StyleSheet } from "react-native";
-import { Button, Icon } from "@rneui/themed";
-import { Input } from "@rneui/base";
-import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import "react-native-get-random-values";
+import { View, StyleSheet } from 'react-native'
+import { Button, Icon } from '@rneui/themed'
+import { Input } from '@rneui/base'
+import { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
+import 'react-native-get-random-values'
 
 export default function CreateLibrary() {
-  const [_name, _setName] = useState("");
-  const [libraryName, setLibraryName] = useState("");
-  const [_libraryDesc, setLibraryDesc] = useState("");
-  const [_libraryLabels, setLibraryLabels] = useState("");
+  const [_name, _setName] = useState('')
+  const [libraryName, setLibraryName] = useState('')
+  const [_libraryDesc, setLibraryDesc] = useState('')
+  const [_libraryLabels, setLibraryLabels] = useState('')
 
   const createLibraryHandler = () => {
-    const endpointUrl = "http://localhost:8000/library/create";
+    const endpointUrl = 'http://localhost:8000/library/create'
     const payload = {
-      userId: "user12345",
+      userId: 'user12345',
       libraryId: uuidv4(),
       libraryName: libraryName,
-      libraryDesc: _libraryDesc,
-    };
+      libraryDesc: _libraryDesc
+    }
 
     fetch(endpointUrl, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(payload),
-    });
-  };
+      body: JSON.stringify(payload)
+    })
+  }
 
   return (
     <View>
@@ -50,13 +50,13 @@ export default function CreateLibrary() {
 
         <Button
           title=""
-          radius={"sm"}
+          radius={'sm'}
           type="solid"
-          buttonStyle={{ backgroundColor: "rgba(127, 220, 103, 1)" }}
+          buttonStyle={{ backgroundColor: 'rgba(127, 220, 103, 1)' }}
           containerStyle={{ marginHorizontal: 30, marginVertical: 20 }}
           titleStyle={{
             marginHorizontal: 20,
-            fontWeight: "bold",
+            fontWeight: 'bold'
           }}
           onPress={createLibraryHandler}
         >
@@ -65,11 +65,11 @@ export default function CreateLibrary() {
         </Button>
       </View>
     </View>
-  );
+  )
 
   const styles = StyleSheet.create({
     root: {
-      backgroundColor: "#f12",
-    },
-  });
+      backgroundColor: '#f12'
+    }
+  })
 }
