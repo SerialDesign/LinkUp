@@ -1,7 +1,7 @@
 import { ScrollView } from 'react-native'
 import { Button, Icon, Text } from '@rneui/themed'
 
-export default function HomeScreen() {
+export default function Dashboard_temp() {
   return (
     <ScrollView>
       <Text>Deine Bibliotheken</Text>
