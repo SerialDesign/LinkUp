@@ -1,16 +1,38 @@
 import { useRoute } from '@react-navigation/native'
-import React from 'react'
+import { React, useState, useEffect } from 'react'
+import * as Font from 'expo-font'
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import LinkLibraryBox from './components/LinkLibraryBox'
+import { Button } from '@rneui/themed'
+import CreateLibrary from './CreateLibrary'
 
 const Homescreen = () => {
   const route = useRoute()
 
+  const [fontLoaded, setFontLoaded] = useState(false)
+
+  // Font loading..
+  useEffect(() => {
+    async function loadFont() {
+      await Font.loadAsync({
+        'Rubik-Black': require('../assets/fonts/Rubik/Rubik-Black.ttf')
+      })
+
+      setFontLoaded(true)
+    }
+
+    loadFont()
+  }, [])
+
+  if (!fontLoaded) {
+    return <Text>Loading...</Text>
+  }
+
   const linkCollections = [
-    { title: 'News', color: '#FF6347' },
-    { title: 'Entertainment', color: '#FFA500' },
-    { title: 'Sports', color: '#7FFF00' },
-    { title: 'Technology', color: '#00BFFF' }
+    { title: 'News', color: '#CFECFE', desc: 'Beschreibung' },
+    { title: 'Entertainment', color: '#C0E5C6' },
+    { title: 'School', color: '#EFE0FF' },
+    { title: 'Technology', color: '#FEFFE0' }
   ]
 
   const renderLinkCollections = () => {
@@ -21,6 +43,7 @@ const Homescreen = () => {
         onPress={() => handleCollectionPress(collection.title)}
       >
         <Text style={styles.collectionTitle}>{collection.title}</Text>
+        <Text style={styles.collectionDesc}>{collection.desc}</Text>
       </TouchableOpacity>
     ))
   }
@@ -33,6 +56,28 @@ const Homescreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Linksammlungen von {route.params.user}</Text>
+      <Button
+        title="Bibliothek hinzufügen"
+        icon={{
+          name: 'add-to-photos',
+          type: 'material',
+          size: 25,
+          color: 'white'
+        }}
+        iconContainerStyle={{ marginRight: 10 }}
+        titleStyle={{ fontWeight: '700' }}
+        buttonStyle={{
+          backgroundColor: '#13C66A',
+          borderColor: 'transparent',
+          borderWidth: 0,
+          borderRadius: 30
+        }}
+        containerStyle={{
+          width: 200,
+          marginHorizontal: 50,
+          marginVertical: 10
+        }}
+      />
       <View style={styles.container}>{renderLinkCollections()}</View>
     </View>
   )
@@ -55,14 +100,15 @@ const styles = StyleSheet.create({
     elevation: 5
   },
   collectionTitle: {
+    fontFamily: 'Rubik-Black',
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#FFFFFF'
+    color: '#000000'
   },
   title: {
     fontSize: 25,
     fontWeight: 'bold',
-    color: 'green',
+    color: '#525F7F',
     marginTop: 50
   }
 })
