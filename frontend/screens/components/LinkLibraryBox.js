@@ -1,13 +1,25 @@
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 
-const linklibraryBox = () => {
+const LinkLibraryBox = () => {
   return (
-    <View>
-      <Text>Linksammlung123</Text>
+    <View style={styles.libraryBox}>
+      <Text style={styles.headerText}>Linksammlung123</Text>
       <Text>101 Links..</Text>
     </View>
   )
 }
 
-export default linklibraryBox
+const styles = StyleSheet.create({
+  libraryBox: {
+    backgroundColor: '#ddd'
+  },
+  headerText: {
+    padding: 40,
+    fontSize: 30,
+    color: '#11aa11',
+    textAlign: 'center'
+  }
+})
+
+export default LinkLibraryBox

@@ -6,9 +6,10 @@ import Header from './screens/components/Header'
 import CreateLibrary from './screens/CreateLibrary'
 import AddLink from './screens/AddLink'
 import LoginScreen from './screens/LoginScreen'
-import HomeScreenius from './screens/Homescreenius'
-import MessageScreen from './screens/MessageScreen'
+import HomeScreenius from './screens/components/templates/Homescreenius'
+import MessageScreen from './screens/components/templates/MessageScreen'
 import { useState } from 'react'
+import Homescreen from './screens/Homescreen'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
@@ -26,8 +27,13 @@ export default function App() {
         }}
       >
         <Stack.Screen name="Login" component={LoginScreen} />
-        {/* <Stack.Screen name="Home" component={HomeScreenius} /> */}
-        <Stack.Screen name="Message" component={MessageScreen} />
+        {/* name = Aufruf in LoginScreen, nun abgeändert in Homescreen und mit options Title vergeben, damit code einheitlich in English
+         <Stack.Screen name="Linksammlungen" component={Homescreen} /> */}
+        <Stack.Screen
+          name="Homescreen"
+          options={{ title: 'Linksammlungen' }}
+          component={Homescreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
 

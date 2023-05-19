@@ -11,7 +11,7 @@ export default function LoginScreen() {
   const login = () => {
     // Alert.alert('Logging in as user.. ', user)
 
-    navigation.navigate('Message', {
+    navigation.navigate('Homescreen', {
       user
     })
   }

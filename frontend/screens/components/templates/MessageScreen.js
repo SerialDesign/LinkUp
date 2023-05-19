@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { useRoute } from '@react-navigation/native'
+import LinkLibraryBox from '../LinkLibraryBox'
 
 const MessageScreen = () => {
   const route = useRoute()
@@ -8,6 +9,7 @@ const MessageScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Linksammlungen von {route.params.user}</Text>
+      <LinkLibraryBox></LinkLibraryBox>
     </View>
   )
 }
