@@ -1,7 +1,7 @@
 import { useRoute } from '@react-navigation/native'
 import { React, useState, useEffect } from 'react'
 import * as Font from 'expo-font'
-import { View, StyleSheet, TouchableOpacity, Text } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, Text, ScrollView } from 'react-native'
 import LinkLibraryBox from './components/LinkLibraryBox'
 import { Button } from '@rneui/themed'
 import CreateLibrary from './CreateLibrary'
@@ -54,7 +54,12 @@ const Homescreen = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+    // contentContainerStyle={{
+    //   justifyContent: 'center',
+    //   alignItems: 'center'
+    // }}
+    >
       <Text style={styles.title}>Linksammlungen von {route.params.user}</Text>
       <Button
         title="Bibliothek hinzufügen"
@@ -73,13 +78,40 @@ const Homescreen = () => {
           borderRadius: 30
         }}
         containerStyle={{
+          width: 300,
+          marginHorizontal: 50,
+          marginVertical: 10,
+          justifyContent: 'center',
+          alignSelf: 'center'
+        }}
+      />
+      <Button
+        title="Link hinzufügen"
+        icon={{
+          name: 'link',
+          type: 'material',
+          size: 25,
+          color: 'white'
+        }}
+        iconContainerStyle={{ marginRight: 10 }}
+        titleStyle={{ fontWeight: '700' }}
+        buttonStyle={{
+          backgroundColor: '#13C66A',
+          borderColor: 'transparent',
+          borderWidth: 0,
+          borderRadius: 30,
+          justifyContent: 'center'
+        }}
+        containerStyle={{
           width: 200,
           marginHorizontal: 50,
-          marginVertical: 10
+          marginVertical: 10,
+          justifyContent: 'center',
+          alignSelf: 'center'
         }}
       />
       <View style={styles.container}>{renderLinkCollections()}</View>
-    </View>
+    </ScrollView>
   )
 }
 
@@ -109,7 +141,8 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: 'bold',
     color: '#525F7F',
-    marginTop: 50
+    marginTop: 30,
+    marginLeft: 20
   }
 })
 
