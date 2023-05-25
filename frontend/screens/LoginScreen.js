@@ -6,6 +6,13 @@ import { useNavigation } from '@react-navigation/native'
 
 export default function LoginScreen() {
   const [user, onChangeUser] = React.useState('')
+  const loginLibRef = React.useRef()
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      loginLibRef.current?.focus()
+    }, 0)
+  }, [])
 
   const navigation = useNavigation()
   const login = () => {
@@ -25,6 +32,9 @@ export default function LoginScreen() {
         onChangeText={onChangeUser}
         value={user === '' ? null : user}
         placeholder="username"
+        focused={true}
+        ref={loginLibRef}
+        onSubmitEditing={login}
       />
       {/* <Button onPress={() => login()}>Login</Button> */}
       <Button styles={styles.buttonx} onPress={login}>
