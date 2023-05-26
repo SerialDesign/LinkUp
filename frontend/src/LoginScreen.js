@@ -1,12 +1,15 @@
 import React from 'react'
-import { ScrollView, StyleSheet } from 'react-native'
-import { Button, Text, Input } from '@rneui/base'
+import { View, StyleSheet } from 'react-native'
+import { Button, Text, Input, Image, Switch } from '@rneui/base'
 import { Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import { useColorScheme } from 'nativewind'
+import { StatusBar } from 'expo-status-bar'
 
 export default function LoginScreen() {
   const [user, onChangeUser] = React.useState('')
   const loginLibRef = React.useRef()
+  const { colorScheme, toggleColorScheme } = useColorScheme()
 
   React.useEffect(() => {
     setTimeout(() => {
@@ -24,9 +27,18 @@ export default function LoginScreen() {
   }
 
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.headerText}>Welcome to LinkUp</Text>
-      <Text style={styles.regularText}>Login to continue </Text>
+    <View className="justify-center flex-1 p-5 bg-white dark:bg-black">
+      <Image
+        source={{
+          uri: 'https://www.onlinelogomaker.com/applet_userdata/version2/d/d/36559316/projects/36559316.png'
+          //uri: 'https://www.onlinelogomaker.com/logomaker/?project=18555730'
+        }}
+        style={{
+          height: 200
+        }}
+        resizeMode="stretch"
+      />
+      {/* <Text style={styles.regularText}>Log dich ein um fortzufahren</Text> */}
       <Input
         style={styles.input}
         onChangeText={onChangeUser}
@@ -40,7 +52,10 @@ export default function LoginScreen() {
       <Button styles={styles.buttonx} onPress={login}>
         Linksammlungen anzeigen
       </Button>
-    </ScrollView>
+      <Text className="text-2xl">Darkmode:</Text>
+      <Switch value={colorScheme === 'dark'} onChange={toggleColorScheme} />
+      <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+    </View>
   )
 }
 

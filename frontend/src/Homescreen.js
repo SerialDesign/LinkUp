@@ -70,15 +70,6 @@ const Homescreen = () => {
       //   alignItems: 'center'
       // }}
     >
-      <Image
-        source={{
-          uri: 'https://www.onlinelogomaker.com/applet_userdata/version2/d/d/36559316/projects/36559316.png'
-        }}
-        style={{
-          height: 200
-        }}
-        resizeMode="stretch"
-      />
       <Text style={styles.title}>Linksammlungen von {route.params.user}</Text>
       <Button
         title="Bibliothek hinzufügen"

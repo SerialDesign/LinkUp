@@ -1,13 +1,13 @@
 import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, Text, View } from 'react-native'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
-import WelcomeScreen from './screens/components/templates/WelcomeScreen'
-import Header from './screens/components/Header'
-import CreateLibrary from './screens/CreateLibrary'
-import AddLink from './screens/AddLink'
-import LoginScreen from './screens/LoginScreen'
+import WelcomeScreen from './src/components/templates/WelcomeScreen'
+import Header from './src/components/Header'
+import CreateLibrary from './src/CreateLibrary'
+import AddLink from './src/AddLink'
+import LoginScreen from './src/LoginScreen'
 import { useState } from 'react'
-import Homescreen from './screens/Homescreen'
+import Homescreen from './src/Homescreen'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
@@ -16,6 +16,7 @@ const Stack = createNativeStackNavigator()
 export default function App() {
   return (
     <NavigationContainer>
+      {/*  // Cleanup code: check Book s. 252 */}
       <Stack.Navigator
         screenOptions={{
           headerStyle: {
