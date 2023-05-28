@@ -35,14 +35,36 @@ const Homescreen = () => {
       .then((data) => {
         const libraries = data.map((library) => {
           return {
-            label: library.libraryName,
-            value: library.libraryId
+            libraryId: library.libraryId,
+            libraryName: library.libraryName,
+            libraryDesc: library.libraryDesc
           }
         })
 
         setLibraries(libraries)
       })
   }
+
+  // Old via Dropdown
+  // const getAllLibraries = () => {
+  //   const userID = route.params.user
+  //   console.log('user: ', userID)
+  //   const endpointUrl = 'http://localhost:8000/' + userID + '/libraries'
+  //   console.log('endpoint: ', endpointUrl)
+
+  //   fetch(endpointUrl)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       const libraries = data.map((library) => {
+  //         return {
+  //           label: library.libraryName,
+  //           value: library.libraryId
+  //         }
+  //       })
+
+  //       setLibraries(libraries)
+  //     })
+  // }
 
   // Font loading..
   const [fontLoaded, setFontLoaded] = useState(false)
@@ -64,29 +86,53 @@ const Homescreen = () => {
     return <Text>Loading...</Text>
   }
 
-  const linkCollections = [
-    { title: 'News', color: '#CFECFE', desc: 'Beschreibung' },
-    { title: 'Entertainment', color: '#C0E5C6' },
-    { title: 'School', color: '#EFE0FF' },
-    { title: 'Technology', color: '#FEFFE0' }
-  ]
+  const libraryCollection = []
 
-  const renderLinkCollections = () => {
-    return linkCollections.map((collection, index) => (
+  const renderLibraryBoxes = () => {
+    console.log('da')
+    libraries.forEach((library) => addToCollection(library))
+
+    return libraries.map((collection, index) => (
       <TouchableOpacity
         key={index}
-        style={[styles.collectionBox, { backgroundColor: collection.color }]}
-        onPress={() => handleCollectionPress(collection.title)}
+        // Todo: with color of library ->  style={[styles.collectionBox, { backgroundColor: collection.color }]}
+        style={[styles.collectionBox, { backgroundColor: '#C0E5C6' }]}
+        onPress={() => handleCollectionPress(collection.libraryName)}
       >
-        <Text style={styles.collectionTitle}>{collection.title}</Text>
-        <Text style={styles.collectionDesc}>{collection.desc}</Text>
+        <Text style={styles.collectionTitle}>{collection.libraryName}</Text>
+        <Text style={styles.collectionDesc}>{collection.libraryDesc}</Text>
       </TouchableOpacity>
     ))
   }
 
-  const handleCollectionPress = (title) => {
+  const addToCollection = (library) => {
+    libraryCollection.push(library)
+    console.log('library ' + library.libraryName + ' pushed.. desc:' + library.libraryDesc)
+  }
+
+  const linkCollections = [
+    { title: 'News', color: '#CFECFE', desc: 'Beschreibung' },
+    { title: 'Entertainment', color: '#C0E5C6', desc: 'dafuq' },
+    { title: 'School', color: '#EFE0FF' },
+    { title: 'Technology', color: '#FEFFE0' }
+  ]
+
+  // const renderLinkCollections = () => {
+  //   return linkCollections.map((collection, index) => (
+  //     <TouchableOpacity
+  //       key={index}
+  //       style={[styles.collectionBox, { backgroundColor: collection.color }]}
+  //       onPress={() => handleCollectionPress(collection.title)}
+  //     >
+  //       <Text style={styles.collectionTitle}>{collection.title}</Text>
+  //       <Text style={styles.collectionDesc}>{collection.desc}</Text>
+  //     </TouchableOpacity>
+  //   ))
+  // }
+
+  const handleCollectionPress = (libraryName) => {
     // Handle collection press event here
-    console.log(`Pressed ${title}`)
+    console.log(`Pressed ${libraryName}`)
   }
 
   return (
@@ -141,7 +187,7 @@ const Homescreen = () => {
           alignSelf: 'center'
         }}
       />
-
+      {/* 
       <Dropdown
         style={styles.dropdown}
         placeholderStyle={styles.placeholderStyle}
@@ -162,8 +208,8 @@ const Homescreen = () => {
         renderLeftIcon={() => (
           <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
         )}
-      />
-      <View style={styles.container}>{renderLinkCollections()}</View>
+      /> */}
+      <View style={styles.container}>{renderLibraryBoxes()}</View>
       <FAB title="+" color="#13C66A" style={styles.floatingButton} />
       <ImageBackground
         source={require('../assets/images/master_of_bookmarks.png')}
