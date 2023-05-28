@@ -1,5 +1,7 @@
-import { useRoute } from '@react-navigation/native'
+import { NavigationContainer, useRoute } from '@react-navigation/native'
 import { React, useState, useEffect } from 'react'
+import { Dropdown } from 'react-native-element-dropdown'
+import AntDesign from '@expo/vector-icons/AntDesign'
 import * as Font from 'expo-font'
 import {
   View,
@@ -18,9 +20,32 @@ import { FAB } from '@rneui/themed'
 const Homescreen = () => {
   const route = useRoute()
 
-  const [fontLoaded, setFontLoaded] = useState(false)
+  // Libraries loading... (over userID)
+  const [value, setValue] = useState(null)
+  const [libraries, setLibraries] = useState([])
+
+  const getAllLibraries = () => {
+    const userID = route.params.user
+    console.log('user: ', userID)
+    const endpointUrl = 'http://localhost:8000/' + userID + '/libraries'
+    console.log('endpoint: ', endpointUrl)
+
+    fetch(endpointUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        const libraries = data.map((library) => {
+          return {
+            label: library.libraryName,
+            value: library.libraryId
+          }
+        })
+
+        setLibraries(libraries)
+      })
+  }
 
   // Font loading..
+  const [fontLoaded, setFontLoaded] = useState(false)
   useEffect(() => {
     async function loadFont() {
       await Font.loadAsync({
@@ -31,6 +56,8 @@ const Homescreen = () => {
     }
 
     loadFont()
+
+    getAllLibraries()
   }, [])
 
   if (!fontLoaded) {
@@ -63,13 +90,7 @@ const Homescreen = () => {
   }
 
   return (
-    <ScrollView
-      style={styles.scrollContainer}
-      // contentContainerStyle={{
-      //   justifyContent: 'center',
-      //   alignItems: 'center'
-      // }}
-    >
+    <ScrollView style={styles.scrollContainer}>
       <Text style={styles.title}>Linksammlungen von {route.params.user}</Text>
       <Button
         title="Bibliothek hinzufügen"
@@ -119,6 +140,28 @@ const Homescreen = () => {
           justifyContent: 'center',
           alignSelf: 'center'
         }}
+      />
+
+      <Dropdown
+        style={styles.dropdown}
+        placeholderStyle={styles.placeholderStyle}
+        selectedTextStyle={styles.selectedTextStyle}
+        inputSearchStyle={styles.inputSearchStyle}
+        iconStyle={styles.iconStyle}
+        data={libraries.length > 0 ? libraries : [{ label: 'No libraries found', value: null }]}
+        search
+        maxHeight={300}
+        labelField="label"
+        valueField="value"
+        placeholder="Libraries.."
+        searchPlaceholder="Suche..."
+        value={value}
+        onChange={(item) => {
+          setValue(item.value)
+        }}
+        renderLeftIcon={() => (
+          <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
+        )}
       />
       <View style={styles.container}>{renderLinkCollections()}</View>
       <FAB title="+" color="#13C66A" style={styles.floatingButton} />
