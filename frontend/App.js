@@ -10,6 +10,7 @@ import { useState } from 'react'
 import Homescreen from './src/Homescreen'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import Tabs from './src/navigation/Tabs'
 
 const Stack = createNativeStackNavigator()
 
@@ -33,9 +34,20 @@ export default function App() {
           options={{ title: 'Linksammlungen' }}
           component={Homescreen}
         />
+        <Stack.Screen name="CreateLibrary" component={CreateLibrary} />
       </Stack.Navigator>
     </NavigationContainer>
 
+    // Todo: check if user is logged in --> show Bottom Tab Navigator (or show on Homescreen, but then independent = true.. not best practice
+    // -> https://stackoverflow.com/questions/73751503/how-can-i-navigate-from-login-screen-to-a-bottomtab-screen )
+    // -> https://reactnavigation.org/docs/auth-flow/
+    // -> https://www.youtube.com/watch?v=yyGS0adZdsU
+
+    // <NavigationContainer>
+    // <Tabs />
+    // </NavigationContainer>
+
+    // OLD
     // <SafeAreaProvider>
     //   <View
     //     style={{

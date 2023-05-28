@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import 'react-native-get-random-values'
 
-export default function CreateLibrary() {
+export default function CreateLibrary({ navigation, userId }) {
   const [_name, _setName] = useState('')
   const [libraryName, setLibraryName] = useState('')
   const [_libraryDesc, setLibraryDesc] = useState('')
@@ -27,6 +27,8 @@ export default function CreateLibrary() {
       },
       body: JSON.stringify(payload)
     })
+
+    navigation.navigate('Homescreen', { user: userId })
   }
 
   return (

@@ -17,15 +17,16 @@ import { Button } from '@rneui/themed'
 import CreateLibrary from './CreateLibrary'
 import { FAB } from '@rneui/themed'
 
-const Homescreen = () => {
+const Homescreen = ({ navigation }) => {
   const route = useRoute()
 
   // Libraries loading... (over userID)
   const [value, setValue] = useState(null)
   const [libraries, setLibraries] = useState([])
 
+  const userID = route.params.user
+
   const getAllLibraries = () => {
-    const userID = route.params.user
     console.log('user: ', userID)
     const endpointUrl = 'http://localhost:8000/' + userID + '/libraries'
     console.log('endpoint: ', endpointUrl)
@@ -86,8 +87,6 @@ const Homescreen = () => {
     return <Text>Loading...</Text>
   }
 
-  const libraryCollection = []
-
   const renderLibraryBoxes = () => {
     console.log('da')
     libraries.forEach((library) => addToCollection(library))
@@ -105,17 +104,19 @@ const Homescreen = () => {
     ))
   }
 
+  const libraryCollection = []
+
   const addToCollection = (library) => {
     libraryCollection.push(library)
     console.log('library ' + library.libraryName + ' pushed.. desc:' + library.libraryDesc)
   }
 
-  const linkCollections = [
-    { title: 'News', color: '#CFECFE', desc: 'Beschreibung' },
-    { title: 'Entertainment', color: '#C0E5C6', desc: 'dafuq' },
-    { title: 'School', color: '#EFE0FF' },
-    { title: 'Technology', color: '#FEFFE0' }
-  ]
+  // const linkCollections = [
+  //   { title: 'News', color: '#CFECFE', desc: 'Beschreibung' },
+  //   { title: 'Entertainment', color: '#C0E5C6', desc: 'dafuq' },
+  //   { title: 'School', color: '#EFE0FF' },
+  //   { title: 'Technology', color: '#FEFFE0' }
+  // ]
 
   // const renderLinkCollections = () => {
   //   return linkCollections.map((collection, index) => (
@@ -161,6 +162,7 @@ const Homescreen = () => {
           justifyContent: 'center',
           alignSelf: 'center'
         }}
+        onPress={() => navigation.navigate('CreateLibrary', { userId: userID })}
       />
       <Button
         title="Link hinzufügen"
