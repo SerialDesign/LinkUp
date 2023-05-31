@@ -193,7 +193,7 @@ app.put('/library/:libraryId/links', (req, res) => {
 })
 
 app.delete('/library/:libraryId/links', (req, res) => {
-  const removeLinks = req.body.links // Expecting an array of URLs to remove
+  const removeLinks = req.body.links // Expecting an array of link IDs to remove
 
   fs.readFile(DB_FILE, (err, data) => {
     if (err) {
@@ -209,7 +209,7 @@ app.delete('/library/:libraryId/links', (req, res) => {
       return res.status(404).send('Library not found')
     }
 
-    library.links = library.links.filter((link) => !removeLinks.includes(link.url))
+    library.links = library.links.filter((link) => !removeLinks.includes(link.id))
 
     fs.writeFile(DB_FILE, JSON.stringify(database), (err) => {
       if (err) {

@@ -16,7 +16,43 @@
       "preRequestScript": "",
       "testScript": "",
       "body": {
-        "body": "{\n\t\"userId\": \"user123\",\n\t\"libraryId\": \"example12345\",\n  \t\"libraryName\": \"another one 2\",\n\t\"links\": [{\n\t\t\t\"url\": \"url\",\n\t\t\t\"description\": \"desc\"\n\t\t},\n\t\t{\n\t\t\t\"url\": \"url\",\n\t\t\t\"description\": \"desc\"\n\t\t},\n\t\t{\n\t\t\t\"url\": \"url\",\n\t\t\t\"description\": \"desc\"\n\t\t}\n\t]\n}",
+        "body": "{\n\t\"userId\": \"danburonline\",\n\t\"libraryId\": \"id1234\",\n  \t\"libraryName\": \"this is the library name\",\n\t\"links\": []\n}",
+        "contentType": "application/json"
+      }
+    },
+    {
+      "v": "1",
+      "endpoint": "http://localhost:8000/library/id1234/links",
+      "name": "add links to library",
+      "params": [],
+      "headers": [],
+      "method": "PUT",
+      "auth": {
+        "authActive": true,
+        "authType": "none"
+      },
+      "preRequestScript": "",
+      "testScript": "",
+      "body": {
+        "body": "{\n  \"links\": [\n    {\n      \"id\": \"link1\",\n      \"url\": \"http://example1.com\",\n      \"description\": \"Example link 1\"\n    },\n    {\n      \"id\": \"link2\",\n      \"url\": \"http://example2.com\",\n      \"description\": \"Example link 2\"\n    }\n  ]\n}",
+        "contentType": "application/json"
+      }
+    },
+    {
+      "v": "1",
+      "endpoint": "http://localhost:8000/library/id1234/links",
+      "name": "delete links in library",
+      "params": [],
+      "headers": [],
+      "method": "DELETE",
+      "auth": {
+        "authActive": true,
+        "authType": "none"
+      },
+      "preRequestScript": "",
+      "testScript": "",
+      "body": {
+        "body": "{\n  \"links\": [\"link1\", \"link2\"]\n}\n",
         "contentType": "application/json"
       }
     },
@@ -76,7 +112,7 @@
     },
     {
       "v": "1",
-      "endpoint": "http://localhost:8000/user123/libraries",
+      "endpoint": "http://localhost:8000/danburonline/libraries",
       "name": "get all libraries",
       "params": [],
       "headers": [],
