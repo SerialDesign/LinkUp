@@ -16,7 +16,7 @@
       "preRequestScript": "",
       "testScript": "",
       "body": {
-        "body": "{\n\t\"userId\": \"user123\",\n\t\"libraryId\": \"example123\",\n  \t\"libraryName\": \"name\",\n\t\"links\": [{\n\t\t\t\"url\": \"url\",\n\t\t\t\"description\": \"desc\"\n\t\t},\n\t\t{\n\t\t\t\"url\": \"url\",\n\t\t\t\"description\": \"desc\"\n\t\t},\n\t\t{\n\t\t\t\"url\": \"url\",\n\t\t\t\"description\": \"desc\"\n\t\t}\n\t]\n}",
+        "body": "{\n\t\"userId\": \"user123\",\n\t\"libraryId\": \"example12345\",\n  \t\"libraryName\": \"another one 2\",\n\t\"links\": [{\n\t\t\t\"url\": \"url\",\n\t\t\t\"description\": \"desc\"\n\t\t},\n\t\t{\n\t\t\t\"url\": \"url\",\n\t\t\t\"description\": \"desc\"\n\t\t},\n\t\t{\n\t\t\t\"url\": \"url\",\n\t\t\t\"description\": \"desc\"\n\t\t}\n\t]\n}",
         "contentType": "application/json"
       }
     },
@@ -54,6 +54,24 @@
       "body": {
         "body": null,
         "contentType": null
+      }
+    },
+    {
+      "v": "1",
+      "endpoint": "http://localhost:8000/user123/libraries/search?query=one",
+      "name": "search library",
+      "params": [],
+      "headers": [],
+      "method": "GET",
+      "auth": {
+        "authActive": true,
+        "authType": "none"
+      },
+      "preRequestScript": "",
+      "testScript": "",
+      "body": {
+        "contentType": null,
+        "body": null
       }
     },
     {
