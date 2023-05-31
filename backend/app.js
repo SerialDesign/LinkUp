@@ -23,6 +23,7 @@ if (!fs.existsSync(DB_FILE)) {
 
 // Health check endpoint
 app.get('/health', (_req, res) => {
+  console.log('Health check requested')
   res.send('OK')
 })
 
@@ -228,7 +229,4 @@ app.delete('/library/:libraryId/links', (req, res) => {
   })
 })
 
-// Start the server
-app.listen(8000, () => {
-  console.log('Server is listening on port 8000')
-})
+module.exports = app
