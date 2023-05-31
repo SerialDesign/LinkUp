@@ -7,6 +7,8 @@ const app = express()
 // TODO Create library UUIDs on the server (not on the client anymore)
 // TODO Create link UUIDs on the server (not on the client anymore)
 // TODO Have the user `:userId` in all endpoints
+// TODO Check if the user exists in all endpoints
+// TODO Check if the newly created UUIDs already exist in the database
 
 // Instantiate the body-parser middleware
 app.use(bodyParser.urlencoded({ extended: false }))
