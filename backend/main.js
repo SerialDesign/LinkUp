@@ -138,6 +138,30 @@ app.get('/library/:libraryId/links', (req, res) => {
   })
 })
 
+app.get('/:userId/libraries/search', (req, res) => {
+  const query = req.query.query.toLowerCase()
+
+  fs.readFile(DB_FILE, (err, data) => {
+    if (err) {
+      console.error(err)
+      return res.status(500).send('Error reading from database')
+    }
+
+    const database = JSON.parse(data)
+    const filteredDatabase = database.filter((library) => {
+      return (
+        library.userId === req.params.userId && library.libraryName.toLowerCase().includes(query)
+      )
+    })
+
+    if (filteredDatabase.length === 0) {
+      return res.status(404).send('Library not found')
+    }
+
+    res.send(filteredDatabase)
+  })
+})
+
 // Start the server
 app.listen(8000, () => {
   console.log('Server is listening on port 8000')
