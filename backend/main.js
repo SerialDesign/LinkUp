@@ -4,6 +4,10 @@ const fs = require('fs')
 
 const app = express()
 
+// TODO Create library UUIDs on the server (not on the client anymore)
+// TODO Create link UUIDs on the server (not on the client anymore)
+// TODO Have the user `:userId` in all endpoints
+
 // Instantiate the body-parser middleware
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
