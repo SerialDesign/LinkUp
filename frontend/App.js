@@ -11,6 +11,7 @@ import Homescreen from './src/Homescreen'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Tabs from './src/navigation/Tabs'
+import Library from './src/Library'
 
 const Stack = createNativeStackNavigator()
 
@@ -35,6 +36,16 @@ export default function App() {
           component={Homescreen}
         />
         <Stack.Screen name="CreateLibrary" component={CreateLibrary} />
+        <Stack.Screen
+          options={{
+            headerStyle: {
+              backgroundColor: '#CFECFE'
+            },
+            headerTintColor: 'black'
+          }}
+          name="Library"
+          component={Library}
+        />
       </Stack.Navigator>
     </NavigationContainer>
 

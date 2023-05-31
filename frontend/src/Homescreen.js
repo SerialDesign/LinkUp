@@ -13,11 +13,10 @@ import {
   ImageBackground
 } from 'react-native'
 import LinkLibraryBox from './components/LinkLibraryBox'
-import { Button } from '@rneui/themed'
+import { Button, Input, FAB } from '@rneui/themed'
 import CreateLibrary from './CreateLibrary'
-import { FAB } from '@rneui/themed'
 
-const Homescreen = ({ navigation }) => {
+const Homescreen = ({ navigation, user }) => {
   const route = useRoute()
 
   // Libraries loading... (over userID)
@@ -88,7 +87,6 @@ const Homescreen = ({ navigation }) => {
   }
 
   const renderLibraryBoxes = () => {
-    console.log('da')
     libraries.forEach((library) => addToCollection(library))
 
     return libraries.map((collection, index) => (
@@ -96,10 +94,12 @@ const Homescreen = ({ navigation }) => {
         key={index}
         // Todo: with color of library ->  style={[styles.collectionBox, { backgroundColor: collection.color }]}
         style={[styles.collectionBox, { backgroundColor: '#C0E5C6' }]}
-        onPress={() => handleCollectionPress(collection.libraryName)}
+        onPress={() => handleCollectionPress(collection.libraryId)}
       >
         <Text style={styles.collectionTitle}>{collection.libraryName}</Text>
         <Text style={styles.collectionDesc}>{collection.libraryDesc}</Text>
+        {/* // Hidden field for passing unique library ID */}
+        {/* <Text style={{ display: 'none' }}>{collection.libraryId}</Text> */}
       </TouchableOpacity>
     ))
   }
@@ -131,9 +131,10 @@ const Homescreen = ({ navigation }) => {
   //   ))
   // }
 
-  const handleCollectionPress = (libraryName) => {
+  const handleCollectionPress = (libraryId) => {
     // Handle collection press event here
-    console.log(`Pressed ${libraryName}`)
+    console.log(`Pressed ${libraryId}`)
+    navigation.navigate('Library', { libraryId })
   }
 
   return (
@@ -162,7 +163,7 @@ const Homescreen = ({ navigation }) => {
           justifyContent: 'center',
           alignSelf: 'center'
         }}
-        onPress={() => navigation.navigate('CreateLibrary', { userId: userID })}
+        onPress={() => navigation.navigate('CreateLibrary', { user })}
       />
       <Button
         title="Link hinzufügen"

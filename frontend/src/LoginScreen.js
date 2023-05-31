@@ -48,10 +48,19 @@ export default function LoginScreen() {
         onSubmitEditing={login}
       />
       {/* <Button onPress={() => login()}>Login</Button> */}
-      <Button styles={styles.buttonx} onPress={login}>
+      <Button
+        buttonStyle={{
+          backgroundColor: '#13C66A',
+          borderColor: 'transparent',
+          borderRadius: 30
+        }}
+        onPress={login}
+      >
         Linksammlungen anzeigen
       </Button>
-      <Text className="text-2xl">Darkmode:</Text>
+      <Text style={{ marginTop: 100 }} className="text-2xl">
+        Darkmode
+      </Text>
       <Switch value={colorScheme === 'dark'} onChange={toggleColorScheme} />
       <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
     </View>
@@ -82,9 +91,5 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     backgroundColor: 'white'
-  },
-
-  buttonx: {
-    backgroundColor: '#11aa11'
   }
 })
