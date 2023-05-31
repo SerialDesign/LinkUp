@@ -162,6 +162,66 @@ app.get('/:userId/libraries/search', (req, res) => {
   })
 })
 
+app.put('/library/:libraryId/links', (req, res) => {
+  const newLinks = req.body.links
+
+  fs.readFile(DB_FILE, (err, data) => {
+    if (err) {
+      console.error(err)
+      return res.status(500).send('Error reading from database')
+    }
+
+    let database = JSON.parse(data)
+
+    const library = database.find((library) => library.libraryId === req.params.libraryId)
+
+    if (!library) {
+      return res.status(404).send('Library not found')
+    }
+
+    library.links.push(...newLinks)
+
+    fs.writeFile(DB_FILE, JSON.stringify(database), (err) => {
+      if (err) {
+        console.error(err)
+        return res.status(500).send('Error writing to database')
+      }
+
+      res.send(`Links added to library with ID: ${library.libraryId}`)
+    })
+  })
+})
+
+app.delete('/library/:libraryId/links', (req, res) => {
+  const removeLinks = req.body.links // Expecting an array of URLs to remove
+
+  fs.readFile(DB_FILE, (err, data) => {
+    if (err) {
+      console.error(err)
+      return res.status(500).send('Error reading from database')
+    }
+
+    let database = JSON.parse(data)
+
+    const library = database.find((library) => library.libraryId === req.params.libraryId)
+
+    if (!library) {
+      return res.status(404).send('Library not found')
+    }
+
+    library.links = library.links.filter((link) => !removeLinks.includes(link.url))
+
+    fs.writeFile(DB_FILE, JSON.stringify(database), (err) => {
+      if (err) {
+        console.error(err)
+        return res.status(500).send('Error writing to database')
+      }
+
+      res.send(`Links removed from library with ID: ${library.libraryId}`)
+    })
+  })
+})
+
 // Start the server
 app.listen(8000, () => {
   console.log('Server is listening on port 8000')
