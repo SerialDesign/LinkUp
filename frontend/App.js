@@ -12,8 +12,11 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Tabs from './src/navigation/Tabs'
 import Library from './src/Library'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import FooterNav from './src/FooterNav'
 
 const Stack = createNativeStackNavigator()
+const BottomNavigator = createBottomTabNavigator()
 
 export default function App() {
   return (
@@ -26,7 +29,11 @@ export default function App() {
           },
           headerTintColor: '#fff'
         }}
+        // initialRouteName="FooterNav"
       >
+        {/* Todo: try to bring FooterNav to Homescreen / delete here later.. maybe initialRouteName needed */}
+        <Stack.Screen name="FooterNav" options={{ title: 'FooterNav' }} component={FooterNav} />
+
         <Stack.Screen name="Login" component={LoginScreen} />
         {/* name = Aufruf in LoginScreen, nun abgeändert in Homescreen und mit options Title vergeben, damit code einheitlich in English
          <Stack.Screen name="Linksammlungen" component={Homescreen} /> */}
@@ -35,7 +42,11 @@ export default function App() {
           options={{ title: 'Linksammlungen' }}
           component={Homescreen}
         />
-        <Stack.Screen name="CreateLibrary" component={CreateLibrary} />
+        <Stack.Screen
+          name="CreateLibrary"
+          options={{ title: 'Linksammlungen erstellen' }}
+          component={CreateLibrary}
+        />
         <Stack.Screen
           options={{
             headerStyle: {

@@ -4,7 +4,7 @@
   "requests": [
     {
       "v": "1",
-      "endpoint": "http://localhost:8000/library/create",
+      "endpoint": "http://localhost:8000/userId/library/create",
       "name": "create library",
       "params": [],
       "headers": [],
@@ -16,13 +16,13 @@
       "preRequestScript": "",
       "testScript": "",
       "body": {
-        "body": "{\n\t\"userId\": \"danburonline\",\n\t\"libraryId\": \"id1234\",\n  \t\"libraryName\": \"this is the library name\",\n\t\"links\": []\n}",
+        "body": "{\n\t\"userId\": \"test\",\n\t\"libraryId\": \"id1234\",\n  \t\"libraryName\": \"this is the library name\",\n\t\"links\": []\n}",
         "contentType": "application/json"
       }
     },
     {
       "v": "1",
-      "endpoint": "http://localhost:8000/library/id1234/links",
+      "endpoint": "http://localhost:8000/userId/library/id1234/links",
       "name": "add links to library",
       "params": [],
       "headers": [],
@@ -64,7 +64,7 @@
         "body": "{\n  \"userId\": \"id\"\n}",
         "contentType": "application/json"
       },
-      "endpoint": "http://localhost:8000/library/{libraryid}/copy",
+      "endpoint": "http://localhost:8000/userId/library/{libraryid}/copy",
       "v": "1",
       "params": [],
       "headers": [],
@@ -76,7 +76,7 @@
     },
     {
       "v": "1",
-      "endpoint": "http://localhost:8000/library/example123",
+      "endpoint": "http://localhost:8000/userId/library/example123",
       "name": "get library",
       "params": [],
       "headers": [],
@@ -112,7 +112,7 @@
     },
     {
       "v": "1",
-      "endpoint": "http://localhost:8000/danburonline/libraries",
+      "endpoint": "http://localhost:8000/cywy/libraries",
       "name": "get all libraries",
       "params": [],
       "headers": [],

@@ -4,10 +4,12 @@ import { Route, useRoute } from '@react-navigation/native'
 
 const Library = ({ navigation, route }) => {
   const [library, setLibrary] = useState(null)
+  const user = route.params.userID
 
   const getAllLinksOfLibrary = () => {
     const libraryId = route.params.libraryId
-    const endpointUrl = 'http://localhost:8000/library/' + libraryId
+    const endpointUrl = 'http://localhost:8000/' + user + '/library/' + libraryId
+    console.log('Endpoint', endpointUrl)
 
     fetch(endpointUrl)
       .then((response) => response.json())

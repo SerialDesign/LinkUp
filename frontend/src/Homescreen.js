@@ -12,11 +12,9 @@ import {
   Image,
   ImageBackground
 } from 'react-native'
-import LinkLibraryBox from './components/LinkLibraryBox'
 import { Button, Input, FAB } from '@rneui/themed'
-import CreateLibrary from './CreateLibrary'
 
-const Homescreen = ({ navigation, user }) => {
+const Homescreen = ({ navigation }) => {
   const route = useRoute()
 
   // Libraries loading... (over userID)
@@ -134,12 +132,12 @@ const Homescreen = ({ navigation, user }) => {
   const handleCollectionPress = (libraryId) => {
     // Handle collection press event here
     console.log(`Pressed ${libraryId}`)
-    navigation.navigate('Library', { libraryId })
+    navigation.navigate('Library', { userID, libraryId })
   }
 
   return (
     <ScrollView style={styles.scrollContainer}>
-      <Text style={styles.title}>Linksammlungen von {route.params.user}</Text>
+      <Text style={styles.title}>Linksammlungen von {userID}</Text>
       <Button
         title="Bibliothek hinzufügen"
         icon={{
@@ -163,7 +161,7 @@ const Homescreen = ({ navigation, user }) => {
           justifyContent: 'center',
           alignSelf: 'center'
         }}
-        onPress={() => navigation.navigate('CreateLibrary', { user })}
+        onPress={() => navigation.navigate('CreateLibrary', { userID })}
       />
       <Button
         title="Link hinzufügen"

@@ -1,12 +1,11 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const fs = require('fs')
+const { v4: uuidv4 } = require('uuid')
 
 const app = express()
 
-// TODO Create library UUIDs on the server (not on the client anymore)
 // TODO Create link UUIDs on the server (not on the client anymore)
-// TODO Have the user `:userId` in all endpoints
 // TODO Check if the user exists in all endpoints
 // TODO Check if the newly created UUIDs already exist in the database
 
@@ -28,9 +27,16 @@ app.get('/health', (_req, res) => {
 })
 
 // Create a new library, get ID back
-app.post('/library/create', (req, res) => {
+app.post('/:userId/library/create', (req, res) => {
   const newLibrary = req.body
+  // Dani suggests:
+  // const newLibrary = {
+  //   ...req.body,
+  //   libraryId: uuidv4()
+  // }
+
   newLibrary.links = []
+  newLibrary.libraryId = uuidv4()
 
   fs.readFile(DB_FILE, (err, data) => {
     if (err) {
@@ -55,7 +61,7 @@ app.post('/library/create', (req, res) => {
 })
 
 // Add links to a library
-app.post('/library/:libraryId/links/add', (req, res) => {
+app.post('/:userId/library/:libraryId/links/add', (req, res) => {
   const newLinks = req.body.links
   fs.readFile(DB_FILE, (err, data) => {
     if (err) {
@@ -89,7 +95,7 @@ app.post('/library/:libraryId/links/add', (req, res) => {
 })
 
 // Get a library by ID
-app.get('/library/:libraryId', (req, res) => {
+app.get('/:userId/library/:libraryId', (req, res) => {
   fs.readFile(DB_FILE, (err, data) => {
     if (err) {
       console.error(err)
@@ -125,7 +131,7 @@ app.get('/:userId/libraries', (req, res) => {
 })
 
 // Get all links in a library
-app.get('/library/:libraryId/links', (req, res) => {
+app.get('/:userId/library/:libraryId/links', (req, res) => {
   fs.readFile(DB_FILE, (err, data) => {
     if (err) {
       console.error(err)
@@ -169,7 +175,7 @@ app.get('/:userId/libraries/search', (req, res) => {
   })
 })
 
-app.put('/library/:libraryId/links', (req, res) => {
+app.put('/userId/library/:libraryId/links', (req, res) => {
   const newLinks = req.body.links
 
   fs.readFile(DB_FILE, (err, data) => {
@@ -199,7 +205,7 @@ app.put('/library/:libraryId/links', (req, res) => {
   })
 })
 
-app.delete('/library/:libraryId/links', (req, res) => {
+app.delete('/:userId/library/:libraryId/links', (req, res) => {
   const removeLinks = req.body.links // Expecting an array of link IDs to remove
 
   fs.readFile(DB_FILE, (err, data) => {

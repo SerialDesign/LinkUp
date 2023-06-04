@@ -4,18 +4,27 @@ import { Input } from '@rneui/base'
 import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import 'react-native-get-random-values'
+import { useRoute } from '@react-navigation/native'
 
-export default function CreateLibrary({ navigation, userId }) {
+export default function CreateLibrary({ navigation }) {
+  const route = useRoute()
   const [_name, _setName] = useState('')
   const [libraryName, setLibraryName] = useState('')
   const [_libraryDesc, setLibraryDesc] = useState('')
   const [_libraryLabels, setLibraryLabels] = useState('')
 
+  //Todo: unimportant.. userID in CreateLibrary, user in Homescreen - vereinheitlichen
+  const user = route.params.userID
+  console.log('user: ', user)
+
   const createLibraryHandler = () => {
-    const endpointUrl = 'http://localhost:8000/library/create'
+    const endpointUrl = 'http://localhost:8000/' + user + '/library/create'
+    console.log('endpoint: ', endpointUrl)
+
+    // const endpointUrl = 'http://localhost:8000/user/library/create'
     const payload = {
-      userId: 'user12345',
-      libraryId: uuidv4(),
+      // userId: 'user12345',
+      userId: user,
       libraryName: libraryName,
       libraryDesc: _libraryDesc
     }
@@ -28,7 +37,7 @@ export default function CreateLibrary({ navigation, userId }) {
       body: JSON.stringify(payload)
     })
 
-    navigation.navigate('Homescreen', { user: userId })
+    navigation.navigate('Homescreen', { user })
   }
 
   return (
