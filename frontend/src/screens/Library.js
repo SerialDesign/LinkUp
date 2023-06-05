@@ -1,16 +1,17 @@
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Linking } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { checkIfUserIdHasValue } from '../helper'
+import { Button, Icon } from '@rneui/themed'
 
 const Library = ({ navigation, route }) => {
   const [library, setLibrary] = useState(null)
-  const user = route.params.userID
+  const userId = route.params.userId
 
-  checkIfUserIdHasValue(user)
+  checkIfUserIdHasValue(userId)
 
   const getAllLinksOfLibrary = () => {
     const libraryId = route.params.libraryId
-    const endpointUrl = 'http://localhost:8000/' + user + '/library/' + libraryId
+    const endpointUrl = 'http://localhost:8000/' + userId + '/library/' + libraryId
     console.log('Endpoint', endpointUrl)
 
     fetch(endpointUrl)
@@ -38,12 +39,65 @@ const Library = ({ navigation, route }) => {
     Linking.openURL(link)
   }
 
+  const handleDeleteLink = (linkId) => {
+    console.log('Deleting link:', linkId)
+
+    const endpointUrl = `http://localhost:8000/${userId}/library/${library.libraryId}/links/delete`
+    console.log('🚀 ~ file: Library.js:48 ~ handleDeleteLink ~ endpointUrl:', endpointUrl)
+
+    fetch(endpointUrl, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        linkId: linkId
+      })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle successful deletion
+        // You can update the library state or perform any other actions here
+      })
+      .catch((error) => {
+        console.error(error)
+        // Handle error scenario
+      })
+  }
+
   if (!library) {
     return null // Return null or a loading indicator while data is being fetched
   }
 
   return (
     <View style={styles.container}>
+      <Button
+        title="Link hinzufügen"
+        icon={{
+          name: 'link',
+          type: 'material',
+          size: 25,
+          color: 'white'
+        }}
+        iconContainerStyle={{ marginRight: 10 }}
+        titleStyle={{ fontWeight: '700' }}
+        buttonStyle={{
+          backgroundColor: '#13C66A',
+          borderColor: 'transparent',
+          borderWidth: 0,
+          borderRadius: 30,
+          justifyContent: 'center'
+        }}
+        containerStyle={{
+          width: 200,
+          marginHorizontal: 50,
+          marginVertical: 10,
+          justifyContent: 'center',
+          alignSelf: 'center'
+        }}
+        onPress={() => navigation.navigate('AddLink', { userId })}
+      />
+
       <Text style={styles.title}>{library.libraryName}</Text>
       <Text style={styles.description}>{library.libraryDesc}</Text>
       <Text style={styles.id}>Library ID: {library.libraryId}</Text>
@@ -60,6 +114,9 @@ const Library = ({ navigation, route }) => {
               activeOpacity={0.7}
             >
               <Text style={styles.link}>{item.description}</Text>
+              <TouchableOpacity onPress={() => handleDeleteLink(item.linkId)}>
+                <Icon name="delete" type="material" size={20} color="red" />
+              </TouchableOpacity>
             </TouchableOpacity>
           )}
         />
@@ -98,9 +155,15 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   linkContainer: {
+    width: '70%',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    marginLeft: 25,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     backgroundColor: '#e3e3e3',
     borderRadius: 8,
-    padding: 10,
     marginBottom: 10
   },
   link: {

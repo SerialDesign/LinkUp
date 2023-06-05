@@ -5,10 +5,8 @@ const { v4: uuidv4 } = require('uuid')
 
 const app = express()
 
-// TODO Create link UUIDs on the server (not on the client anymore)
 // TODO Check if the newly created UUIDs already exist in the database (add Library & Link)
-
-// TODO Check if the user exists in all endpoints --> function checkIfUserIdHasValue(userId).. or how to check in endpoint?
+// TODO Check again.. if the user exists in all endpoints --> function checkIfUserIdHasValue(userId).. or how to check in endpoint?
 
 // Instantiate the body-parser middleware
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -63,7 +61,13 @@ app.post('/:userId/library/create', (req, res) => {
 
 // Add links to a library
 app.post('/:userId/library/:libraryId/links/add', (req, res) => {
-  const newLinks = req.body.links
+  // const newLinks = req.body.links
+
+  const newLinks = req.body.links.map((link) => ({
+    ...link,
+    linkId: uuidv4() // Generate a unique linkId using uuidv4
+  }))
+
   fs.readFile(DB_FILE, (err, data) => {
     if (err) {
       console.error(err)
@@ -232,6 +236,47 @@ app.delete('/:userId/library/:libraryId/links', (req, res) => {
       }
 
       res.send(`Links removed from library with ID: ${library.libraryId}`)
+    })
+  })
+})
+app.delete('/:userId/library/:libraryId/links/delete', (req, res) => {
+  console.log('is in delete link endpoint')
+  const linkId = req.params.linkId // Retrieve linkId from URL parameter
+  console.log('🚀 ~ file: app.js:245 ~ app.delete ~ linkId:', linkId)
+
+  fs.readFile(DB_FILE, (err, data) => {
+    if (err) {
+      console.error(err)
+      return res.status(500).send('Error reading from database')
+    }
+
+    let database = JSON.parse(data)
+
+    const library = database.find((library) => library.libraryId === req.params.libraryId)
+
+    if (!library) {
+      return res.status(404).send('Library not found')
+    }
+
+    const linkIndex = library.links.findIndex((link) => link.id === linkId)
+
+    if (linkIndex === -1) {
+      return res.status(404).send('Link not found')
+    }
+
+    library.links.splice(linkIndex, 1)
+
+    fs.writeFile(DB_FILE, JSON.stringify(database), (err) => {
+      if (err) {
+        console.error(err)
+        return res.status(500).send('Error writing to database')
+      }
+
+      const response = {
+        message: `Link removed from library with ID: ${library.libraryId}`
+      }
+
+      res.json(response)
     })
   })
 })

@@ -145,6 +145,24 @@
         "contentType": null,
         "body": null
       }
+    },
+    {
+      "v": "1",
+      "endpoint": "http://localhost:8000/userId/library/libraryId/links/delete",
+      "name": "delete link from library",
+      "params": [],
+      "headers": [],
+      "method": "DELETE",
+      "auth": {
+        "authActive": true,
+        "authType": "none"
+      },
+      "preRequestScript": "",
+      "testScript": "",
+      "body": {
+        "body": "{\n  \"linkId\": \"link1\"\n}",
+        "contentType": "application/json"
+      }
     }
   ],
   "v": 1

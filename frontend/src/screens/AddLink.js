@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react'
 import { Route, useRoute } from '@react-navigation/native'
 // import Clipboard from '@react-native-clipboard/clipboard'
 
-export default function AddLink() {
+export default function AddLink({ navigation }) {
   // useEffect(() => {
   //   const fetchClipboardText = async () => {
   //     const clipboardText = await Clipboard.getString()
@@ -19,10 +19,10 @@ export default function AddLink() {
   // }, [])
 
   const route = useRoute()
-  const userId = route.params.userID
+  const userId = route.params.userId
 
   // TODO: rename value variable an test again if it works correctly
-  const [value, setValue] = useState(null)
+  const [libraryId, setLibraryId] = useState(null)
   const [libraries, setLibraries] = useState([])
   const URLInputRef = React.useRef()
   const [URLInput, setURLInput] = useState('')
@@ -31,11 +31,12 @@ export default function AddLink() {
   const saveLinkToLibrary = () => {
     console.log('Saving link to Library ')
     // const endpointUrl = 'http://localhost:8000/library/8a4a10c8-6feb-42fb-b432-a24486475496/links/add'
-    const endpointUrl = 'http://localhost:8000/' + userId + '/library/' + value + '/links/add'
+    const endpointUrl = 'http://localhost:8000/' + userId + '/library/' + libraryId + '/links/add'
     console.log('🚀 ~ file: AddLink.js:109 ~ saveLinkToLibrary ~ endpointUrl:', endpointUrl)
     //http://localhost:8000/userId/library/id1234/links/add"
 
     // TODO: Validation URL, ansonsten Meldung ausgegben, dass keine URL..
+    // TODO: If https:// is missing. add it
 
     const payload = {
       links: [
@@ -53,6 +54,8 @@ export default function AddLink() {
       },
       body: JSON.stringify(payload)
     })
+
+    navigation.navigate('Library', { libraryId, userId })
   }
 
   const fetchCopiedText = async () => {
@@ -95,6 +98,7 @@ export default function AddLink() {
       <Input
         style={{ borderWidth: 1, borderColor: 'gray', padding: 10 }}
         value={URLInput}
+        onChangeText={(text) => setURLInput(text)}
         ref={URLInputRef}
         // onChangeText={(text) => setURLInput(text)}
         placeholder="URL"
@@ -117,9 +121,9 @@ export default function AddLink() {
         valueField="value"
         placeholder="Linksammlung auswählen"
         searchPlaceholder="Suche..."
-        value={value}
+        value={libraryId}
         onChange={(item) => {
-          setValue(item.value)
+          setLibraryId(item.value)
         }}
         renderLeftIcon={() => (
           <AntDesign style={styles.icon} color="black" name="Safety" size={20} />

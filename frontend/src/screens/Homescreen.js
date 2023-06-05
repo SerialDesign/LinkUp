@@ -23,13 +23,13 @@ const Homescreen = ({ navigation }) => {
   const [value, setValue] = useState(null)
   const [libraries, setLibraries] = useState([])
 
-  const userID = route.params.userId
-  console.log(userID)
-  checkIfUserIdHasValue(userID)
+  const userId = route.params.userId
+  console.log(userId)
+  checkIfUserIdHasValue(userId)
 
   const getAllLibraries = () => {
-    console.log('user: ', userID)
-    const endpointUrl = 'http://localhost:8000/' + userID + '/libraries'
+    console.log('user: ', userId)
+    const endpointUrl = 'http://localhost:8000/' + userId + '/libraries'
     console.log('endpoint: ', endpointUrl)
 
     fetch(endpointUrl)
@@ -95,12 +95,12 @@ const Homescreen = ({ navigation }) => {
   const handleCollectionPress = (libraryId) => {
     // Handle collection press event here
     console.log(`Pressed ${libraryId}`)
-    navigation.navigate('Library', { userID, libraryId })
+    navigation.navigate('Library', { userId, libraryId })
   }
 
   return (
     <ScrollView style={styles.scrollContainer}>
-      <Text style={styles.title}>Linksammlungen von {userID}</Text>
+      <Text style={styles.title}>Linksammlungen von {userId}</Text>
       <Button
         title="Bibliothek hinzufügen"
         icon={{
@@ -124,7 +124,7 @@ const Homescreen = ({ navigation }) => {
           justifyContent: 'center',
           alignSelf: 'center'
         }}
-        onPress={() => navigation.navigate('CreateLibrary', { userID })}
+        onPress={() => navigation.navigate('CreateLibrary', { userId })}
       />
       <Button
         title="Link hinzufügen"
@@ -150,7 +150,7 @@ const Homescreen = ({ navigation }) => {
           justifyContent: 'center',
           alignSelf: 'center'
         }}
-        onPress={() => navigation.navigate('AddLink', { userID })}
+        onPress={() => navigation.navigate('AddLink', { userId })}
       />
       <View style={styles.container}>{renderLibraryBoxes()}</View>
       <FAB title="+" color="#13C66A" style={styles.floatingButton} />
