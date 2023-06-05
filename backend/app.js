@@ -14,17 +14,17 @@ app.use(bodyParser.json())
 
 const DB_FILE = 'database.json'
 
+// Helper method to check if UUID already exists in database
+const checkifUUIDExists = (uuid, database) => {
+  return database.some((library) => library.libraryId === uuid)
+}
+
 // Check if the database file exists, if not create an empty array
 if (!fs.existsSync(DB_FILE)) {
   fs.writeFileSync(DB_FILE, '[]')
 }
 
-// Health check endpoint
-app.get('/health', (_req, res) => {
-  console.log('Health check requested')
-  res.send('OK')
-})
-
+// POSTs
 // Create a new library, get ID back
 app.post('/:userId/library/create', (req, res) => {
   const newLibrary = req.body
@@ -34,7 +34,7 @@ app.post('/:userId/library/create', (req, res) => {
   //   libraryId: uuidv4()
   // }
 
-  newLibrary.links = []
+  // Generate a new UUID
   newLibrary.libraryId = uuidv4()
 
   fs.readFile(DB_FILE, (err, data) => {
@@ -44,7 +44,15 @@ app.post('/:userId/library/create', (req, res) => {
     }
 
     let database = JSON.parse(data)
-    console.log(newLibrary)
+
+    // Check if UUID already exists in the database
+    if (checkifUUIDExists(newLibrary.libraryId, database)) {
+      console.log('couldnt create library - UUID already exists')
+      //TODO- show visual feedback in app, if UUID does already exist..
+      return res.status(400).send('UUID already exists')
+    }
+
+    newLibrary.links = []
 
     database.push(newLibrary)
 
@@ -65,7 +73,7 @@ app.post('/:userId/library/:libraryId/links/add', (req, res) => {
 
   const newLinks = req.body.links.map((link) => ({
     ...link,
-    linkId: uuidv4() // Generate a unique linkId using uuidv4
+    linkId: '1ef8420d-f1a7-4392-b806-6d36adba98ae' // Generate a unique linkId using uuidv4
   }))
 
   fs.readFile(DB_FILE, (err, data) => {
@@ -86,6 +94,17 @@ app.post('/:userId/library/:libraryId/links/add', (req, res) => {
 
     const library = filteredDatabase[0]
 
+    // Check if any of the linkIds already exist in the library
+    const duplicateLinkIds = newLinks.filter((link) =>
+      library.links.some((existingLink) => existingLink.linkId === link.linkId)
+    )
+
+    if (duplicateLinkIds.length > 0) {
+      console.log('couldnt add link to library - Duplicate linkIds/UUID found')
+      //TODO- show visual feedback in app, if linkId/UUID does already exist..
+      return res.status(400).send('Duplicate linkIds found')
+    }
+
     library.links.push(...newLinks)
 
     fs.writeFile(DB_FILE, JSON.stringify(database), (err) => {
@@ -99,6 +118,7 @@ app.post('/:userId/library/:libraryId/links/add', (req, res) => {
   })
 })
 
+// GETs
 // Get a library by ID
 app.get('/:userId/library/:libraryId', (req, res) => {
   fs.readFile(DB_FILE, (err, data) => {
@@ -180,6 +200,13 @@ app.get('/:userId/libraries/search', (req, res) => {
   })
 })
 
+// Health check endpoint
+app.get('/health', (_req, res) => {
+  console.log('Health check requested')
+  res.send('OK')
+})
+
+// PUT
 app.put('/userId/library/:libraryId/links', (req, res) => {
   const newLinks = req.body.links
 
@@ -210,6 +237,7 @@ app.put('/userId/library/:libraryId/links', (req, res) => {
   })
 })
 
+// DELETE
 app.delete('/:userId/library/:libraryId/links', (req, res) => {
   const removeLinks = req.body.links // Expecting an array of link IDs to remove
 
@@ -239,6 +267,7 @@ app.delete('/:userId/library/:libraryId/links', (req, res) => {
     })
   })
 })
+
 app.delete('/:userId/library/:libraryId/links/delete', (req, res) => {
   console.log('is in delete link endpoint')
   const linkId = req.params.linkId // Retrieve linkId from URL parameter

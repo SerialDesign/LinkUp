@@ -15,18 +15,18 @@ export default function CreateLibrary({ navigation }) {
   const [_libraryLabels, setLibraryLabels] = useState('')
 
   //Todo: unimportant.. userID in CreateLibrary, user in Homescreen - vereinheitlichen
-  const user = route.params.userID
-  console.log('user: ', user)
-  checkIfUserIdHasValue(user)
+  const userId = route.params.userId
+  console.log('user: ', userId)
+  checkIfUserIdHasValue(userId)
 
   const createLibraryHandler = () => {
-    const endpointUrl = 'http://localhost:8000/' + user + '/library/create'
+    const endpointUrl = 'http://localhost:8000/' + userId + '/library/create'
     console.log('endpoint: ', endpointUrl)
 
     // const endpointUrl = 'http://localhost:8000/user/library/create'
     const payload = {
       // userId: 'user12345',
-      userId: user,
+      userId: userId,
       libraryName: libraryName,
       libraryDesc: _libraryDesc
     }
@@ -39,7 +39,7 @@ export default function CreateLibrary({ navigation }) {
       body: JSON.stringify(payload)
     })
 
-    navigation.navigate('Homescreen', { user })
+    navigation.navigate('Homescreen', { userId })
   }
 
   return (

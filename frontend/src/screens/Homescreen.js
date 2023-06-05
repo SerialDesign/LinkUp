@@ -24,7 +24,6 @@ const Homescreen = ({ navigation }) => {
   const [libraries, setLibraries] = useState([])
 
   const userId = route.params.userId
-  console.log(userId)
   checkIfUserIdHasValue(userId)
 
   const getAllLibraries = () => {
