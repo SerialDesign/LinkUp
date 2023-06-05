@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import LoginScreen from './LoginScreen'
+import LoginScreen from './screens/LoginScreen'
 
 const BottomNavigator = createBottomTabNavigator()
 

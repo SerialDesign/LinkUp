@@ -1,13 +1,12 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Button, Text, Input, Image, Switch } from '@rneui/base'
-import { Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useColorScheme } from 'nativewind'
 import { StatusBar } from 'expo-status-bar'
 
 export default function LoginScreen() {
-  const [user, onChangeUser] = React.useState('')
+  const [userId, onChangeUser] = React.useState('')
   const loginLibRef = React.useRef()
   const { colorScheme, toggleColorScheme } = useColorScheme()
 
@@ -21,7 +20,7 @@ export default function LoginScreen() {
   const login = () => {
     // Alert.alert('Logging in as user.. ', user)
     navigation.navigate('Homescreen', {
-      user
+      userId
     })
   }
 
@@ -41,7 +40,7 @@ export default function LoginScreen() {
       <Input
         style={styles.input}
         onChangeText={onChangeUser}
-        value={user === '' ? null : user}
+        value={userId === '' ? null : userId}
         placeholder="username"
         focused={true}
         ref={loginLibRef}

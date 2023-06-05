@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import 'react-native-get-random-values'
 import { useRoute } from '@react-navigation/native'
+import { checkIfUserIdHasValue } from '../helper'
 
 export default function CreateLibrary({ navigation }) {
   const route = useRoute()
@@ -16,6 +17,7 @@ export default function CreateLibrary({ navigation }) {
   //Todo: unimportant.. userID in CreateLibrary, user in Homescreen - vereinheitlichen
   const user = route.params.userID
   console.log('user: ', user)
+  checkIfUserIdHasValue(user)
 
   const createLibraryHandler = () => {
     const endpointUrl = 'http://localhost:8000/' + user + '/library/create'

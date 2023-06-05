@@ -22,7 +22,7 @@
     },
     {
       "v": "1",
-      "endpoint": "http://localhost:8000/userId/library/id1234/links",
+      "endpoint": "http://localhost:8000/userId/library/id1234/links/add",
       "name": "add links to library",
       "params": [],
       "headers": [],

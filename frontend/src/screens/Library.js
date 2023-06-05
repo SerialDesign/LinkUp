@@ -1,10 +1,12 @@
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Linking } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { Route, useRoute } from '@react-navigation/native'
+import { checkIfUserIdHasValue } from '../helper'
 
 const Library = ({ navigation, route }) => {
   const [library, setLibrary] = useState(null)
   const user = route.params.userID
+
+  checkIfUserIdHasValue(user)
 
   const getAllLinksOfLibrary = () => {
     const libraryId = route.params.libraryId

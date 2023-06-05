@@ -3,17 +3,17 @@ import { StyleSheet, Text, View } from 'react-native'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import WelcomeScreen from './src/components/templates/WelcomeScreen'
 import Header from './src/components/Header'
-import CreateLibrary from './src/CreateLibrary'
-import AddLink from './src/AddLink'
-import LoginScreen from './src/LoginScreen'
+import CreateLibrary from './src/screens/CreateLibrary'
+import AddLink from './src/screens/AddLink'
+import LoginScreen from './src/screens/LoginScreen'
 import { useState } from 'react'
-import Homescreen from './src/Homescreen'
+import Homescreen from './src/screens/Homescreen'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import Tabs from './src/navigation/Tabs'
-import Library from './src/Library'
+import Library from './src/screens/Library'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import FooterNav from './src/FooterNav'
+import ClipboardTest from './src/components/templates/ClipboardTest'
 
 const Stack = createNativeStackNavigator()
 const BottomNavigator = createBottomTabNavigator()
@@ -32,9 +32,9 @@ export default function App() {
         // initialRouteName="FooterNav"
       >
         {/* Todo: try to bring FooterNav to Homescreen / delete here later.. maybe initialRouteName needed */}
-        <Stack.Screen name="FooterNav" options={{ title: 'FooterNav' }} component={FooterNav} />
+        <Stack.Screen name="FooterNav" options={{ title: 'Login' }} component={FooterNav} />
 
-        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Login" options={{ title: 'Login' }} component={LoginScreen} />
         {/* name = Aufruf in LoginScreen, nun abgeändert in Homescreen und mit options Title vergeben, damit code einheitlich in English
          <Stack.Screen name="Linksammlungen" component={Homescreen} /> */}
         <Stack.Screen
@@ -56,6 +56,13 @@ export default function App() {
           }}
           name="Library"
           component={Library}
+        />
+
+        <Stack.Screen name="AddLink" options={{ title: 'Link hinzufügen' }} component={AddLink} />
+        <Stack.Screen
+          name="ClipboardTest"
+          options={{ title: 'ClipboardTest' }}
+          component={ClipboardTest}
         />
       </Stack.Navigator>
     </NavigationContainer>
