@@ -21,10 +21,12 @@ export default function AddLink() {
   const route = useRoute()
   const userId = route.params.userID
 
+  // TODO: rename value variable an test again if it works correctly
   const [value, setValue] = useState(null)
   const [libraries, setLibraries] = useState([])
   const URLInputRef = React.useRef()
   const [URLInput, setURLInput] = useState('')
+  const [URLDesc, setURLDesc] = useState('')
 
   const saveLinkToLibrary = () => {
     console.log('Saving link to Library ')
@@ -38,8 +40,8 @@ export default function AddLink() {
     const payload = {
       links: [
         {
-          url: 'https://www.google.com',
-          description: 'Google'
+          url: URLInput,
+          description: URLDesc
         }
       ]
     }
@@ -55,7 +57,6 @@ export default function AddLink() {
 
   const fetchCopiedText = async () => {
     const text = await Clipboard.getString()
-    console.log('🚀 ~ file: AddLink.js:28 ~ fetchCopiedText ~ text:', text)
     setURLInput(text)
   }
 
@@ -98,7 +99,7 @@ export default function AddLink() {
         // onChangeText={(text) => setURLInput(text)}
         placeholder="URL"
       />
-      <Input placeholder="Beschreibung" />
+      <Input placeholder="Beschreibung" value={URLDesc} onChangeText={(text) => setURLDesc(text)} />
       <Dropdown
         style={styles.dropdown}
         placeholderStyle={styles.placeholderStyle}

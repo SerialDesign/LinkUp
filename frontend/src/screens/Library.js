@@ -55,16 +55,16 @@ const Library = ({ navigation, route }) => {
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
             <TouchableOpacity
-              onPress={() => handleLinkPress(item)}
+              onPress={() => handleLinkPress(item.url)}
               style={styles.linkContainer}
               activeOpacity={0.7}
             >
-              <Text style={styles.link}>{item}</Text>
+              <Text style={styles.link}>{item.description}</Text>
             </TouchableOpacity>
           )}
         />
       ) : (
-        <Text style={styles.noLinksText}>No links available.</Text>
+        <Text style={styles.noLinksText}>Diese Linksammlung enthält keine Links</Text>
       )}
     </View>
   )
