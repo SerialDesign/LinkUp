@@ -59,7 +59,16 @@ export default function App() {
           component={Library}
         />
 
-        <Stack.Screen name="AddLink" options={{ title: 'Link hinzufügen' }} component={AddLink} />
+        <Stack.Screen
+          name="AddLink"
+          options={{
+            title: 'Link hinzufügen',
+            headerStyle: {
+              backgroundColor: '#13C66A'
+            }
+          }}
+          component={AddLink}
+        />
         <Stack.Screen
           name="ClipboardTest"
           options={{ title: 'ClipboardTest' }}

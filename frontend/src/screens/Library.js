@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontStyle: 'italic'
   },
-  // TODO: alle primaryButton + buttonCenterLayouting in master.css verlagern und neu verlinken auf CreateLibrary, AddLink + Library..
+  // TODO: alle primaryButton + buttonCenterLayouting in master.css verlagern und neu verlinken auf CreateLibrary, AddLink + Library.. IMPORTANT: be carefull with width of buttonCenterLayouting, 300 on AddLink
   primaryButton: {
     backgroundColor: '#13C66A',
     borderColor: 'transparent',

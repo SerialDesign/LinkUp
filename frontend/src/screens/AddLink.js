@@ -91,18 +91,34 @@ export default function AddLink({ navigation }) {
   }, [])
 
   return (
-    <SafeAreaView>
-      <Header>URL</Header>
+    <SafeAreaView style={{ backgroundColor: 'white', flex: 1 }}>
+      <Header placement="left" containerStyle={{ backgroundColor: '#13C66A' }} />
       {/* <Input placeholder="URL" ref={URLInput} /> */}
       <Input
-        style={{ borderWidth: 1, borderColor: 'gray', padding: 10 }}
+        style={{
+          borderWidth: 1,
+          borderColor: 'gray',
+          padding: 20,
+          marginTop: 10,
+          backgroundColor: '#EEF0F7'
+        }}
         value={URLInput}
         onChangeText={(text) => setURLInput(text)}
         ref={URLInputRef}
         // onChangeText={(text) => setURLInput(text)}
         placeholder="URL"
       />
-      <Input placeholder="Beschreibung" value={URLDesc} onChangeText={(text) => setURLDesc(text)} />
+      <Input
+        placeholder="Beschreibung"
+        style={{
+          borderWidth: 0.5,
+          borderColor: 'gray',
+          padding: 20,
+          marginTop: 10
+        }}
+        value={URLDesc}
+        onChangeText={(text) => setURLDesc(text)}
+      />
       <Dropdown
         style={styles.dropdown}
         placeholderStyle={styles.placeholderStyle}
@@ -129,7 +145,7 @@ export default function AddLink({ navigation }) {
         )}
       />
       <Image
-        source={require('../../assets/images/addLink.png')}
+        source={require('../../assets/images/addLink_withoutShadow.png')}
         style={styles.bookmarksIllustration}
         resizeMode="contain"
       />
@@ -137,16 +153,10 @@ export default function AddLink({ navigation }) {
         iconContainerStyle={{ marginRight: 10 }}
         titleStyle={{ fontWeight: '700' }}
         buttonStyle={styles.primaryButton}
-        containerStyle={{
-          width: 300,
-          marginHorizontal: 50,
-          marginVertical: 10,
-          justifyContent: 'center',
-          alignSelf: 'center'
-        }}
+        containerStyle={styles.buttonCenterLayouting}
         onPress={saveLinkToLibrary}
       >
-        Link hinzufügen
+        Speichern
       </Button>
     </SafeAreaView>
   )
@@ -177,8 +187,8 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   bookmarksIllustration: {
-    width: 200,
-    height: 200,
+    width: 250,
+    height: 250,
     alignSelf: 'center',
     marginTop: 10
   },
@@ -187,5 +197,12 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
     borderWidth: 0,
     borderRadius: 30
+  },
+  buttonCenterLayouting: {
+    width: 300,
+    marginHorizontal: 50,
+    marginVertical: 10,
+    justifyContent: 'center',
+    alignSelf: 'center'
   }
 })
