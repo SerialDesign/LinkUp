@@ -71,33 +71,6 @@ const Library = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <Button
-        title="Link hinzufügen"
-        icon={{
-          name: 'link',
-          type: 'material',
-          size: 25,
-          color: 'white'
-        }}
-        iconContainerStyle={{ marginRight: 10 }}
-        titleStyle={{ fontWeight: '700' }}
-        buttonStyle={{
-          backgroundColor: '#13C66A',
-          borderColor: 'transparent',
-          borderWidth: 0,
-          borderRadius: 30,
-          justifyContent: 'center'
-        }}
-        containerStyle={{
-          width: 200,
-          marginHorizontal: 50,
-          marginVertical: 10,
-          justifyContent: 'center',
-          alignSelf: 'center'
-        }}
-        onPress={() => navigation.navigate('AddLink', { userId })}
-      />
-
       <Text style={styles.title}>{library.libraryName}</Text>
       <Text style={styles.description}>{library.libraryDesc}</Text>
       <Text style={styles.id}>Library ID: {library.libraryId}</Text>
@@ -123,6 +96,20 @@ const Library = ({ navigation, route }) => {
       ) : (
         <Text style={styles.noLinksText}>Diese Linksammlung enthält keine Links</Text>
       )}
+      <Button
+        title="Link hinzufügen"
+        icon={{
+          name: 'link',
+          type: 'material',
+          size: 25,
+          color: 'white'
+        }}
+        iconContainerStyle={{ marginRight: 10 }}
+        titleStyle={{ fontWeight: '700' }}
+        buttonStyle={styles.primaryButton}
+        containerStyle={styles.buttonCenterLayouting}
+        onPress={() => navigation.navigate('AddLink', { userId })}
+      />
     </View>
   )
 }
@@ -172,6 +159,20 @@ const styles = StyleSheet.create({
   noLinksText: {
     fontSize: 16,
     fontStyle: 'italic'
+  },
+  // TODO: alle primaryButton + buttonCenterLayouting in master.css verlagern und neu verlinken auf CreateLibrary, AddLink + Library..
+  primaryButton: {
+    backgroundColor: '#13C66A',
+    borderColor: 'transparent',
+    borderWidth: 0,
+    borderRadius: 30
+  },
+  buttonCenterLayouting: {
+    width: 200,
+    marginHorizontal: 50,
+    marginVertical: 10,
+    justifyContent: 'center',
+    alignSelf: 'center'
   }
 })
 

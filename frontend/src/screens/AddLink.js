@@ -1,7 +1,6 @@
-import { ScrollView, Clipboard, SafeAreaView } from 'react-native'
+import { ScrollView, Clipboard, SafeAreaView, Image, StyleSheet } from 'react-native'
 import { Header, Text, Input } from '@rneui/themed'
 import { Dropdown } from 'react-native-element-dropdown'
-import { StyleSheet } from 'react-native'
 import AntDesign from '@expo/vector-icons/AntDesign'
 import { Button } from '@rneui/base'
 import React, { useEffect, useState } from 'react'
@@ -129,7 +128,26 @@ export default function AddLink({ navigation }) {
           <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
         )}
       />
-      <Button onPress={saveLinkToLibrary}>Link hinzufügen</Button>
+      <Image
+        source={require('../../assets/images/addLink.png')}
+        style={styles.bookmarksIllustration}
+        resizeMode="contain"
+      />
+      <Button
+        iconContainerStyle={{ marginRight: 10 }}
+        titleStyle={{ fontWeight: '700' }}
+        buttonStyle={styles.primaryButton}
+        containerStyle={{
+          width: 300,
+          marginHorizontal: 50,
+          marginVertical: 10,
+          justifyContent: 'center',
+          alignSelf: 'center'
+        }}
+        onPress={saveLinkToLibrary}
+      >
+        Link hinzufügen
+      </Button>
     </SafeAreaView>
   )
 }
@@ -157,5 +175,17 @@ const styles = StyleSheet.create({
   inputSearchStyle: {
     height: 40,
     fontSize: 16
+  },
+  bookmarksIllustration: {
+    width: 200,
+    height: 200,
+    alignSelf: 'center',
+    marginTop: 10
+  },
+  primaryButton: {
+    backgroundColor: '#13C66A',
+    borderColor: 'transparent',
+    borderWidth: 0,
+    borderRadius: 30
   }
 })

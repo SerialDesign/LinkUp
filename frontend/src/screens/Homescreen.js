@@ -110,19 +110,8 @@ const Homescreen = ({ navigation }) => {
         }}
         iconContainerStyle={{ marginRight: 10 }}
         titleStyle={{ fontWeight: '700' }}
-        buttonStyle={{
-          backgroundColor: '#13C66A',
-          borderColor: 'transparent',
-          borderWidth: 0,
-          borderRadius: 30
-        }}
-        containerStyle={{
-          width: 300,
-          marginHorizontal: 50,
-          marginVertical: 10,
-          justifyContent: 'center',
-          alignSelf: 'center'
-        }}
+        buttonStyle={styles.primaryButton}
+        containerStyle={styles.buttonCenterLayouting}
         onPress={() => navigation.navigate('CreateLibrary', { userId })}
       />
       <Button
@@ -135,20 +124,8 @@ const Homescreen = ({ navigation }) => {
         }}
         iconContainerStyle={{ marginRight: 10 }}
         titleStyle={{ fontWeight: '700' }}
-        buttonStyle={{
-          backgroundColor: '#13C66A',
-          borderColor: 'transparent',
-          borderWidth: 0,
-          borderRadius: 30,
-          justifyContent: 'center'
-        }}
-        containerStyle={{
-          width: 200,
-          marginHorizontal: 50,
-          marginVertical: 10,
-          justifyContent: 'center',
-          alignSelf: 'center'
-        }}
+        buttonStyle={styles.primaryButton}
+        containerStyle={styles.buttonCenterLayouting}
         onPress={() => navigation.navigate('AddLink', { userId })}
       />
       <View style={styles.container}>{renderLibraryBoxes()}</View>
@@ -208,6 +185,19 @@ const styles = StyleSheet.create({
     height: 200,
     alignSelf: 'center',
     marginTop: 100
+  },
+  primaryButton: {
+    backgroundColor: '#13C66A',
+    borderColor: 'transparent',
+    borderWidth: 0,
+    borderRadius: 30
+  },
+  buttonCenterLayouting: {
+    width: 200,
+    marginHorizontal: 50,
+    marginVertical: 10,
+    justifyContent: 'center',
+    alignSelf: 'center'
   }
 })
 

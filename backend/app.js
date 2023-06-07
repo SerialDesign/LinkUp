@@ -5,7 +5,6 @@ const { v4: uuidv4 } = require('uuid')
 
 const app = express()
 
-// TODO Check if the newly created UUIDs already exist in the database (add Library & Link)
 // TODO Check again.. if the user exists in all endpoints --> function checkIfUserIdHasValue(userId).. or how to check in endpoint?
 
 // Instantiate the body-parser middleware

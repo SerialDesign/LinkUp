@@ -49,6 +49,7 @@ export default function App() {
         />
         <Stack.Screen
           options={{
+            title: 'Bibliothek', //TODO: mit {libraryId} + Back button auf Deutsch setzen?
             headerStyle: {
               backgroundColor: '#CFECFE'
             },
