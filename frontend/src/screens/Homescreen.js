@@ -110,7 +110,7 @@ const Homescreen = ({ navigation }) => {
         }}
         iconContainerStyle={{ marginRight: 10 }}
         titleStyle={{ fontWeight: '700' }}
-        buttonStyle={styles.primaryButton}
+        buttonStyle={styles.libraryColor}
         containerStyle={styles.buttonCenterLayouting}
         onPress={() => navigation.navigate('CreateLibrary', { userId })}
       />
@@ -185,6 +185,10 @@ const styles = StyleSheet.create({
     height: 200,
     alignSelf: 'center',
     marginTop: 100
+  },
+  libraryColor: {
+    backgroundColor: '#59B9F5',
+    borderRadius: 10
   },
   primaryButton: {
     backgroundColor: '#13C66A',

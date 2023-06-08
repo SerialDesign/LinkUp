@@ -14,6 +14,8 @@ import Library from './src/screens/Library'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import FooterNav from './src/FooterNav'
 import ClipboardTest from './src/components/templates/ClipboardTest'
+import { TouchableOpacity, Image } from 'react-native'
+import ShareScreen from './src/screens/ShareScreen'
 
 const Stack = createNativeStackNavigator()
 const BottomNavigator = createBottomTabNavigator()
@@ -37,28 +39,63 @@ export default function App() {
         <Stack.Screen name="Login" options={{ title: 'Login' }} component={LoginScreen} />
         {/* name = Aufruf in LoginScreen, nun abgeändert in Homescreen und mit options Title vergeben, damit code einheitlich in English
          <Stack.Screen name="Linksammlungen" component={Homescreen} /> */}
+
+        {/* Homescreen */}
         <Stack.Screen
           name="Homescreen"
           options={{ title: 'Linksammlungen' }}
           component={Homescreen}
         />
+
+        {/* Create Library */}
         <Stack.Screen
           name="CreateLibrary"
-          options={{ title: 'Linksammlungen erstellen' }}
+          options={{
+            headerStyle: {
+              backgroundColor: '#59B9F5'
+            },
+            title: 'Linksammlungen erstellen'
+          }}
           component={CreateLibrary}
         />
+
+        {/* Library Detail Screen */}
         <Stack.Screen
-          options={{
+          options={({ navigation }) => ({
             title: 'Bibliothek', //TODO: mit {libraryId} + Back button auf Deutsch setzen?
             headerStyle: {
               backgroundColor: '#CFECFE'
             },
-            headerTintColor: 'black'
-          }}
+            headerTintColor: 'black',
+            headerRight: () => (
+              <TouchableOpacity
+                style={{ marginRight: 10 }}
+                onPress={
+                  () => navigation.navigate('ShareScreen')
+                  // , { libraryName: 'Library Name cannot be passed here..' }
+                }
+              >
+                <Image source={require('./assets/icon.png')} style={{ width: 24, height: 24 }} />
+              </TouchableOpacity>
+            )
+          })}
           name="Library"
           component={Library}
         />
 
+        {/* Share Screen */}
+        <Stack.Screen
+          name="ShareScreen"
+          options={{
+            title: 'Teilen',
+            headerStyle: {
+              backgroundColor: '#13C66A'
+            }
+          }}
+          component={ShareScreen}
+        />
+
+        {/* Add Link Screen*/}
         <Stack.Screen
           name="AddLink"
           options={{
@@ -69,6 +106,8 @@ export default function App() {
           }}
           component={AddLink}
         />
+
+        {/* Clipboard Test.. */}
         <Stack.Screen
           name="ClipboardTest"
           options={{ title: 'ClipboardTest' }}
