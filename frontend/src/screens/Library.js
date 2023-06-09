@@ -72,6 +72,12 @@ const Library = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{library.libraryName}</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('DeleteConfirmation', { library })}>
+        <Icon name="delete" type="material" size={25} color="red" />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('ShareScreen', { userId })}>
+        <Icon name="share" type="material" size={25} color="black" />
+      </TouchableOpacity>
       <Text style={styles.description}>{library.libraryDesc}</Text>
       <Text style={styles.id}>Library ID: {library.libraryId}</Text>
 

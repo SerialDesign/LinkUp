@@ -16,6 +16,7 @@ import FooterNav from './src/FooterNav'
 import ClipboardTest from './src/components/templates/ClipboardTest'
 import { TouchableOpacity, Image } from 'react-native'
 import ShareScreen from './src/screens/ShareScreen'
+import DeleteConfirmation from './src/components/DeleteConfirmation'
 
 const Stack = createNativeStackNavigator()
 const BottomNavigator = createBottomTabNavigator()
@@ -89,7 +90,7 @@ export default function App() {
           options={{
             title: 'Teilen',
             headerStyle: {
-              backgroundColor: '#13C66A'
+              backgroundColor: '#0094EF'
             }
           }}
           component={ShareScreen}
@@ -107,10 +108,24 @@ export default function App() {
           component={AddLink}
         />
 
+        {/* Additional Screens / Confirmation etc. */}
+        <Stack.Screen
+          name="DeleteConfirmation"
+          options={{
+            title: 'No Binance anymore',
+            headerStyle: {
+              backgroundColor: 'red'
+            }
+          }}
+          component={DeleteConfirmation}
+        />
+
         {/* Clipboard Test.. */}
         <Stack.Screen
           name="ClipboardTest"
-          options={{ title: 'ClipboardTest' }}
+          options={{
+            title: 'ClipboardTest'
+          }}
           component={ClipboardTest}
         />
       </Stack.Navigator>

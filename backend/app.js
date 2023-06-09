@@ -237,6 +237,9 @@ app.put('/userId/library/:libraryId/links', (req, res) => {
 })
 
 // DELETE
+
+// Todo change endpoint to singular link instead of links
+// DELETE Link
 app.delete('/:userId/library/:libraryId/links', (req, res) => {
   const removeLinks = req.body.links // Expecting an array of link IDs to remove
 
@@ -263,6 +266,37 @@ app.delete('/:userId/library/:libraryId/links', (req, res) => {
       }
 
       res.send(`Links removed from library with ID: ${library.libraryId}`)
+    })
+  })
+})
+
+// DELETE Library
+app.delete('/:userId/library/:libraryId', (req, res) => {
+  const libraryId = req.params.libraryId // Retrieve libraryId from URL parameter
+  fs.readFile(DB_FILE, (err, data) => {
+    if (err) {
+      console.error(err)
+      return res.status(500).send('Error reading from database')
+    }
+
+    let database = JSON.parse(data)
+
+    const library = database.find((library) => library.libraryId === req.params.libraryId)
+
+    if (!library) {
+      return res.status(404).send('Library not found')
+    }
+
+    // remove lirary from database
+    database = database.filter((library) => library.libraryId !== libraryId)
+
+    fs.writeFile(DB_FILE, JSON.stringify(database), (err) => {
+      if (err) {
+        console.error(err)
+        return res.status(500).send('Error writing to database')
+      }
+
+      res.send(`Library removed with ID: ${libraryId}`)
     })
   })
 })
