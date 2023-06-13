@@ -273,6 +273,8 @@ app.delete('/:userId/library/:libraryId/links', (req, res) => {
 // DELETE Library
 app.delete('/:userId/library/:libraryId', (req, res) => {
   const libraryId = req.params.libraryId // Retrieve libraryId from URL parameter
+  console.log('🚀 ~ file: app.js:245 ~ app.delete ~ libraryId:', libraryId)
+
   fs.readFile(DB_FILE, (err, data) => {
     if (err) {
       console.error(err)

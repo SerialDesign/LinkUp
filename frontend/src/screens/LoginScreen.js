@@ -47,14 +47,7 @@ export default function LoginScreen() {
         onSubmitEditing={login}
       />
       {/* <Button onPress={() => login()}>Login</Button> */}
-      <Button
-        buttonStyle={{
-          backgroundColor: '#13C66A',
-          borderColor: 'transparent',
-          borderRadius: 30
-        }}
-        onPress={login}
-      >
+      <Button buttonStyle={styles.greenButton} onPress={login}>
         Linksammlungen anzeigen
       </Button>
       <Text style={{ marginTop: 100 }} className="text-2xl">
@@ -90,5 +83,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     backgroundColor: 'white'
+  },
+  greenButton: {
+    backgroundColor: '#13C66A',
+    borderColor: 'transparent',
+    borderRadius: 30
   }
 })

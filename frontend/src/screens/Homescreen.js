@@ -1,5 +1,5 @@
-import { NavigationContainer, useRoute } from '@react-navigation/native'
-import { React, useState, useEffect } from 'react'
+import { NavigationContainer, useRoute, useFocusEffect } from '@react-navigation/native'
+import { React, useState, useEffect, useCallback } from 'react'
 import { Dropdown } from 'react-native-element-dropdown'
 import AntDesign from '@expo/vector-icons/AntDesign'
 import { checkIfUserIdHasValue } from '../helper'
@@ -27,6 +27,7 @@ const Homescreen = ({ navigation }) => {
   checkIfUserIdHasValue(userId)
 
   const getAllLibraries = () => {
+    console.log('Getting all libraries for user: ', userId)
     console.log('user: ', userId)
     const endpointUrl = 'http://localhost:8000/' + userId + '/libraries'
     console.log('endpoint: ', endpointUrl)
@@ -34,6 +35,7 @@ const Homescreen = ({ navigation }) => {
     fetch(endpointUrl)
       .then((response) => response.json())
       .then((data) => {
+        console.log('API response: ', data)
         const libraries = data.map((library) => {
           return {
             libraryId: library.libraryId,
@@ -48,6 +50,7 @@ const Homescreen = ({ navigation }) => {
 
   // Font loading..
   const [fontLoaded, setFontLoaded] = useState(false)
+
   useEffect(() => {
     async function loadFont() {
       await Font.loadAsync({
@@ -59,27 +62,30 @@ const Homescreen = ({ navigation }) => {
 
     loadFont()
 
-    getAllLibraries()
-  }, [])
+    // needed to refresh the library list after creating a new library (without calling the endpoint endlessly)
+    const unsubscribeFocus = navigation.addListener('focus', () => {
+      getAllLibraries()
+    })
+
+    // Cleanup function
+    return () => {
+      unsubscribeFocus()
+    }
+  }, [navigation])
 
   if (!fontLoaded) {
     return <Text>Loading...</Text>
   }
-
   const renderLibraryBoxes = () => {
-    libraries.forEach((library) => addToCollection(library))
-
-    return libraries.map((collection, index) => (
+    return libraries.map((library, index) => (
       <TouchableOpacity
         key={index}
         // Todo: with color of library ->  style={[styles.collectionBox, { backgroundColor: collection.color }]}
         style={[styles.collectionBox, { backgroundColor: '#C0E5C6' }]}
-        onPress={() => handleCollectionPress(collection.libraryId)}
+        onPress={() => handleCollectionPress(library.libraryId)}
       >
-        <Text style={styles.collectionTitle}>{collection.libraryName}</Text>
-        <Text style={styles.collectionDesc}>{collection.libraryDesc}</Text>
-        {/* // Hidden field for passing unique library ID */}
-        {/* <Text style={{ display: 'none' }}>{collection.libraryId}</Text> */}
+        <Text style={styles.collectionTitle}>{library.libraryName}</Text>
+        <Text style={styles.collectionDesc}>{library.libraryDesc}</Text>
       </TouchableOpacity>
     ))
   }
