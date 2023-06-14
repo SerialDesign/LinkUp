@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, KeyboardAvoidingView } from 'react-native'
 import { Button, Text, Input, Image, Switch } from '@rneui/base'
 import { useNavigation } from '@react-navigation/native'
 import { useColorScheme } from 'nativewind'
@@ -25,37 +25,39 @@ export default function LoginScreen() {
   }
 
   return (
-    <View className="justify-center flex-1 p-5 bg-white dark:bg-black">
-      <Image
-        source={{
-          uri: 'https://www.onlinelogomaker.com/applet_userdata/version2/d/d/36559316/projects/36559316.png'
-          //uri: 'https://www.onlinelogomaker.com/logomaker/?project=18555730'
-        }}
-        style={{
-          height: 200
-        }}
-        resizeMode="stretch"
-      />
-      {/* <Text style={styles.regularText}>Log dich ein um fortzufahren</Text> */}
-      <Input
-        style={styles.input}
-        onChangeText={onChangeUser}
-        value={userId === '' ? null : userId}
-        placeholder="username"
-        focused={true}
-        ref={loginLibRef}
-        onSubmitEditing={login}
-      />
-      {/* <Button onPress={() => login()}>Login</Button> */}
-      <Button buttonStyle={styles.greenButton} onPress={login}>
-        Linksammlungen anzeigen
-      </Button>
-      <Text style={{ marginTop: 100 }} className="text-2xl">
-        Darkmode
-      </Text>
-      <Switch value={colorScheme === 'dark'} onChange={toggleColorScheme} />
-      <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
-    </View>
+    <KeyboardAvoidingView style={styles.container} behavior="padding">
+      <View style={styles.content} className="justify-center flex-1 p-5 bg-white dark:bg-black">
+        <Image
+          source={{
+            uri: 'https://www.onlinelogomaker.com/applet_userdata/version2/d/d/36559316/projects/36559316.png'
+            //uri: 'https://www.onlinelogomaker.com/logomaker/?project=18555730'
+          }}
+          style={{
+            height: 200
+          }}
+          resizeMode="stretch"
+        />
+        {/* <Text style={styles.regularText}>Log dich ein um fortzufahren</Text> */}
+        <Input
+          style={styles.input}
+          onChangeText={onChangeUser}
+          value={userId === '' ? null : userId}
+          placeholder="username"
+          focused={true}
+          ref={loginLibRef}
+          onSubmitEditing={login}
+        />
+        {/* <Button onPress={() => login()}>Login</Button> */}
+        <Button buttonStyle={styles.greenButton} onPress={login}>
+          Linksammlungen anzeigen
+        </Button>
+        {/* <Text style={{ marginTop: 100 }} className="text-2xl">
+          Darkmode
+        </Text>
+        <Switch value={colorScheme === 'dark'} onChange={toggleColorScheme} />
+        <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} /> */}
+      </View>
+    </KeyboardAvoidingView>
   )
 }
 
@@ -63,20 +65,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
-  headerText: {
-    padding: 40,
-    fontSize: 30,
-    color: '#11aa11',
-    textAlign: 'center'
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 16,
+    backgroundColor: 'white'
+    // ...other styles you have
   },
-  regularText: {
-    fontSize: 24,
-    padding: 20,
-    marginVertical: 8,
-    color: '#11aa11',
-    textAlign: 'center'
-  },
-
   input: {
     height: 40,
     margin: 12,
