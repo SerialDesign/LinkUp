@@ -30,7 +30,6 @@ const DeleteConfirmation = () => {
         libraryId: libraryId
       })
     })
-      .then((response) => response.json())
       .then((data) => {
         // Handle successful deletion
         // You can update the library state or perform any other actions here

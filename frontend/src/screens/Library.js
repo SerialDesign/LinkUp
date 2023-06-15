@@ -53,16 +53,10 @@ const Library = ({ navigation, route }) => {
       body: JSON.stringify({
         linkId: linkId
       })
+    }).catch((error) => {
+      console.error(error)
+      // Handle error scenario
     })
-      .then((response) => response.json())
-      .then((data) => {
-        // Handle successful deletion
-        // You can update the library state or perform any other actions here
-      })
-      .catch((error) => {
-        console.error(error)
-        // Handle error scenario
-      })
   }
 
   if (!library) {
