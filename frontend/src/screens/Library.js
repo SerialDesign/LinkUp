@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity, Linking } from 'rea
 import React, { useEffect, useState } from 'react'
 import { checkIfUserIdHasValue } from '../helper'
 import { Button, Icon } from '@rneui/themed'
+import Constants from 'expo-constants'
 
 const Library = ({ navigation, route }) => {
   const [library, setLibrary] = useState(null)
@@ -11,7 +12,8 @@ const Library = ({ navigation, route }) => {
   checkIfUserIdHasValue(userId)
 
   const getAllLinksOfLibrary = () => {
-    const endpointUrl = 'http://localhost:8000/' + userId + '/library/' + libraryId
+    // const endpointUrl = 'http://localhost:8000/' + userId + '/library/' + libraryId
+    const endpointUrl = Constants.expoConfig.extra.apiUrl + userId + '/library/' + libraryId
     console.log('Endpoint', endpointUrl)
 
     fetch(endpointUrl)
@@ -42,7 +44,9 @@ const Library = ({ navigation, route }) => {
   const handleDeleteLink = (linkId) => {
     console.log('Deleting link:', linkId)
 
-    const endpointUrl = `http://localhost:8000/${userId}/library/${library.libraryId}/links/delete`
+    // const endpointUrl = `http://localhost:8000/${userId}/library/${library.libraryId}/links/delete`
+    const endpointUrl =
+      Constants.expoConfig.extra.apiUrl + `${userId}/library/${library.libraryId}/links/delete`
     console.log('🚀 ~ file: Library.js:48 ~ handleDeleteLink ~ endpointUrl:', endpointUrl)
 
     fetch(endpointUrl, {

@@ -3,6 +3,7 @@ import React from 'react'
 import { useRoute, useNavigation } from '@react-navigation/native'
 import { useEffect } from 'react'
 import { Icon, Button } from '@rneui/themed'
+import Constants from 'expo-constants'
 
 const DeleteConfirmation = () => {
   const navigation = useNavigation()
@@ -18,7 +19,8 @@ const DeleteConfirmation = () => {
   }, [])
 
   function deleteLibrary() {
-    const endpointUrl = 'http://localhost:8000/' + userId + '/library/' + libraryId
+    // const endpointUrl = 'http://localhost:8000/' + userId + '/library/' + libraryId
+    const endpointUrl = Constants.expoConfig.extra.apiUrl + userId + '/library/' + libraryId
     console.log('Endpoint', endpointUrl)
 
     fetch(endpointUrl, {

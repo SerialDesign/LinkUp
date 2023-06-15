@@ -2,15 +2,16 @@ import { View, Image, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import QRCode from 'react-native-qrcode-svg'
 import { useRoute } from '@react-navigation/native'
+import Constants from 'expo-constants'
 
 const ShareScreen = () => {
-  // const libraryId = '12345689'
   const route = useRoute()
   const userId = route.params.userId
   const libraryId = route.params.libraryId
   console.log('🚀 ~ file: ShareScreen.js:8 ~ ShareScreen ~ userId:', userId)
-  // const libraryId = 'localhost:8000/:userId/library/:libraryId'
-  const qrCodeString = 'http://localhost:8000/' + userId + '/library/' + libraryId
+
+  // const qrCodeString = 'http://localhost:8000/' + userId + '/library/' + libraryId
+  const qrCodeString = Constants.expoConfig.extra.apiUrl + userId + '/library/' + libraryId
   console.log('🚀 ~ file: ShareScreen.js:14 ~ ShareScreen ~ qrCodeString:', qrCodeString)
 
   return (

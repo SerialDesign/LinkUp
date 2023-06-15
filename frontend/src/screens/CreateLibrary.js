@@ -22,7 +22,8 @@ export default function CreateLibrary({ navigation }) {
   const createLibraryHandler = () => {
     // TODO Use this variable to talk to the backend everywhere where you use the API instead of hardcoding the URL as a string
     console.log('CREATING LIB + CONFIG: ', Constants.expoConfig.extra.apiUrl)
-    const endpointUrl = 'http://localhost:8000/' + userId + '/library/create'
+    // const endpointUrl = 'http://localhost:8000/' + userId + '/library/create'
+    const endpointUrl = Constants.expoConfig.extra.apiUrl + userId + '/library/create'
     console.log('endpoint: ', endpointUrl)
 
     // const endpointUrl = 'http://localhost:8000/user/library/create'

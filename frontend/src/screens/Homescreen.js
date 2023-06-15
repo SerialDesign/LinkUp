@@ -14,6 +14,7 @@ import {
   ImageBackground
 } from 'react-native'
 import { Button, Input, FAB, SearchBar } from '@rneui/themed'
+import Constants from 'expo-constants'
 
 const Homescreen = ({ navigation }) => {
   const route = useRoute()
@@ -29,7 +30,8 @@ const Homescreen = ({ navigation }) => {
   const getAllLibraries = () => {
     console.log('Getting all libraries for user: ', userId)
     console.log('user: ', userId)
-    const endpointUrl = 'http://localhost:8000/' + userId + '/libraries'
+    // const endpointUrl = 'http://localhost:8000/' + userId + '/libraries'
+    const endpointUrl = Constants.expoConfig.extra.apiUrl + userId + '/libraries'
     console.log('endpoint: ', endpointUrl)
 
     fetch(endpointUrl)

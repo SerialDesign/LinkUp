@@ -5,6 +5,7 @@ import AntDesign from '@expo/vector-icons/AntDesign'
 import { Button } from '@rneui/base'
 import React, { useEffect, useState } from 'react'
 import { Route, useRoute } from '@react-navigation/native'
+import Constants from 'expo-constants'
 // import Clipboard from '@react-native-clipboard/clipboard'
 
 export default function AddLink({ navigation }) {
@@ -30,7 +31,10 @@ export default function AddLink({ navigation }) {
   const saveLinkToLibrary = () => {
     console.log('Saving link to Library ')
     // const endpointUrl = 'http://localhost:8000/library/8a4a10c8-6feb-42fb-b432-a24486475496/links/add'
-    const endpointUrl = 'http://localhost:8000/' + userId + '/library/' + libraryId + '/links/add'
+    // const endpointUrl = 'http://localhost:8000/' + userId + '/library/' + libraryId + '/links/add'
+    const endpointUrl =
+      Constants.expoConfig.extra.apiUrl + userId + '/library/' + libraryId + '/links/add'
+
     console.log('🚀 ~ file: AddLink.js:109 ~ saveLinkToLibrary ~ endpointUrl:', endpointUrl)
     //http://localhost:8000/userId/library/id1234/links/add"
 
@@ -70,7 +74,8 @@ export default function AddLink({ navigation }) {
   }, [])
 
   const getAllLibraries = () => {
-    const endpointUrl = 'http://localhost:8000/' + userId + '/libraries'
+    // const endpointUrl = 'http://localhost:8000/' + userId + '/libraries'
+    const endpointUrl = Constants.expoConfig.extra.apiUrl + userId + '/libraries'
 
     fetch(endpointUrl)
       .then((response) => response.json())
