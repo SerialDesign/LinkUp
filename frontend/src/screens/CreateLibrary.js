@@ -76,6 +76,8 @@ export default function CreateLibrary({ navigation }) {
           Bibliothek speichern
           <Icon name="save" color="white" />
         </Button>
+
+        {/* Scan QR-Code: https://chat.forefront.ai/share/l9xzxkwceh1jz7zn (FF) or https://www.perplexity.ai/search/6e4f54ad-f54c-4335-835e-9e50d48c4efc?s=c (PP) */}
       </View>
     </View>
   )

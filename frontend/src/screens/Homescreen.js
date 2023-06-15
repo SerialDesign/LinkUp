@@ -3,7 +3,6 @@ import { React, useState, useEffect, useCallback } from 'react'
 import { Dropdown } from 'react-native-element-dropdown'
 import AntDesign from '@expo/vector-icons/AntDesign'
 import { checkIfUserIdHasValue } from '../helper'
-
 import * as Font from 'expo-font'
 import {
   View,
@@ -14,7 +13,7 @@ import {
   Image,
   ImageBackground
 } from 'react-native'
-import { Button, Input, FAB } from '@rneui/themed'
+import { Button, Input, FAB, SearchBar } from '@rneui/themed'
 
 const Homescreen = ({ navigation }) => {
   const route = useRoute()
@@ -22,6 +21,7 @@ const Homescreen = ({ navigation }) => {
   // Libraries loading... (over userID)
   const [value, setValue] = useState(null)
   const [libraries, setLibraries] = useState([])
+  const [search, setSearch] = useState('')
 
   const userId = route.params.userId
   checkIfUserIdHasValue(userId)
@@ -76,8 +76,19 @@ const Homescreen = ({ navigation }) => {
   if (!fontLoaded) {
     return <Text>Loading...</Text>
   }
+
+  // search filter tryout
+  const filteredLibraries = libraries.filter((library) => {
+    return (
+      library.libraryName.toLowerCase().includes(search.toLowerCase()) ||
+      library.libraryDesc.toLowerCase().includes(search.toLowerCase())
+    )
+  })
+
+  // Render Libraries
   const renderLibraryBoxes = () => {
-    return libraries.map((library, index) => (
+    return filteredLibraries.map((library, index) => (
+      //return libraries.map((library, index) => (
       <TouchableOpacity
         key={index}
         // Todo: with color of library ->  style={[styles.collectionBox, { backgroundColor: collection.color }]}
@@ -103,37 +114,47 @@ const Homescreen = ({ navigation }) => {
     navigation.navigate('Library', { userId, libraryId })
   }
 
+  const updateSearch = (search) => {
+    console.log('🚀 ~ file: Homescreen.js:107 ~ updateSearch ~ search:', search)
+    setSearch(search)
+
+    // Add your filtering logic here
+  }
+
   return (
     <ScrollView style={styles.scrollContainer}>
+      <SearchBar placeholder="Suche..." onChangeText={updateSearch} value={search} />
       <Text style={styles.title}>Linksammlungen von {userId}</Text>
-      <Button
-        title="Bibliothek hinzufügen"
-        icon={{
-          name: 'add-to-photos',
-          type: 'material',
-          size: 25,
-          color: 'white'
-        }}
-        iconContainerStyle={{ marginRight: 10 }}
-        titleStyle={{ fontWeight: '700' }}
-        buttonStyle={styles.libraryColor}
-        containerStyle={styles.buttonCenterLayouting}
-        onPress={() => navigation.navigate('CreateLibrary', { userId })}
-      />
-      <Button
-        title="Link hinzufügen"
-        icon={{
-          name: 'link',
-          type: 'material',
-          size: 25,
-          color: 'white'
-        }}
-        iconContainerStyle={{ marginRight: 10 }}
-        titleStyle={{ fontWeight: '700' }}
-        buttonStyle={styles.primaryButton}
-        containerStyle={styles.buttonCenterLayouting}
-        onPress={() => navigation.navigate('AddLink', { userId })}
-      />
+      <View style={styles.buttonsContainer}>
+        <Button
+          title="Bibliothek hinzufügen"
+          icon={{
+            name: 'add-to-photos',
+            type: 'material',
+            size: 25,
+            color: 'white'
+          }}
+          iconContainerStyle={{ marginRight: 10 }}
+          titleStyle={{ fontWeight: '700' }}
+          buttonStyle={styles.libraryColor}
+          containerStyle={styles.buttonCenterLayouting}
+          onPress={() => navigation.navigate('CreateLibrary', { userId })}
+        />
+        <Button
+          title="Link hinzufügen"
+          icon={{
+            name: 'link',
+            type: 'material',
+            size: 25,
+            color: 'white'
+          }}
+          iconContainerStyle={{ marginRight: 10 }}
+          titleStyle={{ fontWeight: '700' }}
+          buttonStyle={styles.primaryButton}
+          containerStyle={styles.buttonCenterLayouting}
+          onPress={() => navigation.navigate('AddLink', { userId })}
+        />
+      </View>
       <View style={styles.container}>{renderLibraryBoxes()}</View>
       <FAB title="+" color="#13C66A" style={styles.floatingButton} />
       <ImageBackground
@@ -195,20 +216,29 @@ const styles = StyleSheet.create({
   libraryColor: {
     backgroundColor: '#59B9F5',
     borderRadius: 10
+    // borderWidth: 2,
+    // borderColor: '#3A8BCB'
   },
   primaryButton: {
     backgroundColor: '#13C66A',
-    borderColor: 'transparent',
-    borderWidth: 0,
+    // borderColor: '#0F9A57',
+    // borderWidth: 2,
     borderRadius: 30
   },
   buttonCenterLayouting: {
-    width: 200,
+    width: 200, //300
     marginHorizontal: 50,
     marginVertical: 10,
     justifyContent: 'center',
     alignSelf: 'center'
   }
+  // buttons side by side
+  // buttonsContainer: {
+  //   flexDirection: 'row',
+  //   justifyContent: 'space-around',
+  //   alignItems: 'center',
+  //   marginVertical: 10
+  // }
 })
 
 export default Homescreen

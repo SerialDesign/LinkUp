@@ -6,11 +6,11 @@ import { Button, Icon } from '@rneui/themed'
 const Library = ({ navigation, route }) => {
   const [library, setLibrary] = useState(null)
   const userId = route.params.userId
+  const libraryId = route.params.libraryId
 
   checkIfUserIdHasValue(userId)
 
   const getAllLinksOfLibrary = () => {
-    const libraryId = route.params.libraryId
     const endpointUrl = 'http://localhost:8000/' + userId + '/library/' + libraryId
     console.log('Endpoint', endpointUrl)
 
@@ -72,15 +72,17 @@ const Library = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{library.libraryName}</Text>
-      <TouchableOpacity onPress={() => navigation.navigate('DeleteConfirmation', { library })}>
+      <Text style={styles.description}>{library.libraryDesc}</Text>
+      {/* <Text style={styles.id}>Library ID: {library.libraryId}</Text> */}
+      <TouchableOpacity
+        onPress={() => navigation.navigate('DeleteConfirmation', { userId, libraryId })}
+      >
         <Icon name="delete" type="material" size={25} color="red" />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('ShareScreen', { userId })}>
+      <TouchableOpacity onPress={() => navigation.navigate('ShareScreen', { userId, libraryId })}>
         <Icon name="share" type="material" size={25} color="black" />
       </TouchableOpacity>
-      <Text style={styles.description}>{library.libraryDesc}</Text>
-      <Text style={styles.id}>Library ID: {library.libraryId}</Text>
-
+      {/* // Links section */}
       <Text style={styles.sectionTitle}>Links:</Text>
       {library.links.length > 0 ? (
         <FlatList
@@ -93,6 +95,7 @@ const Library = ({ navigation, route }) => {
               activeOpacity={0.7}
             >
               <Text style={styles.link}>{item.description}</Text>
+              {/* <Text style={styles.link}>({item.url})</Text> */}
               <TouchableOpacity onPress={() => handleDeleteLink(item.linkId)}>
                 <Icon name="delete" type="material" size={20} color="red" />
               </TouchableOpacity>
