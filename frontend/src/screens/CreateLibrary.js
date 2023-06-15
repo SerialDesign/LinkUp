@@ -2,10 +2,10 @@ import { View, StyleSheet } from 'react-native'
 import { Button, Icon } from '@rneui/themed'
 import { Input } from '@rneui/base'
 import { useState } from 'react'
-import { v4 as uuidv4 } from 'uuid'
 import 'react-native-get-random-values'
 import { useRoute } from '@react-navigation/native'
 import { checkIfUserIdHasValue } from '../helper'
+import Constants from 'expo-constants'
 
 export default function CreateLibrary({ navigation }) {
   const route = useRoute()
@@ -20,6 +20,8 @@ export default function CreateLibrary({ navigation }) {
   checkIfUserIdHasValue(userId)
 
   const createLibraryHandler = () => {
+    // TODO Use this variable to talk to the backend everywhere where you use the API instead of hardcoding the URL as a string
+    console.log('CREATING LIB + CONFIG: ', Constants.expoConfig.extra.apiUrl)
     const endpointUrl = 'http://localhost:8000/' + userId + '/library/create'
     console.log('endpoint: ', endpointUrl)
 
