@@ -33,7 +33,7 @@ const DeleteConfirmation = () => {
       .then((data) => {
         // Handle successful deletion
         // You can update the library state or perform any other actions here
-        console.log('🚀 ~ file: DeleteConfirmation.js:95 ~ .then ~ data', data)
+        console.log('🚀 ~ file: DeleteConfirmation.js:95 ~ .then ~ data', data.json())
       })
       .catch((error) => {
         console.error(error)
