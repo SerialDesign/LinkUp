@@ -17,6 +17,7 @@ import ClipboardTest from './src/components/templates/ClipboardTest'
 import { TouchableOpacity, Image } from 'react-native'
 import ShareScreen from './src/screens/ShareScreen'
 import DeleteConfirmation from './src/components/DeleteConfirmation'
+import QRCodeScanner from './src/screens/QRCodeScanner'
 
 const Stack = createNativeStackNavigator()
 const BottomNavigator = createBottomTabNavigator()
@@ -58,6 +59,18 @@ export default function App() {
             title: 'Linksammlungen erstellen'
           }}
           component={CreateLibrary}
+        />
+
+        {/* QRCodeScanner */}
+        <Stack.Screen
+          name="QRCodeScanner"
+          options={{
+            headerStyle: {
+              backgroundColor: 'rgba(127, 11, 103, 1)'
+            },
+            title: 'QR-Code Scanner'
+          }}
+          component={QRCodeScanner}
         />
 
         {/* Library Detail Screen */}

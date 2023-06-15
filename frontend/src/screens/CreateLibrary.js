@@ -78,6 +78,18 @@ export default function CreateLibrary({ navigation }) {
         </Button>
 
         {/* Scan QR-Code: https://chat.forefront.ai/share/l9xzxkwceh1jz7zn (FF) or https://www.perplexity.ai/search/6e4f54ad-f54c-4335-835e-9e50d48c4efc?s=c (PP) */}
+        <Button
+          title="QR-Code scannen"
+          radius={'sm'}
+          type="solid"
+          buttonStyle={{ backgroundColor: 'rgba(127, 11, 103, 1)' }}
+          containerStyle={{ marginHorizontal: 30, marginVertical: 20 }}
+          titleStyle={{
+            marginHorizontal: 20,
+            fontWeight: 'bold'
+          }}
+          onPress={() => navigation.navigate('QRCodeScanner')}
+        ></Button>
       </View>
     </View>
   )
