@@ -22,3 +22,11 @@
 ## API
 
 - <https://hoppscotch.io> for API specs
+
+## Preview the app on the smartphone
+
+- Download the Expo app on your smartphone
+- Be in the same network as the computer where you start your local server (the backend)
+- Find out your local IP address (e.g. via `ifconfig | grep "inet " | grep -v 127.0.0.1` on macOS)
+- Overwrite the [`app.json`](./frontend/app.json) file with your IP address from the previous step
+- Start the app via `bash ./scripts/start-app.sh -i`
