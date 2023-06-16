@@ -6,12 +6,14 @@ import 'react-native-get-random-values'
 import { useRoute } from '@react-navigation/native'
 import { checkIfUserIdHasValue } from '../helper'
 import Constants from 'expo-constants'
+import globalStyles from '../../assets/styles/globalStyles'
+import { getRandomColor } from '../helper'
 
 export default function CreateLibrary({ navigation }) {
   const route = useRoute()
   const [_name, _setName] = useState('')
   const [libraryName, setLibraryName] = useState('')
-  const [_libraryDesc, setLibraryDesc] = useState('')
+  const [libraryDesc, setLibraryDesc] = useState('')
   const [_libraryLabels, setLibraryLabels] = useState('')
 
   //Todo: unimportant.. userID in CreateLibrary, user in Homescreen - vereinheitlichen
@@ -27,11 +29,12 @@ export default function CreateLibrary({ navigation }) {
     console.log('endpoint: ', endpointUrl)
 
     // const endpointUrl = 'http://localhost:8000/user/library/create'
+
     const payload = {
-      // userId: 'user12345',
       userId: userId,
       libraryName: libraryName,
-      libraryDesc: _libraryDesc
+      libraryDesc: libraryDesc,
+      libraryColor: getRandomColor()
     }
 
     fetch(endpointUrl, {
@@ -52,17 +55,22 @@ export default function CreateLibrary({ navigation }) {
           placeholder="Name der Bibliothek"
           onChangeText={setLibraryName}
           clearButtonMode="while-editing"
+          style={globalStyles.primaryInput}
         />
         <Input
           placeholder="Beschreibung"
           onChangeText={setLibraryDesc}
           clearButtonMode="while-editing"
+          style={globalStyles.inputDescription}
         />
+
+        {/* Todo: implement Labels or delete
         <Input
           placeholder="#Labels"
           onChangeText={setLibraryLabels}
           clearButtonMode="while-editing"
-        />
+          style={globalStyles.inputDescription}
+        /> */}
 
         <Button
           title=""
@@ -96,10 +104,4 @@ export default function CreateLibrary({ navigation }) {
       </View>
     </View>
   )
-
-  const styles = StyleSheet.create({
-    root: {
-      backgroundColor: '#f12'
-    }
-  })
 }

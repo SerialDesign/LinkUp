@@ -23,7 +23,7 @@
 
 - <https://hoppscotch.io> for API specs
 
-## Preview the app on the smartphone
+## Preview the app on the smartphone via Expo
 
 - Download the Expo app on your smartphone
 - Be in the same network as the computer where you start your local server (the backend)

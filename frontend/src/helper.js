@@ -8,3 +8,18 @@ export function checkIfUserIdHasValue(user) {
     )
   }
 }
+
+export function getRandomColor() {
+  const colors = [
+    '#FEFFE0',
+    '#CFECFE',
+    '#C0E5C6',
+    '#EFE0FF',
+    '#FEE7EF',
+    '#FEFFE0',
+    '#DAF7A6',
+    '#011627'
+  ]
+
+  return colors[Math.floor(Math.random() * colors.length)]
+}

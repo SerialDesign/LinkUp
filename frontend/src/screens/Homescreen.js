@@ -42,7 +42,8 @@ const Homescreen = ({ navigation }) => {
           return {
             libraryId: library.libraryId,
             libraryName: library.libraryName,
-            libraryDesc: library.libraryDesc
+            libraryDesc: library.libraryDesc,
+            libraryColor: library.libraryColor
           }
         })
 
@@ -94,7 +95,10 @@ const Homescreen = ({ navigation }) => {
       <TouchableOpacity
         key={index}
         // Todo: with color of library ->  style={[styles.collectionBox, { backgroundColor: collection.color }]}
-        style={[styles.collectionBox, { backgroundColor: '#C0E5C6' }]}
+        style={[
+          styles.collectionBox,
+          { backgroundColor: library.libraryColor ? library.libraryColor : '#C0E5C6' } // setting Color of Box - if no color is set, use default color #C0E5C6
+        ]}
         onPress={() => handleCollectionPress(library.libraryId)}
       >
         <Text style={styles.collectionTitle}>{library.libraryName}</Text>
@@ -158,7 +162,7 @@ const Homescreen = ({ navigation }) => {
         />
       </View>
       <View style={styles.container}>{renderLibraryBoxes()}</View>
-      <FAB title="+" color="#13C66A" style={styles.floatingButton} />
+      {/* <FAB title="+" color="#13C66A" style={styles.floatingButton} /> */}
       <ImageBackground
         source={require('../../assets/images/master_of_bookmarks.png')}
         style={styles.bookmarksIllustration}
