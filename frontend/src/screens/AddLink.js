@@ -6,6 +6,7 @@ import { Button } from '@rneui/base'
 import React, { useEffect, useState } from 'react'
 import { Route, useRoute } from '@react-navigation/native'
 import Constants from 'expo-constants'
+import globalStyles from '../../assets/styles/globalStyles'
 // import Clipboard from '@react-native-clipboard/clipboard'
 
 export default function AddLink({ navigation }) {
@@ -100,13 +101,7 @@ export default function AddLink({ navigation }) {
       <Header placement="left" containerStyle={{ backgroundColor: '#13C66A' }} />
       {/* <Input placeholder="URL" ref={URLInput} /> */}
       <Input
-        style={{
-          borderWidth: 1,
-          borderColor: 'gray',
-          padding: 20,
-          marginTop: 10,
-          backgroundColor: '#EEF0F7'
-        }}
+        style={globalStyles.primaryInput}
         value={URLInput}
         onChangeText={(text) => setURLInput(text)}
         ref={URLInputRef}
@@ -115,12 +110,7 @@ export default function AddLink({ navigation }) {
       />
       <Input
         placeholder="Beschreibung"
-        style={{
-          borderWidth: 0.5,
-          borderColor: 'gray',
-          padding: 20,
-          marginTop: 10
-        }}
+        style={globalStyles.inputDescription}
         value={URLDesc}
         onChangeText={(text) => setURLDesc(text)}
       />
@@ -157,8 +147,8 @@ export default function AddLink({ navigation }) {
       <Button
         iconContainerStyle={{ marginRight: 10 }}
         titleStyle={{ fontWeight: '700' }}
-        buttonStyle={styles.primaryButton}
-        containerStyle={styles.buttonCenterLayouting}
+        buttonStyle={globalStyles.primaryButton}
+        containerStyle={globalStyles.buttonCenterLayouting}
         onPress={saveLinkToLibrary}
       >
         Speichern
@@ -196,18 +186,5 @@ const styles = StyleSheet.create({
     height: 250,
     alignSelf: 'center',
     marginTop: 10
-  },
-  primaryButton: {
-    backgroundColor: '#13C66A',
-    borderColor: 'transparent',
-    borderWidth: 0,
-    borderRadius: 30
-  },
-  buttonCenterLayouting: {
-    width: 300,
-    marginHorizontal: 50,
-    marginVertical: 10,
-    justifyContent: 'center',
-    alignSelf: 'center'
   }
 })
