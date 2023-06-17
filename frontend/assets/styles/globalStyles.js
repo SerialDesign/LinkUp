@@ -27,6 +27,13 @@ const globalStyles = StyleSheet.create({
     marginVertical: 10,
     justifyContent: 'center',
     alignSelf: 'center'
+  },
+
+  addLinkButton: {
+    name: 'link',
+    type: 'material',
+    size: 25,
+    color: 'white'
   }
 })
 

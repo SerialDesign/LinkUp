@@ -1,8 +1,10 @@
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Linking } from 'react-native'
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Linking, Share } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { checkIfUserIdHasValue } from '../helper'
 import { Button, Icon } from '@rneui/themed'
 import Constants from 'expo-constants'
+import globalStyles from '../../assets/styles/globalStyles'
+// import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 const Library = ({ navigation, route }) => {
   const [library, setLibrary] = useState(null)
@@ -37,6 +39,14 @@ const Library = ({ navigation, route }) => {
     getAllLinksOfLibrary()
   }, [])
 
+  const renderRightActions = (item, progress) => {
+    return (
+      <RectButton onPress={() => handleDeleteLink(item.linkId)} style={styles.deleteButton}>
+        <Icon name="delete" type="material" size={20} color="white" />
+      </RectButton>
+    )
+  }
+
   const handleLinkPress = (link) => {
     Linking.openURL(link)
   }
@@ -67,6 +77,23 @@ const Library = ({ navigation, route }) => {
     return null // Return null or a loading indicator while data is being fetched
   }
 
+  const handleShare = async (url, description) => {
+    try {
+      const result = await Share.share({
+        message: `${description}\n${url}`,
+        url: url
+      })
+
+      if (result.action === Share.sharedAction) {
+        console.log('Shared successfully')
+      } else {
+        console.log('Share dismissed')
+      }
+    } catch (error) {
+      console.error('Share error:', error)
+    }
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{library.libraryName}</Text>
@@ -87,6 +114,8 @@ const Library = ({ navigation, route }) => {
           data={library.links}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
+            // Implemeent swipe to delete?
+            // <Swipeable renderRightActions={(progress) => renderRightActions(item, progress)}> -->  npx expo install react-native-gesture-handler@~2.9.0
             <TouchableOpacity
               onPress={() => handleLinkPress(item.url)}
               style={styles.linkContainer}
@@ -97,20 +126,19 @@ const Library = ({ navigation, route }) => {
               <TouchableOpacity onPress={() => handleDeleteLink(item.linkId)}>
                 <Icon name="delete" type="material" size={20} color="red" />
               </TouchableOpacity>
+              <TouchableOpacity onPress={() => handleShare(item.url, item.description)}>
+                <Icon name="share" type="material" size={20} color="blue" />
+              </TouchableOpacity>
             </TouchableOpacity>
+            // </Swipeable>
           )}
         />
       ) : (
-        <Text style={styles.noLinksText}>Diese Linksammlung enthält keine Links</Text>
+        <Text style={styles.noLinksText}>Diese Linksammlung enthält keine Links.</Text>
       )}
       <Button
         title="Link hinzufügen"
-        icon={{
-          name: 'link',
-          type: 'material',
-          size: 25,
-          color: 'white'
-        }}
+        icon={globalStyles.addLinkButton}
         iconContainerStyle={{ marginRight: 10 }}
         titleStyle={{ fontWeight: '700' }}
         buttonStyle={styles.primaryButton}
