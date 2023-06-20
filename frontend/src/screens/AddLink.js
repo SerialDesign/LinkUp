@@ -7,6 +7,8 @@ import React, { useEffect, useState } from 'react'
 import { Route, useRoute } from '@react-navigation/native'
 import Constants from 'expo-constants'
 import globalStyles from '../../assets/styles/globalStyles'
+import validator from 'validator'
+import { Alert } from 'react-native'
 // import Clipboard from '@react-native-clipboard/clipboard'
 
 export default function AddLink({ navigation }) {
@@ -22,14 +24,27 @@ export default function AddLink({ navigation }) {
   const route = useRoute()
   const userId = route.params.userId
 
+  const passedLibraryId = route.params.libraryId
+
   // TODO: rename value variable an test again if it works correctly
-  const [libraryId, setLibraryId] = useState(null)
+
+  const [libraryId, setLibraryId] = useState(passedLibraryId || null)
   const [libraries, setLibraries] = useState([])
   const URLInputRef = React.useRef()
   const [URLInput, setURLInput] = useState('')
   const [URLDesc, setURLDesc] = useState('')
 
   const saveLinkToLibrary = () => {
+    if (!URLInput || !libraryId) {
+      Alert.alert('Sorry!', 'Bitte Felder ausfüllen')
+      return
+    }
+
+    if (!validator.isURL(URLInput)) {
+      Alert.alert('Sorry!', 'Bitte eine gültige URL eingeben')
+      return
+    }
+
     console.log('Saving link to Library ')
     // const endpointUrl = 'http://localhost:8000/library/8a4a10c8-6feb-42fb-b432-a24486475496/links/add'
     // const endpointUrl = 'http://localhost:8000/' + userId + '/library/' + libraryId + '/links/add'
@@ -109,7 +124,7 @@ export default function AddLink({ navigation }) {
         placeholder="URL"
       />
       <Input
-        placeholder="Beschreibung"
+        placeholder="Beschreibung (optional)"
         style={globalStyles.inputDescription}
         value={URLDesc}
         onChangeText={(text) => setURLDesc(text)}

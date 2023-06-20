@@ -143,7 +143,7 @@ const Library = ({ navigation, route }) => {
         titleStyle={{ fontWeight: '700' }}
         buttonStyle={styles.primaryButton}
         containerStyle={styles.buttonCenterLayouting}
-        onPress={() => navigation.navigate('AddLink', { userId })}
+        onPress={() => navigation.navigate('AddLink', { userId, libraryId })}
       />
     </View>
   )
