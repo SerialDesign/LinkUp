@@ -5,6 +5,7 @@ import { Button, Icon } from '@rneui/themed'
 import Constants from 'expo-constants'
 import globalStyles from '../../assets/styles/globalStyles'
 // import Swipeable from 'react-native-gesture-handler/Swipeable';
+import { useIsFocused } from '@react-navigation/native'
 
 const Library = ({ navigation, route }) => {
   const [library, setLibrary] = useState(null)
@@ -12,6 +13,24 @@ const Library = ({ navigation, route }) => {
   const libraryId = route.params.libraryId
 
   checkIfUserIdHasValue(userId)
+
+  const isFocused = useIsFocused()
+
+  useEffect(() => {
+    if (isFocused) {
+      const endpointUrl = Constants.expoConfig.extra.apiUrl + `${userId}/library/${libraryId}`
+
+      fetch(endpointUrl)
+        .then((response) => response.json())
+        .then((data) => {
+          setLibrary(data)
+        })
+        .catch((error) => {
+          console.error(error)
+          // Handle error scenario
+        })
+    }
+  }, [isFocused])
 
   const getAllLinksOfLibrary = () => {
     // const endpointUrl = 'http://localhost:8000/' + userId + '/library/' + libraryId
@@ -67,10 +86,21 @@ const Library = ({ navigation, route }) => {
       body: JSON.stringify({
         linkId: linkId
       })
-    }).catch((error) => {
-      console.error(error)
-      // Handle error scenario
     })
+      .then(() => {
+        // Remove the link from the library.links array
+        const updatedLinks = library.links.filter((link) => link.linkId !== linkId)
+
+        // Update the state with the new links array
+        setLibrary({
+          ...library,
+          links: updatedLinks
+        })
+      })
+      .catch((error) => {
+        console.error(error)
+        // Handle error scenario
+      })
   }
 
   if (!library) {
