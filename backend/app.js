@@ -72,7 +72,7 @@ app.post('/:userId/library/:libraryId/links/add', (req, res) => {
 
   const newLinks = req.body.links.map((link) => ({
     ...link,
-    linkId: '1ef8420d-f1a7-4392-b806-6d36adba98ae' // Generate a unique linkId using uuidv4
+    linkId: uuidv4()
   }))
 
   fs.readFile(DB_FILE, (err, data) => {
