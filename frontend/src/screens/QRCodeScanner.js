@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { Text, View, StyleSheet, Button } from 'react-native'
 import { BarCodeScanner } from 'expo-barcode-scanner'
+import { useRoute } from '@react-navigation/native'
 
-export default function QRCodeScanner() {
+export default function QRCodeScanner({ navigation }) {
+  const route = useRoute()
   const [hasPermission, setHasPermission] = useState(null)
   const [scanned, setScanned] = useState(false)
+
+  console.log('route.params:', route.params)
+  const userId = route.params.userId
+  console.log('userId:', userId)
+  console.log('🚀 ~ file: QRCodeScanner.js:12 ~ QRCodeScanner ~ userId:', userId)
 
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
@@ -17,14 +24,16 @@ export default function QRCodeScanner() {
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true)
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`)
+    alert(`Barcode vom Typ ${type} und Daten [${data}] wurden gescannt!`)
+    // navigate to create library screen and pass data to import library
+    navigation.navigate('CreateLibrary', { data, userId })
   }
 
   if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>
+    return <Text>Zugriff auf Kamere erlauben</Text>
   }
   if (hasPermission === false) {
-    return <Text>No access to camera</Text>
+    return <Text>Kein Zugriff auf die Kamera</Text>
   }
 
   return (
@@ -33,7 +42,9 @@ export default function QRCodeScanner() {
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
-      {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
+      {scanned && (
+        <Button title={'Tippe hier um erneut zu scannen'} onPress={() => setScanned(false)} />
+      )}
     </View>
   )
 }

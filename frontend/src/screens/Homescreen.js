@@ -37,7 +37,7 @@ const Homescreen = ({ navigation }) => {
     fetch(endpointUrl)
       .then((response) => response.json())
       .then((data) => {
-        console.log('API response: ', data)
+        //console.log('API response: ', data)
         const libraries = data.map((library) => {
           return {
             libraryId: library.libraryId,
