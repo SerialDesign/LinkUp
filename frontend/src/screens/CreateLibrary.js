@@ -37,7 +37,7 @@ export default function CreateLibrary({ navigation }) {
       )
       const text = await response.text()
       const libraryData = text ? JSON.parse(text) : {}
-      console.log('🚀 ~ file: CreateLibrary.js:35 ~ fetchLibraryData ~ libraryData:', libraryData)
+      // console.log('🚀 ~ file: CreateLibrary.js:35 ~ fetchLibraryData ~ libraryData:', libraryData)
 
       // Update state variables with fetched data
       setLibraryName(libraryData.libraryName)
@@ -73,10 +73,10 @@ export default function CreateLibrary({ navigation }) {
 
     // Get the links from the passed library
     const links = await fetchLinks()
-    console.log(
-      '🚀 ~ file: CreateLibrary.js:74 ~ createLibraryHandlerScannedQRCode ~ links:',
-      links
-    )
+    // console.log(
+    // '🚀 ~ file: CreateLibrary.js:74 ~ createLibraryHandlerScannedQRCode ~ links:',
+    // links
+    // )
 
     console.log('CREATING LIB from scanned QR-Code: ', Constants.expoConfig.extra.apiUrl)
     const endpointUrl = Constants.expoConfig.extra.apiUrl + userId + '/library/create'
@@ -122,22 +122,24 @@ export default function CreateLibrary({ navigation }) {
 
     // const createdLibrary = await response.json()
     // const createdLibraryId = createdLibrary.libraryId
-    console.log(
-      '🚀 ~ file: CreateLibrary.js:111 ~ createLibraryHandlerScannedQRCode ~ createdLibraryId:',
-      createdLibraryId
-    )
+    // console.log(
+    // '🚀 ~ file: CreateLibrary.js:111 ~ createLibraryHandlerScannedQRCode ~ createdLibraryId:',
+    // createdLibraryId
+    // )
 
     // adding Links to newly created Library
     const addLinksToLibrary = async (link) => {
+      console.log('---------------- Adding link to library:  ', link)
+
       const addLinksEndpointUrl =
         Constants.expoConfig.extra.apiUrl + `${userId}/library/${createdLibraryId}/links/add`
       // check if wrong with scannedUserId... -->
       //Constants.expoConfig.extra.apiUrl + `${scannedUserId}/library/${createdLibraryId}/links/add`
 
-      console.log(
-        '🚀 ~ file: CreateLibrary.js:133 ~ addLinksToLibrary ~ addLinksEndpointUrl:',
-        addLinksEndpointUrl
-      )
+      // console.log(
+      // '🚀 ~ file: CreateLibrary.js:133 ~ addLinksToLibrary ~ addLinksEndpointUrl:',
+      // addLinksEndpointUrl
+      // )
 
       console.log('Adding link to library: ', link)
 
@@ -145,10 +147,10 @@ export default function CreateLibrary({ navigation }) {
         links: [link]
       }
 
-      console.log(
-        '🚀 ~ file: CreateLibrary.js:141 ~ addLinksToLibrary ~ addLinksPayload:',
-        addLinksPayload
-      )
+      // console.log(
+      // '🚀 ~ file: CreateLibrary.js:141 ~ addLinksToLibrary ~ addLinksPayload:',
+      // addLinksPayload
+      // )
 
       await fetch(addLinksEndpointUrl, {
         method: 'POST',
@@ -169,10 +171,10 @@ export default function CreateLibrary({ navigation }) {
 
   const createLibraryHandler = () => {
     if (qrCodeScannedData !== undefined) {
-      console.log(
-        '🚀 ~ file: CreateLibrary.js:87 ~ createLibraryHandler ~ qrCodeScannedData:',
-        qrCodeScannedData
-      )
+      // console.log(
+      // '🚀 ~ file: CreateLibrary.js:87 ~ createLibraryHandler ~ qrCodeScannedData:',
+      // qrCodeScannedData
+      // )
       createLibraryHandlerScannedQRCode()
     } else {
       // TODO Use this variable to talk to the backend everywhere where you use the API instead of hardcoding the URL as a string
