@@ -7,6 +7,7 @@ import * as Font from 'expo-font'
 import { View, StyleSheet, TouchableOpacity, Text, ScrollView, ImageBackground } from 'react-native'
 import { Button, Input, FAB, SearchBar } from '@rneui/themed'
 import Constants from 'expo-constants'
+import { Icon } from '@rneui/base'
 
 const Homescreen = ({ navigation }) => {
   const route = useRoute()
@@ -35,7 +36,8 @@ const Homescreen = ({ navigation }) => {
             libraryId: library.libraryId,
             libraryName: library.libraryName,
             libraryDesc: library.libraryDesc,
-            libraryColor: library.libraryColor
+            libraryColor: library.libraryColor,
+            favorited: library.favorited ? library.favorited : false
           }
         })
 
@@ -95,6 +97,13 @@ const Homescreen = ({ navigation }) => {
       >
         <Text style={styles.collectionTitle}>{library.libraryName}</Text>
         <Text style={styles.collectionDesc}>{library.libraryDesc}</Text>
+        <TouchableOpacity onPress={() => favorizeLibrary(library.libraryId)}>
+          {library.favorited ? (
+            <Icon name="star" type="material" size={20} color="yellow" />
+          ) : (
+            <Icon name="star" type="material" size={20} color="grey" />
+          )}
+        </TouchableOpacity>
       </TouchableOpacity>
     ))
   }
@@ -117,6 +126,30 @@ const Homescreen = ({ navigation }) => {
     setSearch(search)
 
     // Add your filtering logic here
+  }
+
+  const favorizeLibrary = (libraryId) => {
+    const endpoint =
+      Constants.expoConfig.extra.apiUrl + userId + '/library/' + libraryId + '/favorite'
+    console.log('endpoint: ', endpoint)
+
+    // call the endpoint
+    fetch(endpoint, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        libraryId: libraryId
+      })
+    })
+      .then((data) => {
+        // Handle successful deletion
+        // You can update the library state or perform any other actions here
+      })
+      .catch((error) => {
+        console.error(error)
+      })
   }
 
   return (
