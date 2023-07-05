@@ -259,6 +259,71 @@ app.get('/:userId/library/:libraryId/links', (req, res) => {
   })
 })
 
+app.get('/:userId/library/:libraryId/links/favorited', (req, res) => {
+  fs.readFile(DB_FILE, (err, data) => {
+    if (err) {
+      console.error(err)
+      return res.status(500).send('Error reading from database')
+    }
+
+    const database = JSON.parse(data)
+    const filteredLibrary = database.find(
+      (library) =>
+        library.libraryId === req.params.libraryId && library.userId === req.params.userId
+    )
+
+    if (!filteredLibrary) {
+      return res.status(404).send('Library not found')
+    }
+
+    const favoritedLinks = filteredLibrary.links.filter((link) => link.favorited === true)
+
+    res.send(favoritedLinks)
+  })
+})
+
+app.put('/:userId/library/:libraryId/link/:linkId/favorite', (req, res) => {
+  const userId = req.params.userId
+  const libraryId = req.params.libraryId
+  const linkId = req.params.linkId
+
+  fs.readFile(DB_FILE, (err, data) => {
+    if (err) {
+      console.error(err)
+      return res.status(500).send('Error reading from database')
+    }
+
+    let database = JSON.parse(data)
+    let libraryIndex = database.findIndex(
+      (lib) => lib.libraryId === libraryId && lib.userId === userId
+    )
+
+    // Check if library exists in the database
+    if (libraryIndex === -1) {
+      return res.status(404).send('Library not found')
+    }
+
+    let linkIndex = database[libraryIndex].links.findIndex((link) => link.linkId === linkId)
+
+    // Check if link exists in the library
+    if (linkIndex === -1) {
+      return res.status(404).send('Link not found')
+    }
+
+    // Set the link as favorited
+    database[libraryIndex].links[linkIndex].favorited = true
+
+    fs.writeFile(DB_FILE, JSON.stringify(database), (err) => {
+      if (err) {
+        console.error(err)
+        return res.status(500).send('Error writing to database')
+      }
+
+      res.send(`Link ${linkId} was set as favorite`)
+    })
+  })
+})
+
 app.get('/:userId/libraries/search', (req, res) => {
   const query = req.query.query.toLowerCase()
 
