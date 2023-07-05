@@ -104,22 +104,68 @@ const Homescreen = ({ navigation }) => {
   }
 
   const favorizeLibrary = (libraryId) => {
-    const endpoint =
-      Constants.expoConfig.extra.apiUrl + userId + '/library/' + libraryId + '/favorite'
-    console.log('endpoint: ', endpoint)
+    // call endpoint /:userId/library/:libraryId
 
-    fetch(endpoint, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        libraryId: libraryId
+    const getLibraryEndpoint = Constants.expoConfig.extra.apiUrl + userId + '/library/' + libraryId
+    let libraryIsFavorited = false
+
+    fetch(getLibraryEndpoint)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.favorited) {
+          libraryIsFavorited = true
+          console.log('The library is favorited')
+        } else {
+          libraryIsFavorited = false
+          console.log('The library is not favorited')
+        }
       })
-    })
-      .then((data) => {})
-      .catch((error) => {
-        console.error(error)
+      .catch((error) => console.error(error))
+      .finally(() => {
+        const favEndpoint =
+          Constants.expoConfig.extra.apiUrl + userId + '/library/' + libraryId + '/favorite'
+
+        console.log('endpoint: ', favEndpoint)
+
+        // favorite library if it is not favorited already..
+        if (libraryIsFavorited == false) {
+          // call the endpoint
+          console.log('favorize library')
+          fetch(favEndpoint, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              libraryId: libraryId
+            })
+          })
+            .then((data) => {
+              // Handle successful deletion
+              // You can update the library state or perform any other actions here
+            })
+            .catch((error) => {
+              console.error(error)
+            })
+        } else {
+          console.log('unfavorize library')
+          fetch(favEndpoint, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              libraryId: libraryId
+            })
+          })
+            .then((data) => {
+              // Handle successful deletion
+              // You can update the library state or perform any other actions here
+            })
+            .catch((error) => {
+              console.error(error)
+            })
+        }
       })
   }
 
