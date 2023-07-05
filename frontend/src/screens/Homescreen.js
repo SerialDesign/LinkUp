@@ -1,7 +1,6 @@
+import React, { useState, useEffect, useCallback } from 'react'
 import { useRoute } from '@react-navigation/native'
-import { React, useState, useEffect } from 'react'
-// import { Dropdown } from 'react-native-element-dropdown'
-// import AntDesign from '@expo/vector-icons/AntDesign'
+import { useFocusEffect } from '@react-navigation/native'
 import { checkIfUserIdHasValue } from '../helper'
 import * as Font from 'expo-font'
 import { View, StyleSheet, TouchableOpacity, Text, ScrollView, ImageBackground } from 'react-native'
@@ -12,7 +11,6 @@ import { Icon } from '@rneui/base'
 const Homescreen = ({ navigation }) => {
   const route = useRoute()
 
-  // Libraries loading... (over userID)
   const [value, setValue] = useState(null)
   const [libraries, setLibraries] = useState([])
   const [search, setSearch] = useState('')
@@ -20,32 +18,32 @@ const Homescreen = ({ navigation }) => {
   const userId = route.params.userId
   checkIfUserIdHasValue(userId)
 
-  const getAllLibraries = () => {
+  const getAllLibraries = async () => {
     console.log('Getting all libraries for user: ', userId)
     console.log('user: ', userId)
-    // const endpointUrl = 'http://localhost:8000/' + userId + '/libraries'
     const endpointUrl = Constants.expoConfig.extra.apiUrl + userId + '/libraries'
     console.log('endpoint: ', endpointUrl)
 
-    fetch(endpointUrl)
-      .then((response) => response.json())
-      .then((data) => {
-        //console.log('API response: ', data)
-        const libraries = data.map((library) => {
-          return {
-            libraryId: library.libraryId,
-            libraryName: library.libraryName,
-            libraryDesc: library.libraryDesc,
-            libraryColor: library.libraryColor,
-            favorited: library.favorited ? library.favorited : false
-          }
-        })
+    const response = await fetch(endpointUrl)
+    const data = await response.json()
 
-        setLibraries(libraries)
-      })
+    const libraries = data.map((library) => ({
+      libraryId: library.libraryId,
+      libraryName: library.libraryName,
+      libraryDesc: library.libraryDesc,
+      libraryColor: library.libraryColor,
+      favorited: library.favorited ? library.favorited : false
+    }))
+
+    setLibraries(libraries)
   }
 
-  // Font loading..
+  const fetchLibraries = useCallback(() => {
+    getAllLibraries()
+  }, [])
+
+  useFocusEffect(fetchLibraries)
+
   const [fontLoaded, setFontLoaded] = useState(false)
 
   useEffect(() => {
@@ -58,23 +56,12 @@ const Homescreen = ({ navigation }) => {
     }
 
     loadFont()
-
-    // needed to refresh the library list after creating a new library (without calling the endpoint endlessly)
-    const unsubscribeFocus = navigation.addListener('focus', () => {
-      getAllLibraries()
-    })
-
-    // Cleanup function
-    return () => {
-      unsubscribeFocus()
-    }
-  }, [navigation])
+  }, [])
 
   if (!fontLoaded) {
     return <Text>Loading...</Text>
   }
 
-  // search filter tryout
   const filteredLibraries = libraries.filter((library) => {
     return (
       library.libraryName.toLowerCase().includes(search.toLowerCase()) ||
@@ -83,16 +70,13 @@ const Homescreen = ({ navigation }) => {
     )
   })
 
-  // Render Libraries
   const renderLibraryBoxes = () => {
     return filteredLibraries.map((library, index) => (
-      //return libraries.map((library, index) => (
       <TouchableOpacity
         key={index}
-        // Todo: with color of library ->  style={[styles.collectionBox, { backgroundColor: collection.color }]}
         style={[
           styles.collectionBox,
-          { backgroundColor: library.libraryColor ? library.libraryColor : '#C0E5C6' } // setting Color of Box - if no color is set, use default color #C0E5C6
+          { backgroundColor: library.libraryColor ? library.libraryColor : '#C0E5C6' }
         ]}
         onPress={() => handleCollectionPress(library.libraryId)}
       >
@@ -109,15 +93,7 @@ const Homescreen = ({ navigation }) => {
     ))
   }
 
-  const libraryCollection = []
-
-  const addToCollection = (library) => {
-    libraryCollection.push(library)
-    console.log('library ' + library.libraryName + ' pushed.. desc:' + library.libraryDesc)
-  }
-
   const handleCollectionPress = (libraryId) => {
-    // Handle collection press event here
     console.log(`Pressed ${libraryId}`)
     navigation.navigate('Library', { userId, libraryId })
   }
@@ -125,8 +101,6 @@ const Homescreen = ({ navigation }) => {
   const updateSearch = (search) => {
     console.log('🚀 ~ file: Homescreen.js:107 ~ updateSearch ~ search:', search)
     setSearch(search)
-
-    // Add your filtering logic here
   }
 
   const favorizeLibrary = (libraryId) => {
@@ -134,7 +108,6 @@ const Homescreen = ({ navigation }) => {
       Constants.expoConfig.extra.apiUrl + userId + '/library/' + libraryId + '/favorite'
     console.log('endpoint: ', endpoint)
 
-    // call the endpoint
     fetch(endpoint, {
       method: 'PUT',
       headers: {
@@ -144,10 +117,7 @@ const Homescreen = ({ navigation }) => {
         libraryId: libraryId
       })
     })
-      .then((data) => {
-        // Handle successful deletion
-        // You can update the library state or perform any other actions here
-      })
+      .then((data) => {})
       .catch((error) => {
         console.error(error)
       })
@@ -170,7 +140,9 @@ const Homescreen = ({ navigation }) => {
           titleStyle={{ fontWeight: '700' }}
           buttonStyle={styles.libraryColor}
           containerStyle={styles.buttonCenterLayouting}
-          onPress={() => navigation.navigate('CreateLibrary', { userId })}
+          onPress={() =>
+            navigation.navigate('CreateLibrary', { userId, refreshLibraries: fetchLibraries })
+          }
         />
         <Button
           title="Link hinzufügen"
@@ -188,7 +160,6 @@ const Homescreen = ({ navigation }) => {
         />
       </View>
       <View style={styles.container}>{renderLibraryBoxes()}</View>
-      {/* <FAB title="+" color="#13C66A" style={styles.floatingButton} /> */}
       <ImageBackground
         source={require('../../assets/images/master_of_bookmarks.png')}
         style={styles.bookmarksIllustration}

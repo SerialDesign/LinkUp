@@ -25,7 +25,7 @@ export default function CreateLibrary({ navigation }) {
   const scannedLibraryId = urlParts[5]
 
   //Todo: unimportant.. userID in CreateLibrary, user in Homescreen - vereinheitlichen
-  const userId = route.params.userId
+  const { userId, refreshLibraries } = route.params
   console.log('user (in CreateLibrary): ', userId)
   checkIfUserIdHasValue(userId)
 
@@ -73,10 +73,6 @@ export default function CreateLibrary({ navigation }) {
 
     // Get the links from the passed library
     const links = await fetchLinks()
-    // console.log(
-    // '🚀 ~ file: CreateLibrary.js:74 ~ createLibraryHandlerScannedQRCode ~ links:',
-    // links
-    // )
 
     console.log('CREATING LIB from scanned QR-Code: ', Constants.expoConfig.extra.apiUrl)
     const endpointUrl = Constants.expoConfig.extra.apiUrl + userId + '/library/create'
@@ -88,14 +84,6 @@ export default function CreateLibrary({ navigation }) {
       libraryDesc: libraryDesc,
       libraryColor: getRandomColor()
     }
-
-    fetch(endpointUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    })
 
     // Fetch the newly created library ID
     const response = await fetch(endpointUrl, {
@@ -110,47 +98,24 @@ export default function CreateLibrary({ navigation }) {
     const responseText = await response.text()
     console.log('Response text:', responseText)
 
-    // Parse the response text as JSON
-    // const createdLibrary = JSON.parse(responseText)
-    // const createdLibraryId = createdLibrary.libraryId
-
     const libraryIdRegex = /ID: (\w+-\w+-\w+-\w+-\w+)/
     const match = responseText.match(libraryIdRegex)
     const createdLibraryId = match ? match[1] : null
 
     console.log('Created library ID:', createdLibraryId)
 
-    // const createdLibrary = await response.json()
-    // const createdLibraryId = createdLibrary.libraryId
-    // console.log(
-    // '🚀 ~ file: CreateLibrary.js:111 ~ createLibraryHandlerScannedQRCode ~ createdLibraryId:',
-    // createdLibraryId
-    // )
-
-    // adding Links to newly created Library
+    // Adding Links to newly created Library
     const addLinksToLibrary = async (link) => {
       console.log('---------------- Adding link to library:  ', link)
 
       const addLinksEndpointUrl =
         Constants.expoConfig.extra.apiUrl + `${userId}/library/${createdLibraryId}/links/add`
-      // check if wrong with scannedUserId... -->
-      //Constants.expoConfig.extra.apiUrl + `${scannedUserId}/library/${createdLibraryId}/links/add`
-
-      // console.log(
-      // '🚀 ~ file: CreateLibrary.js:133 ~ addLinksToLibrary ~ addLinksEndpointUrl:',
-      // addLinksEndpointUrl
-      // )
 
       console.log('Adding link to library: ', link)
 
       const addLinksPayload = {
         links: [link]
       }
-
-      // console.log(
-      // '🚀 ~ file: CreateLibrary.js:141 ~ addLinksToLibrary ~ addLinksPayload:',
-      // addLinksPayload
-      // )
 
       await fetch(addLinksEndpointUrl, {
         method: 'POST',
@@ -166,24 +131,33 @@ export default function CreateLibrary({ navigation }) {
       await addLinksToLibrary(link)
     }
 
+    try {
+      const response = await fetch(endpointUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+
+      if (response.ok) {
+        refreshLibraries && refreshLibraries()
+      } else {
+        throw new Error('Failed to create library')
+      }
+    } catch (err) {
+      console.error(err)
+      return
+    }
+
     navigation.navigate('Homescreen', { userId })
   }
 
-  const createLibraryHandler = () => {
+  const createLibraryHandler = async () => {
     if (qrCodeScannedData !== undefined) {
-      // console.log(
-      // '🚀 ~ file: CreateLibrary.js:87 ~ createLibraryHandler ~ qrCodeScannedData:',
-      // qrCodeScannedData
-      // )
       createLibraryHandlerScannedQRCode()
     } else {
-      // TODO Use this variable to talk to the backend everywhere where you use the API instead of hardcoding the URL as a string
-      console.log('CREATING LIB + CONFIG: ', Constants.expoConfig.extra.apiUrl)
-      // const endpointUrl = 'http://localhost:8000/' + userId + '/library/create'
       const endpointUrl = Constants.expoConfig.extra.apiUrl + userId + '/library/create'
-      console.log('endpoint: ', endpointUrl)
-      // const endpointUrl = 'http://localhost:8000/user/library/create'
-
       const payload = {
         userId: userId,
         libraryName: libraryName,
@@ -191,13 +165,25 @@ export default function CreateLibrary({ navigation }) {
         libraryColor: getRandomColor()
       }
 
-      fetch(endpointUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-      })
+      // Here we wait for the library creation to complete before navigating back
+      try {
+        const response = await fetch(endpointUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        })
+
+        if (response.ok) {
+          refreshLibraries && refreshLibraries()
+        } else {
+          throw new Error('Failed to create library')
+        }
+      } catch (err) {
+        console.error(err)
+        return
+      }
 
       navigation.navigate('Homescreen', { userId })
     }
