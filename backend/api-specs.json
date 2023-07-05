@@ -1,223 +1,259 @@
 {
-  "name": "linkup",
   "folders": [],
+  "v": 1,
+  "name": "linkup",
   "requests": [
     {
-      "v": "1",
-      "endpoint": "http://localhost:8000/userId/library/create",
-      "name": "create library",
-      "params": [],
       "headers": [],
+      "endpoint": "http://localhost:8000/userId/library/create",
       "method": "POST",
       "auth": {
         "authActive": true,
         "authType": "none"
       },
-      "preRequestScript": "",
+      "v": "1",
       "testScript": "",
+      "name": "create library",
+      "preRequestScript": "",
+      "params": [],
       "body": {
         "body": "{\n\t\"userId\": \"test\",\n\t\"libraryId\": \"id1234\",\n  \t\"libraryName\": \"this is the library name\",\n\t\"links\": [],\n  \t\"favorited\": false\n}",
         "contentType": "application/json"
       }
     },
     {
-      "v": "1",
-      "endpoint": "http://localhost:8000/userId/library/id1234/links/add",
-      "name": "add links to library",
-      "params": [],
       "headers": [],
-      "method": "PUT",
+      "endpoint": "http://localhost:8000/Daniel/library/71781c37-bcef-43ff-ba1e-1c296cc0b290/links/add",
+      "method": "POST",
       "auth": {
         "authActive": true,
         "authType": "none"
       },
-      "preRequestScript": "",
+      "v": "1",
       "testScript": "",
+      "name": "add links to library",
+      "preRequestScript": "",
+      "params": [],
       "body": {
         "body": "{\n  \"links\": [\n    {\n      \"id\": \"link1\",\n      \"url\": \"http://example1.com\",\n      \"description\": \"Example link 1\"\n    },\n    {\n      \"id\": \"link2\",\n      \"url\": \"http://example2.com\",\n      \"description\": \"Example link 2\"\n    }\n  ]\n}",
         "contentType": "application/json"
       }
     },
     {
-      "v": "1",
-      "endpoint": "http://localhost:8000/library/id1234/links",
-      "name": "delete links in library",
-      "params": [],
       "headers": [],
+      "endpoint": "http://localhost:8000/library/id1234/links",
       "method": "DELETE",
       "auth": {
         "authActive": true,
         "authType": "none"
       },
-      "preRequestScript": "",
+      "v": "1",
       "testScript": "",
+      "name": "delete links in library",
+      "preRequestScript": "",
+      "params": [],
       "body": {
         "body": "{\n  \"links\": [\"link1\", \"link2\"]\n}\n",
         "contentType": "application/json"
       }
     },
     {
-      "method": "POST",
-      "testScript": "",
-      "preRequestScript": "",
-      "body": {
-        "body": "{\n  \"userId\": \"id\"\n}",
-        "contentType": "application/json"
-      },
-      "endpoint": "http://localhost:8000/userId/library/{libraryid}/copy",
-      "v": "1",
-      "params": [],
       "headers": [],
+      "endpoint": "http://localhost:8000/userId/library/{libraryid}/copy",
+      "method": "POST",
       "auth": {
         "authActive": true,
         "authType": "none"
       },
-      "name": "copy library"
+      "testScript": "",
+      "v": "1",
+      "name": "copy library",
+      "preRequestScript": "",
+      "params": [],
+      "body": {
+        "body": "{\n  \"userId\": \"id\"\n}",
+        "contentType": "application/json"
+      }
     },
     {
-      "v": "1",
-      "endpoint": "http://localhost:8000/userId/library/example123",
-      "name": "get library",
-      "params": [],
       "headers": [],
+      "endpoint": "http://localhost:8000/userId/library/71781c37-bcef-43ff-ba1e-1c296cc0b290",
       "method": "GET",
       "auth": {
-        "authType": "none",
-        "authActive": true
+        "authActive": true,
+        "authType": "none"
       },
-      "preRequestScript": "",
+      "v": "1",
       "testScript": "",
+      "name": "get library",
+      "preRequestScript": "",
+      "params": [],
       "body": {
         "body": null,
         "contentType": null
       }
     },
     {
-      "v": "1",
+      "headers": [],
       "endpoint": "http://localhost:8000/user123/libraries/search?query=one",
+      "method": "GET",
+      "auth": {
+        "authActive": true,
+        "authType": "none"
+      },
+      "v": "1",
+      "testScript": "",
       "name": "search library",
+      "preRequestScript": "",
       "params": [],
+      "body": {
+        "body": null,
+        "contentType": null
+      }
+    },
+    {
       "headers": [],
+      "endpoint": "http://localhost:8000/Daniel/libraries",
       "method": "GET",
       "auth": {
         "authActive": true,
         "authType": "none"
       },
-      "preRequestScript": "",
-      "testScript": "",
-      "body": {
-        "contentType": null,
-        "body": null
-      }
-    },
-    {
       "v": "1",
-      "endpoint": "http://localhost:8000/cywy/libraries",
+      "testScript": "",
       "name": "get all libraries",
-      "params": [],
-      "headers": [],
-      "method": "GET",
-      "auth": {
-        "authType": "none",
-        "authActive": true
-      },
       "preRequestScript": "",
-      "testScript": "",
+      "params": [],
       "body": {
-        "contentType": null,
-        "body": null
+        "body": null,
+        "contentType": null
       }
     },
     {
-      "v": "1",
-      "endpoint": "http://localhost:8000/health",
-      "name": "check health",
-      "params": [],
       "headers": [],
+      "endpoint": "http://localhost:8000/health",
       "method": "GET",
       "auth": {
         "authActive": true,
         "authType": "none"
       },
-      "preRequestScript": "",
+      "v": "1",
       "testScript": "",
+      "name": "check health",
+      "preRequestScript": "",
+      "params": [],
       "body": {
-        "contentType": null,
-        "body": null
+        "body": null,
+        "contentType": null
       }
     },
     {
-      "v": "1",
-      "endpoint": "http://localhost:8000/userId/library/libraryId/links/delete",
-      "name": "delete link from library",
-      "params": [],
       "headers": [],
+      "endpoint": "http://localhost:8000/userId/library/libraryId/links/delete",
       "method": "DELETE",
       "auth": {
         "authActive": true,
         "authType": "none"
       },
-      "preRequestScript": "",
+      "v": "1",
       "testScript": "",
+      "name": "delete link from library",
+      "preRequestScript": "",
+      "params": [],
       "body": {
         "body": "{\n  \"linkId\": \"link1\"\n}",
         "contentType": "application/json"
       }
     },
     {
-      "v": "1",
-      "endpoint": "http://localhost:8000/Daniel/library/71781c37-bcef-43ff-ba1e-1c296cc0b290/favorite",
-      "name": "favorite library",
-      "params": [],
       "headers": [],
+      "endpoint": "http://localhost:8000/Daniel/library/71781c37-bcef-43ff-ba1e-1c296cc0b290/favorite",
       "method": "PUT",
       "auth": {
         "authActive": true,
         "authType": "none"
       },
-      "preRequestScript": "",
+      "v": "1",
       "testScript": "",
+      "name": "favorite library",
+      "preRequestScript": "",
+      "params": [],
       "body": {
         "body": "{\n\t\"userId\": \"test\",\n\t\"libraryId\": \"id1234\",\n  \t\"libraryName\": \"this is the library name\",\n\t\"links\": []\n}",
         "contentType": "application/json"
       }
     },
     {
-      "v": "1",
-      "endpoint": "http://localhost:8000/Daniel/library/71781c37-bcef-43ff-ba1e-1c296cc0b290/favorite",
-      "name": "unfavorite library",
-      "params": [],
       "headers": [],
+      "endpoint": "http://localhost:8000/Daniel/library/71781c37-bcef-43ff-ba1e-1c296cc0b290/favorite",
       "method": "DELETE",
       "auth": {
         "authActive": true,
         "authType": "none"
       },
-      "preRequestScript": "",
+      "v": "1",
       "testScript": "",
+      "name": "unfavorite library",
+      "preRequestScript": "",
+      "params": [],
       "body": {
         "body": "{\n\t\"userId\": \"test\",\n\t\"libraryId\": \"id1234\",\n  \t\"libraryName\": \"this is the library name\",\n\t\"links\": []\n}",
         "contentType": "application/json"
       }
     },
     {
-      "v": "1",
-      "endpoint": "http://localhost:8000/Daniel/libraries/favorited",
-      "name": "get all favorited libraries",
-      "params": [],
       "headers": [],
+      "endpoint": "http://localhost:8000/Daniel/libraries/favorited",
       "method": "GET",
       "auth": {
-        "authType": "none",
-        "authActive": true
+        "authActive": true,
+        "authType": "none"
       },
-      "preRequestScript": "",
+      "v": "1",
       "testScript": "",
+      "name": "get all favorited libraries",
+      "preRequestScript": "",
+      "params": [],
       "body": {
-        "contentType": null,
-        "body": null
+        "body": null,
+        "contentType": null
+      }
+    },
+    {
+      "headers": [],
+      "endpoint": "http://localhost:8000/Daniel/library/71781c37-bcef-43ff-ba1e-1c296cc0b290/link/5998fa13-e187-46c2-ba6b-7b2fe94d629c/favorite",
+      "method": "PUT",
+      "auth": {
+        "authActive": true,
+        "authType": "none"
+      },
+      "v": "1",
+      "testScript": "",
+      "name": "favorise link",
+      "preRequestScript": "",
+      "params": [],
+      "body": {
+        "body": null,
+        "contentType": null
+      }
+    },
+    {
+      "headers": [],
+      "endpoint": "http://localhost:8000/Daniel/library/71781c37-bcef-43ff-ba1e-1c296cc0b290/links/favorited",
+      "method": "GET",
+      "auth": {
+        "authActive": true,
+        "authType": "none"
+      },
+      "v": "1",
+      "testScript": "",
+      "name": "get all favorited links",
+      "preRequestScript": "",
+      "params": [],
+      "body": {
+        "body": null,
+        "contentType": null
       }
     }
-  ],
-  "v": 1
+  ]
 }
