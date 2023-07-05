@@ -16,7 +16,7 @@
       "preRequestScript": "",
       "testScript": "",
       "body": {
-        "body": "{\n\t\"userId\": \"test\",\n\t\"libraryId\": \"id1234\",\n  \t\"libraryName\": \"this is the library name\",\n\t\"links\": []\n}",
+        "body": "{\n\t\"userId\": \"test\",\n\t\"libraryId\": \"id1234\",\n  \t\"libraryName\": \"this is the library name\",\n\t\"links\": [],\n  \t\"favorited\": false\n}",
         "contentType": "application/json"
       }
     },
@@ -162,6 +162,60 @@
       "body": {
         "body": "{\n  \"linkId\": \"link1\"\n}",
         "contentType": "application/json"
+      }
+    },
+    {
+      "v": "1",
+      "endpoint": "http://localhost:8000/Daniel/library/71781c37-bcef-43ff-ba1e-1c296cc0b290/favorite",
+      "name": "favorite library",
+      "params": [],
+      "headers": [],
+      "method": "PUT",
+      "auth": {
+        "authActive": true,
+        "authType": "none"
+      },
+      "preRequestScript": "",
+      "testScript": "",
+      "body": {
+        "body": "{\n\t\"userId\": \"test\",\n\t\"libraryId\": \"id1234\",\n  \t\"libraryName\": \"this is the library name\",\n\t\"links\": []\n}",
+        "contentType": "application/json"
+      }
+    },
+    {
+      "v": "1",
+      "endpoint": "http://localhost:8000/Daniel/library/71781c37-bcef-43ff-ba1e-1c296cc0b290/favorite",
+      "name": "unfavorite library",
+      "params": [],
+      "headers": [],
+      "method": "DELETE",
+      "auth": {
+        "authActive": true,
+        "authType": "none"
+      },
+      "preRequestScript": "",
+      "testScript": "",
+      "body": {
+        "body": "{\n\t\"userId\": \"test\",\n\t\"libraryId\": \"id1234\",\n  \t\"libraryName\": \"this is the library name\",\n\t\"links\": []\n}",
+        "contentType": "application/json"
+      }
+    },
+    {
+      "v": "1",
+      "endpoint": "http://localhost:8000/Daniel/libraries/favorited",
+      "name": "get all favorited libraries",
+      "params": [],
+      "headers": [],
+      "method": "GET",
+      "auth": {
+        "authType": "none",
+        "authActive": true
+      },
+      "preRequestScript": "",
+      "testScript": "",
+      "body": {
+        "contentType": null,
+        "body": null
       }
     }
   ],
