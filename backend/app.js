@@ -66,6 +66,74 @@ app.post('/:userId/library/create', (req, res) => {
   })
 })
 
+app.put('/:userId/library/:libraryId/favorite', (req, res) => {
+  const userId = req.params.userId
+  const libraryId = req.params.libraryId
+
+  fs.readFile(DB_FILE, (err, data) => {
+    if (err) {
+      console.error(err)
+      return res.status(500).send('Error reading from database')
+    }
+
+    let database = JSON.parse(data)
+    let libraryIndex = database.findIndex(
+      (lib) => lib.libraryId === libraryId && lib.userId === userId
+    )
+
+    // Check if library exists in the database
+    if (libraryIndex === -1) {
+      return res.status(404).send('Library not found')
+    }
+
+    // Set the library as favorited
+    database[libraryIndex].favorited = true
+
+    fs.writeFile(DB_FILE, JSON.stringify(database), (err) => {
+      if (err) {
+        console.error(err)
+        return res.status(500).send('Error writing to database')
+      }
+
+      res.send(`Library ${libraryId} was set as favorite`)
+    })
+  })
+})
+
+app.delete('/:userId/library/:libraryId/favorite', (req, res) => {
+  const userId = req.params.userId
+  const libraryId = req.params.libraryId
+
+  fs.readFile(DB_FILE, (err, data) => {
+    if (err) {
+      console.error(err)
+      return res.status(500).send('Error reading from database')
+    }
+
+    let database = JSON.parse(data)
+    let libraryIndex = database.findIndex(
+      (lib) => lib.libraryId === libraryId && lib.userId === userId
+    )
+
+    // Check if library exists in the database
+    if (libraryIndex === -1) {
+      return res.status(404).send('Library not found')
+    }
+
+    // Set the library as unfavorited
+    database[libraryIndex].favorited = false
+
+    fs.writeFile(DB_FILE, JSON.stringify(database), (err) => {
+      if (err) {
+        console.error(err)
+        return res.status(500).send('Error writing to database')
+      }
+
+      res.send(`Library ${libraryId} was set as not favorite`)
+    })
+  })
+})
+
 // Add links to a library
 app.post('/:userId/library/:libraryId/links/add', (req, res) => {
   // const newLinks = req.body.links
@@ -149,6 +217,22 @@ app.get('/:userId/libraries', (req, res) => {
 
     const database = JSON.parse(data)
     const filteredDatabase = database.filter((library) => library.userId === req.params.userId)
+
+    res.send(filteredDatabase)
+  })
+})
+
+app.get('/:userId/libraries/favorited', (req, res) => {
+  fs.readFile(DB_FILE, (err, data) => {
+    if (err) {
+      console.error(err)
+      return res.status(500).send('Error reading from database')
+    }
+
+    const database = JSON.parse(data)
+    const filteredDatabase = database.filter(
+      (library) => library.userId === req.params.userId && library.favorited === true
+    )
 
     res.send(filteredDatabase)
   })
