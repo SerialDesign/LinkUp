@@ -78,7 +78,8 @@ const Homescreen = ({ navigation }) => {
   const filteredLibraries = libraries.filter((library) => {
     return (
       library.libraryName.toLowerCase().includes(search.toLowerCase()) ||
-      library.libraryDesc.toLowerCase().includes(search.toLowerCase())
+      library.libraryDesc.toLowerCase().includes(search.toLowerCase()) ||
+      library.favorited
     )
   })
 
