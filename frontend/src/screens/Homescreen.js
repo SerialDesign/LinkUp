@@ -1,18 +1,10 @@
-import { NavigationContainer, useRoute, useFocusEffect } from '@react-navigation/native'
-import { React, useState, useEffect, useCallback } from 'react'
-import { Dropdown } from 'react-native-element-dropdown'
-import AntDesign from '@expo/vector-icons/AntDesign'
+import { useRoute } from '@react-navigation/native'
+import { React, useState, useEffect } from 'react'
+// import { Dropdown } from 'react-native-element-dropdown'
+// import AntDesign from '@expo/vector-icons/AntDesign'
 import { checkIfUserIdHasValue } from '../helper'
 import * as Font from 'expo-font'
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Text,
-  ScrollView,
-  Image,
-  ImageBackground
-} from 'react-native'
+import { View, StyleSheet, TouchableOpacity, Text, ScrollView, ImageBackground } from 'react-native'
 import { Button, Input, FAB, SearchBar } from '@rneui/themed'
 import Constants from 'expo-constants'
 
