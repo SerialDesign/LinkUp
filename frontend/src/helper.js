@@ -17,8 +17,8 @@ export function getRandomColor() {
     '#EFE0FF',
     '#FEE7EF',
     '#FEFFE0',
-    '#DAF7A6',
-    '#011627'
+    '#DAF7A6'
+    // '#011627'
   ]
 
   return colors[Math.floor(Math.random() * colors.length)]
