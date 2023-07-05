@@ -6,13 +6,19 @@ import Constants from 'expo-constants'
 import globalStyles from '../../assets/styles/globalStyles'
 // import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { useIsFocused } from '@react-navigation/native'
+import { SearchBar } from '@rneui/themed'
 
 const Library = ({ navigation, route }) => {
   const [library, setLibrary] = useState(null)
   const userId = route.params.userId
   const libraryId = route.params.libraryId
+  const [search, setSearch] = useState('')
 
   checkIfUserIdHasValue(userId)
+
+  const updateSearch = (search) => {
+    setSearch(search)
+  }
 
   const isFocused = useIsFocused()
 
@@ -124,26 +130,49 @@ const Library = ({ navigation, route }) => {
     }
   }
 
+  const filteredLinks = library.links.filter((link) =>
+    link.description.toLowerCase().includes(search.toLowerCase())
+  )
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{library.libraryName}</Text>
-      <Text style={styles.description}>{library.libraryDesc}</Text>
-      {/* <Text style={styles.id}>Library ID: {library.libraryId}</Text> */}
-      <TouchableOpacity
-        onPress={() => navigation.navigate('DeleteConfirmation', { userId, libraryId })}
-      >
-        <Icon name="delete" type="material" size={25} color="red" />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('ShareScreen', { userId, libraryId })}>
-        <Icon name="share" type="material" size={25} color="black" />
-      </TouchableOpacity>
+      {/* // Library info & icon section */}
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Text style={styles.title}>{library.libraryName}</Text>
+        <Text style={styles.description}>{library.libraryDesc}</Text>
+        {/* <Text style={styles.id}>Library ID: {library.libraryId}</Text> */}
+        <TouchableOpacity
+          onPress={() => navigation.navigate('DeleteConfirmation', { userId, libraryId })}
+        >
+          <Icon name="delete" type="material" size={25} color="red" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('ShareScreen', { userId, libraryId })}>
+          <Icon name="share" type="material" size={25} color="black" />
+        </TouchableOpacity>
+      </View>
+      <SearchBar
+        placeholder="Suche nach Links..."
+        onChangeText={updateSearch}
+        value={search}
+        containerStyle={{ width: '100%', backgroundColor: 'white' }}
+        inputContainerStyle={{ backgroundColor: 'white' }}
+        inputStyle={{ color: 'black' }}
+      />
+
       {/* // Links section */}
       <Text style={styles.sectionTitle}>Links:</Text>
-      {library.links.length > 0 ? (
+      {filteredLinks.length > 0 ? (
         <FlatList
-          data={library.links}
+          data={filteredLinks}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
+            // before search..
+            // {library.links.length > 0 ? (
+            //   <FlatList
+            //     data={library.links}
+            //     keyExtractor={(item, index) => index.toString()}
+            //     renderItem={({ item }) => (
+
             // Implemeent swipe to delete?
             // <Swipeable renderRightActions={(progress) => renderRightActions(item, progress)}> -->  npx expo install react-native-gesture-handler@~2.9.0
             <TouchableOpacity
@@ -164,7 +193,12 @@ const Library = ({ navigation, route }) => {
           )}
         />
       ) : (
-        <Text style={styles.noLinksText}>Diese Linksammlung enthält keine Links.</Text>
+        // before search..
+        // : (
+        //   <Text style={styles.noLinksText}>Diese Linksammlung enthält keine Links.</Text>
+        // )}
+
+        <Text style={styles.noLinksText}>Keine Links gefunden.</Text>
       )}
       <Button
         title="Link hinzufügen"
@@ -184,7 +218,8 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF'
   },
   title: {
     fontSize: 24,

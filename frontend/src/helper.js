@@ -11,14 +11,14 @@ export function checkIfUserIdHasValue(user) {
 
 export function getRandomColor() {
   const colors = [
-    '#FEFFE0',
+    '#FAFAA0',
     '#CFECFE',
     '#C0E5C6',
     '#EFE0FF',
     '#FEE7EF',
-    '#FEFFE0',
-    '#DAF7A6',
-    '#011627'
+    '#F0F3E0',
+    '#DAF7A6'
+    // '#011627' too dark..
   ]
 
   return colors[Math.floor(Math.random() * colors.length)]
