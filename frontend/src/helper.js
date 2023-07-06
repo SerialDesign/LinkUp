@@ -27,3 +27,19 @@ export function getRandomColor() {
 
 // hack for making bold text in Text component
 export const B = (props) => <Text style={{ fontWeight: 'bold' }}>{props.children}</Text>
+
+export const validateLibrary = (libraryName, libraryDesc) => {
+  const errors = []
+
+  if (libraryName.length > 23) {
+    errors.push('Der Name der Linksammlung darf nicht mehr als 23 Zeichen enthalten.')
+  }
+
+  if (libraryDesc.length > 200) {
+    errors.push('Die Beschreibung der Linksammlung darf nicht mehr als 200 Zeichen enthalten.')
+  }
+
+  const isValid = errors.length === 0
+
+  return { isValid, errors }
+}

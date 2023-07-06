@@ -66,44 +66,6 @@ app.post('/:userId/library/create', (req, res) => {
   })
 })
 
-// app.put('/:userId/library/:libraryId', (req, res) => {
-//   const { userId, libraryId } = req.params
-//   const { libraryName, libraryDesc } = req.body
-
-//   fs.readFile(DB_FILE, (err, data) => {
-//     if (err) {
-//       console.error(err)
-//       return res.status(500).send('Error reading from database')
-//     }
-
-//     let database = JSON.parse(data)
-
-//     // Find the library in the database
-//     const libraryIndex = database.findIndex(
-//       (lib) => lib.userId === userId && lib.libraryId === libraryId
-//     )
-
-//     if (libraryIndex !== -1) {
-//       // Update the library data
-//       database[libraryIndex].libraryName = libraryName
-//       database[libraryIndex].libraryDesc = libraryDesc
-
-//       // Write the updated data back to the database
-//       fs.writeFile(DB_FILE, JSON.stringify(database), (err) => {
-//         if (err) {
-//           console.error(err)
-//           return res.status(500).send('Error writing to database')
-//         }
-
-//         res.send(`Library updated with ID: ${libraryId}`)
-//       })
-//     } else {
-//       // Return a not found response if the library was not found
-//       res.status(404).send('Library not found')
-//     }
-//   })
-// })
-
 app.put('/:userId/library/:libraryId', (req, res) => {
   const { userId, libraryId } = req.params
   const { libraryName, libraryDesc } = req.body

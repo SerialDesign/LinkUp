@@ -1,4 +1,4 @@
-import { View, StyleSheet, Image } from 'react-native'
+import { View, StyleSheet, Image, Alert } from 'react-native'
 import { Button, Icon } from '@rneui/themed'
 import { Input } from '@rneui/base'
 import { useState } from 'react'
@@ -7,7 +7,7 @@ import { useRoute } from '@react-navigation/native'
 import { checkIfUserIdHasValue } from '../helper'
 import Constants from 'expo-constants'
 import globalStyles from '../../assets/styles/globalStyles'
-import { getRandomColor } from '../helper'
+import { getRandomColor, validateLibrary } from '../helper'
 import { useEffect } from 'react'
 
 export default function CreateLibrary({ navigation }) {
@@ -83,6 +83,14 @@ export default function CreateLibrary({ navigation }) {
       libraryName: libraryName,
       libraryDesc: libraryDesc,
       libraryColor: getRandomColor()
+    }
+
+    // validate the library data before calling the API
+    const { isValid, errors } = validateLibrary(libraryName, libraryDesc)
+
+    if (!isValid) {
+      const errorMessage = errors.join('\n')
+      return Alert.alert('Sorry', errorMessage)
     }
 
     // Fetch the newly created library ID
@@ -163,6 +171,14 @@ export default function CreateLibrary({ navigation }) {
         libraryName: libraryName,
         libraryDesc: libraryDesc,
         libraryColor: getRandomColor()
+      }
+
+      // validate the library data before calling the API
+      const { isValid, errors } = validateLibrary(libraryName, libraryDesc)
+
+      if (!isValid) {
+        const errorMessage = errors.join('\n')
+        return Alert.alert('Sorry', errorMessage)
       }
 
       // Here we wait for the library creation to complete before navigating back

@@ -1,4 +1,4 @@
-import { View, StyleSheet, Image } from 'react-native'
+import { View, StyleSheet, Image, Alert } from 'react-native'
 import { Button, Icon } from '@rneui/themed'
 import { Input } from '@rneui/base'
 import { useState } from 'react'
@@ -7,7 +7,7 @@ import { useRoute } from '@react-navigation/native'
 import { checkIfUserIdHasValue } from '../helper'
 import Constants from 'expo-constants'
 import globalStyles from '../../assets/styles/globalStyles'
-import { getRandomColor } from '../helper'
+import { validateLibrary } from '../helper'
 import { useEffect } from 'react'
 
 export default function EditLibrary({ navigation }) {
@@ -54,6 +54,14 @@ export default function EditLibrary({ navigation }) {
     const endpointUrl = Constants.expoConfig.extra.apiUrl + userId + '/library/' + libraryId
     console.log('Endpoint', endpointUrl)
 
+    // validate the library data before calling the API
+    const { isValid, errors } = validateLibrary(libraryName, libraryDesc)
+
+    if (!isValid) {
+      const errorMessage = errors.join('\n')
+      return Alert.alert('Sorry', errorMessage)
+    }
+
     try {
       const response = await fetch(endpointUrl, {
         method: 'PUT', // or 'PATCH' if your API supports it
@@ -70,7 +78,8 @@ export default function EditLibrary({ navigation }) {
       if (response.ok) {
         const responseBody = await response.json()
         console.log('Library updated successfully')
-        // Navigate back or show a success message
+        // Navigate back to the library screen
+        navigation.navigate('Library', { userId, libraryId })
       } else {
         console.error('Error updating library:', response.statusText)
       }
