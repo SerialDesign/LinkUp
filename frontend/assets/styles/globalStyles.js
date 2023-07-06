@@ -19,8 +19,16 @@ const globalStyles = StyleSheet.create({
     backgroundColor: '#13C66A',
     borderColor: 'transparent',
     borderWidth: 0,
-    borderRadius: 30
+    borderRadius: 10
   },
+
+  qrCodeButton: {
+    backgroundColor: '#4D13C6',
+    borderColor: 'transparent',
+    borderWidth: 0,
+    borderRadius: 10
+  },
+
   buttonCenterLayouting: {
     width: 300,
     marginHorizontal: 50,

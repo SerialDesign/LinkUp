@@ -29,7 +29,8 @@ export default function App() {
       <Stack.Navigator
         screenOptions={{
           headerStyle: {
-            backgroundColor: '#11aa11'
+            backgroundColor: '#333'
+            // backgroundColor: '#11aa11'
           },
           headerTintColor: '#fff'
         }}
@@ -66,7 +67,7 @@ export default function App() {
           name="QRCodeScanner"
           options={{
             headerStyle: {
-              backgroundColor: 'rgba(127, 11, 103, 1)'
+              backgroundColor: '#4D13C6'
             },
             title: 'QR-Code Scanner'
           }}

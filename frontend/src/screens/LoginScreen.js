@@ -4,6 +4,7 @@ import { Button, Text, Input, Image, Switch } from '@rneui/base'
 import { useNavigation } from '@react-navigation/native'
 import { useColorScheme } from 'nativewind'
 import { StatusBar } from 'expo-status-bar'
+import globalStyles from '../../assets/styles/globalStyles'
 
 export default function LoginScreen() {
   const [userId, onChangeUser] = React.useState('')
@@ -48,7 +49,7 @@ export default function LoginScreen() {
           onSubmitEditing={login}
         />
         {/* <Button onPress={() => login()}>Login</Button> */}
-        <Button buttonStyle={styles.greenButton} onPress={login}>
+        <Button buttonStyle={globalStyles.primaryButton} onPress={login}>
           Linksammlungen anzeigen
         </Button>
         {/* <Text style={{ marginTop: 100 }} className="text-2xl">

@@ -1,4 +1,4 @@
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Image } from 'react-native'
 import { Button, Icon } from '@rneui/themed'
 import { Input } from '@rneui/base'
 import { useState } from 'react'
@@ -192,34 +192,40 @@ export default function CreateLibrary({ navigation }) {
   return (
     <View>
       <View>
-        <Input
-          placeholder="Name der Bibliothek"
-          onChangeText={setLibraryName}
-          value={libraryName}
-          clearButtonMode="while-editing"
-          style={globalStyles.primaryInput}
-        />
-        <Input
-          placeholder="Beschreibung"
-          onChangeText={setLibraryDesc}
-          value={libraryDesc}
-          clearButtonMode="while-editing"
-          style={globalStyles.inputDescription}
-        />
+        <View style={styles.buttonContainer}>
+          <Input
+            placeholder="Name der Linksammlung"
+            onChangeText={setLibraryName}
+            value={libraryName}
+            clearButtonMode="while-editing"
+            style={globalStyles.primaryInput}
+          />
+          <Input
+            placeholder="Beschreibung (optional)"
+            onChangeText={setLibraryDesc}
+            value={libraryDesc}
+            clearButtonMode="while-editing"
+            style={globalStyles.inputDescription}
+          />
 
-        {/* Todo: implement Labels or delete
+          {/* Todo: implement Labels or delete
         <Input
           placeholder="#Labels"
           onChangeText={setLibraryLabels}
           clearButtonMode="while-editing"
           style={globalStyles.inputDescription}
         /> */}
-
+          <Image
+            source={require('../../assets/images/addLink_withoutShadow.png')}
+            style={styles.bookmarksIllustration}
+            resizeMode="contain"
+          />
+        </View>
         <Button
           title=""
           radius={'sm'}
           type="solid"
-          buttonStyle={{ backgroundColor: 'rgba(127, 220, 103, 1)' }}
+          buttonStyle={globalStyles.primaryButton}
           containerStyle={{ marginHorizontal: 30, marginVertical: 20 }}
           titleStyle={{
             marginHorizontal: 20,
@@ -236,7 +242,7 @@ export default function CreateLibrary({ navigation }) {
           title="QR-Code scannen"
           radius={'sm'}
           type="solid"
-          buttonStyle={{ backgroundColor: 'rgba(127, 11, 103, 1)' }}
+          buttonStyle={globalStyles.qrCodeButton}
           containerStyle={{ marginHorizontal: 30, marginVertical: 20 }}
           titleStyle={{
             marginHorizontal: 20,
@@ -248,3 +254,18 @@ export default function CreateLibrary({ navigation }) {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  buttonContainer: {
+    marginTop: 50,
+    marginHorizontal: 30,
+    marginVertical: 20
+  },
+
+  bookmarksIllustration: {
+    width: 250,
+    height: 250,
+    alignSelf: 'center',
+    marginTop: 10
+  }
+})
