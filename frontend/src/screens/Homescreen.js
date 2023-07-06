@@ -7,6 +7,7 @@ import { View, StyleSheet, TouchableOpacity, Text, ScrollView, ImageBackground }
 import { Button, Input, FAB, SearchBar } from '@rneui/themed'
 import Constants from 'expo-constants'
 import { Icon } from '@rneui/base'
+import { B } from '../helper'
 
 const Homescreen = ({ navigation }) => {
   const route = useRoute()
@@ -14,6 +15,7 @@ const Homescreen = ({ navigation }) => {
   const [value, setValue] = useState(null)
   const [libraries, setLibraries] = useState([])
   const [search, setSearch] = useState('')
+  const [showFavorited, setShowFavorited] = useState(false)
 
   const userId = route.params.userId
   checkIfUserIdHasValue(userId)
@@ -64,9 +66,10 @@ const Homescreen = ({ navigation }) => {
 
   const filteredLibraries = libraries.filter((library) => {
     return (
-      library.libraryName.toLowerCase().includes(search.toLowerCase()) ||
-      library.libraryDesc.toLowerCase().includes(search.toLowerCase()) ||
-      library.favorited
+      (!showFavorited || library.favorited) &&
+      (library.libraryName.toLowerCase().includes(search.toLowerCase()) ||
+        library.libraryDesc.toLowerCase().includes(search.toLowerCase()) ||
+        library.favorited)
     )
   })
 
@@ -109,6 +112,10 @@ const Homescreen = ({ navigation }) => {
         library.libraryId === libraryId ? { ...library, favorited } : library
       )
     )
+  }
+
+  const toggleFavoritedFilter = () => {
+    setShowFavorited(!showFavorited)
   }
 
   const favorizeLibrary = (libraryId) => {
@@ -182,27 +189,32 @@ const Homescreen = ({ navigation }) => {
 
   return (
     <ScrollView style={styles.scrollContainer}>
-      <SearchBar placeholder="Suche..." onChangeText={updateSearch} value={search} />
-      <Text style={styles.title}>Linksammlungen von {userId}</Text>
+      <SearchBar
+        placeholder="Suche..."
+        onChangeText={updateSearch}
+        value={search}
+        backgroundColor="white"
+        inputStyle={{ backgroundColor: 'white' }}
+        inputContainerStyle={{ backgroundColor: 'white' }}
+      />
       <View style={styles.buttonsContainer}>
         <Button
           title="Bibliothek hinzufügen"
           icon={{
             name: 'add-to-photos',
             type: 'material',
-            size: 25,
+            size: 18,
             color: 'white'
           }}
           iconContainerStyle={{ marginRight: 10 }}
-          titleStyle={{ fontWeight: '700' }}
-          buttonStyle={styles.libraryColor}
+          titleStyle={{ fontWeight: '700', textAlign: 'left' }}
+          buttonStyle={[styles.libraryColor, styles.buttonStyle]}
           containerStyle={styles.buttonCenterLayouting}
           onPress={() =>
             navigation.navigate('CreateLibrary', { userId, refreshLibraries: fetchLibraries })
           }
         />
         <Button
-          title="Link hinzufügen"
           icon={{
             name: 'link',
             type: 'material',
@@ -211,10 +223,27 @@ const Homescreen = ({ navigation }) => {
           }}
           iconContainerStyle={{ marginRight: 10 }}
           titleStyle={{ fontWeight: '700' }}
-          buttonStyle={styles.primaryButton}
+          buttonStyle={[styles.linkColor, styles.buttonStyle]}
           containerStyle={styles.buttonCenterLayouting}
           onPress={() => navigation.navigate('AddLink', { userId })}
-        />
+        >
+          <Text style={{ fontWeight: '700', fontSize: '18', textAlign: 'left', color: 'white' }}>
+            Link{'\n'}hinzufügen
+          </Text>
+        </Button>
+      </View>
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10 }}>
+        <Text style={styles.title}>Linksammlungen von {userId}</Text>
+        <TouchableOpacity onPress={toggleFavoritedFilter} style={styles.starButton}>
+          <View style={[styles.starContainer, showFavorited && styles.starContainerActive]}>
+            <Icon
+              name="star"
+              type="material"
+              size={30}
+              color={showFavorited ? 'yellow' : 'lightgrey'}
+            />
+          </View>
+        </TouchableOpacity>
       </View>
       <View style={styles.container}>{renderLibraryBoxes()}</View>
       <ImageBackground
@@ -222,6 +251,29 @@ const Homescreen = ({ navigation }) => {
         style={styles.bookmarksIllustration}
         resizeMode="contain"
       />
+      {filteredLibraries.length == 0 && !showFavorited && (
+        <>
+          <Text style={styles.hint}>
+            Du hast noch keine Linksammlung. {'\n'} {'\n'} Erfasse deine Erste indem du auf den
+            blauen Button '<B>Linksammlung hinzufügen</B>' klickst.
+          </Text>
+        </>
+      )}
+
+      {/* // TODO: wieder einbauen? Anzeige von Icon? */}
+      {/* {filteredLibraries.length == 0 && !showFavorited && (
+        <>
+          <Text style={styles.hint}>
+            Du hast noch keine Linksammlung, erfasse deine Erste indem du auf den blauen Button
+            Linksammlung hinzufügen klickst.
+          </Text>
+          <ImageBackground
+            source={require('../../assets/images/master_of_bookmarks.png')}
+            style={styles.bookmarksIllustration}
+            resizeMode="contain"
+          />
+        </>
+      )} */}
     </ScrollView>
   )
 }
@@ -256,7 +308,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#525F7F',
     marginTop: 30,
-    marginLeft: 20
+    marginLeft: 20,
+    marginBottom: 20
+  },
+  hint: {
+    fontSize: 18,
+    textAlign: 'center',
+    alignSelf: 'center',
+    marginTop: 30,
+    marginLeft: 20,
+    marginRight: 20
   },
   floatingButton: {
     width: 60,
@@ -279,11 +340,11 @@ const styles = StyleSheet.create({
     // borderWidth: 2,
     // borderColor: '#3A8BCB'
   },
-  primaryButton: {
+  linkColor: {
     backgroundColor: '#13C66A',
     // borderColor: '#0F9A57',
     // borderWidth: 2,
-    borderRadius: 30
+    borderRadius: 10
   },
   buttonCenterLayouting: {
     width: 200, //300
@@ -291,7 +352,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     justifyContent: 'center',
     alignSelf: 'center'
-  }
+  },
   // buttons side by side
   // buttonsContainer: {
   //   flexDirection: 'row',
@@ -299,6 +360,46 @@ const styles = StyleSheet.create({
   //   alignItems: 'center',
   //   marginVertical: 10
   // }
+  buttonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginVertical: 10,
+    paddingHorizontal: 10
+  },
+
+  buttonStyle: {
+    width: 180,
+    height: 80,
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    borderStyle: 'solid',
+    borderColor: '#000000',
+    borderWidth: 1,
+    marginLeft: 10
+  },
+  starButton: {
+    marginLeft: 10
+  },
+
+  starContainer: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'lightgrey'
+  },
+
+  starContainerActive: {
+    backgroundColor: '#FFD700',
+    borderColor: '#FFD700'
+  }
 })
 
 export default Homescreen
