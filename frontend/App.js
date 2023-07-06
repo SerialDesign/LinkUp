@@ -8,7 +8,7 @@ import AddLink from './src/screens/AddLink'
 import LoginScreen from './src/screens/LoginScreen'
 import { useState } from 'react'
 import Homescreen from './src/screens/Homescreen'
-import { NavigationContainer } from '@react-navigation/native'
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Library from './src/screens/Library'
@@ -18,13 +18,22 @@ import { TouchableOpacity, Image } from 'react-native'
 import ShareScreen from './src/screens/ShareScreen'
 import DeleteConfirmation from './src/components/DeleteConfirmation'
 import QRCodeScanner from './src/screens/QRCodeScanner'
+import EditLibrary from './src/screens/EditLibrary'
+
+const MyTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: 'white'
+  }
+}
 
 const Stack = createNativeStackNavigator()
 const BottomNavigator = createBottomTabNavigator()
 
 export default function App() {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={MyTheme}>
       {/*  // Cleanup code: check Book s. 252 */}
       <Stack.Navigator
         screenOptions={{
@@ -62,6 +71,44 @@ export default function App() {
           component={CreateLibrary}
         />
 
+        {/* Edit Library */}
+        <Stack.Screen
+          name="EditLibrary"
+          options={{
+            headerStyle: {
+              backgroundColor: '#59B9F5'
+            },
+            title: 'Linksammlungen editieren'
+          }}
+          component={EditLibrary}
+        />
+
+        {/* Library Detail Screen */}
+        <Stack.Screen
+          options={({ navigation }) => ({
+            title: '',
+            // title: 'Bibliothek', //TODO: mit {libraryId} + Back button auf Deutsch setzen?
+            headerStyle: {
+              backgroundColor: '#CFECFE'
+            },
+            headerTintColor: 'black'
+            // Todo remove if not needed
+            // headerRight: () => (
+            //   <TouchableOpacity
+            //     style={{ marginRight: 10 }}
+            //     onPress={
+            //       () => navigation.navigate('ShareScreen')
+            //       // , { libraryName: 'Library Name cannot be passed here..' }
+            //     }
+            //   >
+            //     <Image source={require('./assets/icon.png')} style={{ width: 24, height: 24 }} />
+            //   </TouchableOpacity>
+            // )
+          })}
+          name="Library"
+          component={Library}
+        />
+
         {/* QRCodeScanner */}
         <Stack.Screen
           name="QRCodeScanner"
@@ -72,30 +119,6 @@ export default function App() {
             title: 'QR-Code Scanner'
           }}
           component={QRCodeScanner}
-        />
-
-        {/* Library Detail Screen */}
-        <Stack.Screen
-          options={({ navigation }) => ({
-            title: 'Bibliothek', //TODO: mit {libraryId} + Back button auf Deutsch setzen?
-            headerStyle: {
-              backgroundColor: '#CFECFE'
-            },
-            headerTintColor: 'black',
-            headerRight: () => (
-              <TouchableOpacity
-                style={{ marginRight: 10 }}
-                onPress={
-                  () => navigation.navigate('ShareScreen')
-                  // , { libraryName: 'Library Name cannot be passed here..' }
-                }
-              >
-                <Image source={require('./assets/icon.png')} style={{ width: 24, height: 24 }} />
-              </TouchableOpacity>
-            )
-          })}
-          name="Library"
-          component={Library}
         />
 
         {/* Share Screen */}
