@@ -252,7 +252,7 @@ const Homescreen = ({ navigation }) => {
         style={styles.bookmarksIllustration}
         resizeMode="contain"
       />
-      {filteredLibraries.length == 0 && !showFavorited && (
+      {libraries.length == 0 && filteredLibraries.length == 0 && !showFavorited && (
         <>
           <Text style={styles.hint}>
             Du hast noch keine Linksammlung. {'\n'} {'\n'} Erfasse deine Erste indem du auf den
@@ -333,7 +333,7 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     alignSelf: 'center',
-    marginTop: 100
+    marginTop: 50
   },
   libraryColor: {
     backgroundColor: '#59B9F5',

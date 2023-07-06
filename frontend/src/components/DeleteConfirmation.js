@@ -50,7 +50,6 @@ const DeleteConfirmation = () => {
         style={styles.bookmarksIllustration}
       />
       <Text style={styles.successText}>Linksammlung erfolgreich gelöscht!</Text>
-      <Text style={{ alignSelf: 'center' }}>Also your Binance Account is gone now. :)</Text>
       <Button
         buttonStyle={styles.greenButton}
         onPress={() => navigation.navigate('Homescreen', { userId })}

@@ -149,7 +149,7 @@ export default function App() {
         <Stack.Screen
           name="DeleteConfirmation"
           options={{
-            title: 'No Binance anymore',
+            title: 'Löschung erfolgreich',
             headerStyle: {
               backgroundColor: 'red'
             }
