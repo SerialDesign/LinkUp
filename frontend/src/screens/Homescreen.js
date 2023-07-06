@@ -305,7 +305,8 @@ const styles = StyleSheet.create({
     color: '#000000'
   },
   title: {
-    fontSize: 25,
+    flex: 0.8,
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#525F7F',
     marginTop: 30,
@@ -370,7 +371,7 @@ const styles = StyleSheet.create({
   },
 
   buttonStyle: {
-    width: 180,
+    width: 175,
     height: 80,
     elevation: 5,
     shadowColor: '#000',
@@ -380,9 +381,10 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderColor: '#000000',
     borderWidth: 1,
-    marginLeft: 10
+    marginLeft: 12
   },
   starButton: {
+    flex: 0.2,
     marginLeft: 10
   },
 
