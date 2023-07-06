@@ -167,13 +167,28 @@ const Library = ({ navigation, route }) => {
         placeholder="Suche nach Links..."
         onChangeText={updateSearch}
         value={search}
-        containerStyle={{ width: '100%', backgroundColor: 'white' }}
-        inputContainerStyle={{ backgroundColor: 'white' }}
-        inputStyle={{ color: 'black' }}
+        containerStyle={{
+          width: '100%',
+          backgroundColor: 'white',
+          borderTopColor: 'transparent',
+          borderBottomColor: 'transparent',
+          paddingHorizontal: 0
+        }}
+        inputContainerStyle={{
+          backgroundColor: '#F5F5F5',
+          borderRadius: 8
+        }}
+        inputStyle={{
+          color: 'black'
+        }}
       />
 
       {/* // Links section */}
-      <Text style={styles.sectionTitle}>Links:</Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Text style={styles.sectionTitle}>Links:</Text>
+        <Text style={styles.linkCount}>Anzahl Links: {filteredLinks.length}</Text>
+      </View>
+
       {filteredLinks.length > 0 ? (
         <FlatList
           data={filteredLinks}
@@ -216,15 +231,16 @@ const Library = ({ navigation, route }) => {
         // : (
         //   <Text style={styles.noLinksText}>Diese Linksammlung enthält keine Links.</Text>
         // )}
-
-        <Text style={styles.noLinksText}>Keine Links gefunden.</Text>
+        <View style={{ flex: 1 }}>
+          <Text style={styles.noLinksText}>Keine Links gefunden.</Text>
+        </View>
       )}
       <Button
         title="Link hinzufügen"
         icon={globalStyles.addLinkButton}
         iconContainerStyle={{ marginRight: 10 }}
         titleStyle={{ fontWeight: '700' }}
-        buttonStyle={styles.primaryButton}
+        buttonStyle={globalStyles.primaryButton}
         containerStyle={styles.buttonCenterLayouting}
         onPress={() => navigation.navigate('AddLink', { userId, libraryId })}
       />
@@ -251,6 +267,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 10,
     alignSelf: 'stretch' // Allow this component to stretch full width
+  },
+  linkCount: {
+    backgroundColor: '#F5F5F5',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 8,
+    marginLeft: 10
   },
 
   title: {
@@ -280,13 +303,6 @@ const styles = StyleSheet.create({
   noLinksText: {
     fontSize: 16,
     fontStyle: 'italic'
-  },
-  // TODO: alle primaryButton + buttonCenterLayouting in master.css verlagern und neu verlinken auf CreateLibrary, AddLink + Library.. IMPORTANT: be carefull with width of buttonCenterLayouting, 300 on AddLink
-  primaryButton: {
-    backgroundColor: '#13C66A',
-    borderColor: 'transparent',
-    borderWidth: 0,
-    borderRadius: 30
   },
   buttonCenterLayouting: {
     width: 200,

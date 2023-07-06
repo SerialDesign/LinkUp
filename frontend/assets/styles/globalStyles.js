@@ -19,7 +19,7 @@ const globalStyles = StyleSheet.create({
     padding: 20,
     marginTop: 10
   },
-
+  // TODO: alle primaryButton + buttonCenterLayouting in master.css verlagern und neu verlinken auf CreateLibrary, AddLink + Library.. IMPORTANT: be carefull with width of buttonCenterLayouting, 300 on AddLink
   primaryButton: {
     backgroundColor: '#13C66A',
     borderColor: 'transparent',
