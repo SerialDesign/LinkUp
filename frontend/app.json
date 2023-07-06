@@ -4,9 +4,9 @@
     "slug": "LinkUp",
     "version": "1.0.0",
     "extra": {
-      // "apiUrl": "http://192.168.1.21:8000/" // home network
+      "apiUrl": "http://192.168.1.21:8000/" // home network
       // "apiUrl": "http://localhost:8000"
-      "apiUrl": "http://192.168.217.115:8000/"
+      // "apiUrl": "http://192.168.217.115:8000/"
       //"apiUrl": "http://172.20.10.2:8000/" // hotspot
     },
     "orientation": "portrait",
@@ -17,9 +17,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },

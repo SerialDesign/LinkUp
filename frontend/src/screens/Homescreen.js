@@ -103,6 +103,14 @@ const Homescreen = ({ navigation }) => {
     setSearch(search)
   }
 
+  const updateLibraryFavorited = (libraryId, favorited) => {
+    setLibraries((prevLibraries) =>
+      prevLibraries.map((library) =>
+        library.libraryId === libraryId ? { ...library, favorited } : library
+      )
+    )
+  }
+
   const favorizeLibrary = (libraryId) => {
     // call endpoint /:userId/library/:libraryId
 
@@ -166,6 +174,9 @@ const Homescreen = ({ navigation }) => {
               console.error(error)
             })
         }
+
+        // Update the library's favorited status in the state
+        updateLibraryFavorited(libraryId, !libraryIsFavorited)
       })
   }
 
