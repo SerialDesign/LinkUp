@@ -188,20 +188,26 @@ const Library = ({ navigation, route }) => {
 
             // Implemeent swipe to delete?
             // <Swipeable renderRightActions={(progress) => renderRightActions(item, progress)}> -->  npx expo install react-native-gesture-handler@~2.9.0
+
             <TouchableOpacity
-              onPress={() => handleLinkPress(item.url)}
               style={styles.linkContainer}
+              onPress={() => handleLinkPress(item.url)}
               activeOpacity={0.7}
             >
-              <Text style={styles.link}>{item.description}</Text>
-              {/* <Text style={styles.link}>({item.url})</Text> */}
-              <TouchableOpacity onPress={() => handleDeleteLink(item.linkId)}>
-                <Icon name="delete" type="material" size={20} color="red" />
+              <TouchableOpacity>
+                <Text style={styles.link}>{item.description}</Text>
+                <Text style={styles.link}>({item.url})</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => handleShare(item.url, item.description)}>
-                <Icon name="share" type="material" size={20} color="#4D13C6" />
-              </TouchableOpacity>
+              <View style={{ flexDirection: 'row' }}>
+                <TouchableOpacity onPress={() => handleDeleteLink(item.linkId)}>
+                  <Icon name="delete" type="material" size={20} color="red" />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => handleShare(item.url, item.description)}>
+                  <Icon name="share" type="material" size={20} color="#4D13C6" />
+                </TouchableOpacity>
+              </View>
             </TouchableOpacity>
+
             // </Swipeable>
           )}
         />
@@ -230,10 +236,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'flex-start', // Align children to the start instead of center
+    alignItems: 'stretch', // Stretch children to fill the width
     backgroundColor: '#FFFFFF'
   },
+  linkContainer: {
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#F5F5F5', // light grey color
+    borderRadius: 8,
+    marginBottom: 10,
+    marginTop: 10,
+    alignSelf: 'stretch' // Allow this component to stretch full width
+  },
+
   title: {
     fontSize: 24,
     fontWeight: 'bold',
@@ -254,18 +273,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 10
   },
-  linkContainer: {
-    width: '70%',
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    marginLeft: 25,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#e3e3e3',
-    borderRadius: 8,
-    marginBottom: 10
-  },
+
   link: {
     fontSize: 16
   },
