@@ -137,19 +137,32 @@ const Library = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       {/* // Library info & icon section */}
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Text style={styles.title}>{library.libraryName}</Text>
-        <Text style={styles.description}>{library.libraryDesc}</Text>
-        {/* <Text style={styles.id}>Library ID: {library.libraryId}</Text> */}
-        <TouchableOpacity
-          onPress={() => navigation.navigate('DeleteConfirmation', { userId, libraryId })}
-        >
-          <Icon name="delete" type="material" size={25} color="red" />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('ShareScreen', { userId, libraryId })}>
-          <Icon name="share" type="material" size={25} color="black" />
-        </TouchableOpacity>
+      <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+        <View style={{ width: 'auto' }}>
+          <Text style={styles.title}>{library.libraryName}</Text>
+          <Text style={styles.description}>{library.libraryDesc}</Text>
+        </View>
+        <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', marginLeft: 15 }}>
+          {/* Todo: implement delete functionality on separate screen, code below only for testing purposes (to test faster..) 
+          <TouchableOpacity
+            onPress={() => navigation.navigate('DeleteConfirmation', { userId, libraryId })}
+          >
+            <Icon name="edit" type="material" size={25} />
+          </TouchableOpacity> */}
+          <TouchableOpacity
+            onPress={() => navigation.navigate('EditLibrary', { userId, libraryId })}
+          >
+            <Icon name="edit" type="material" size={25} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ShareScreen', { userId, libraryId })}
+          >
+            <Icon name="share" type="material" size={25} color="#4D13C6" />
+          </TouchableOpacity>
+        </View>
       </View>
+
+      {/* Search */}
       <SearchBar
         placeholder="Suche nach Links..."
         onChangeText={updateSearch}
@@ -186,7 +199,7 @@ const Library = ({ navigation, route }) => {
                 <Icon name="delete" type="material" size={20} color="red" />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => handleShare(item.url, item.description)}>
-                <Icon name="share" type="material" size={20} color="blue" />
+                <Icon name="share" type="material" size={20} color="#4D13C6" />
               </TouchableOpacity>
             </TouchableOpacity>
             // </Swipeable>

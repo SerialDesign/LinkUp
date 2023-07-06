@@ -1,8 +1,8 @@
-import { ScrollView, Clipboard, SafeAreaView, Image, StyleSheet } from 'react-native'
+import { ScrollView, Clipboard, SafeAreaView, Image, StyleSheet, View } from 'react-native'
 import { Header, Text, Input } from '@rneui/themed'
 import { Dropdown } from 'react-native-element-dropdown'
 import AntDesign from '@expo/vector-icons/AntDesign'
-import { Button } from '@rneui/base'
+import { Button, Icon } from '@rneui/base'
 import React, { useEffect, useState } from 'react'
 import { Route, useRoute } from '@react-navigation/native'
 import Constants from 'expo-constants'
@@ -113,51 +113,60 @@ export default function AddLink({ navigation }) {
 
   return (
     <SafeAreaView style={{ backgroundColor: 'white', flex: 1 }}>
-      <Header placement="left" containerStyle={{ backgroundColor: '#13C66A' }} />
+      {/* <Header placement="left" containerStyle={{ backgroundColor: '#13C66A' }} /> */}
       {/* <Input placeholder="URL" ref={URLInput} /> */}
-      <Input
-        style={globalStyles.primaryInput}
-        value={URLInput}
-        onChangeText={(text) => setURLInput(text)}
-        ref={URLInputRef}
-        // onChangeText={(text) => setURLInput(text)}
-        placeholder="URL"
-      />
-      <Input
-        placeholder="Beschreibung (optional)"
-        style={globalStyles.inputDescription}
-        value={URLDesc}
-        onChangeText={(text) => setURLDesc(text)}
-      />
-      <Dropdown
-        style={styles.dropdown}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
-        inputSearchStyle={styles.inputSearchStyle}
-        iconStyle={styles.iconStyle}
-        data={
-          libraries.length > 0
-            ? libraries
-            : [{ label: 'Keine Linksammlungen gefunden', value: null }]
-        }
-        search
-        maxHeight={300}
-        labelField="label"
-        valueField="value"
-        placeholder="Linksammlung auswählen"
-        searchPlaceholder="Suche..."
-        value={libraryId}
-        onChange={(item) => {
-          setLibraryId(item.value)
-        }}
-        renderLeftIcon={() => (
-          <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
-        )}
-      />
-      <Image
+      <View style={globalStyles.inputContainer}>
+        <Input
+          style={globalStyles.primaryInput}
+          value={URLInput}
+          onChangeText={(text) => setURLInput(text)}
+          ref={URLInputRef}
+          // onChangeText={(text) => setURLInput(text)}
+          placeholder="URL"
+        />
+        <Input
+          placeholder="Beschreibung (optional)"
+          style={globalStyles.inputDescription}
+          value={URLDesc}
+          onChangeText={(text) => setURLDesc(text)}
+        />
+        <Dropdown
+          style={styles.dropdown}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={
+            libraries.length > 0
+              ? libraries
+              : [{ label: 'Keine Linksammlungen gefunden', value: null }]
+          }
+          search
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          placeholder="Linksammlung auswählen"
+          searchPlaceholder="Suche..."
+          value={libraryId}
+          onChange={(item) => {
+            setLibraryId(item.value)
+          }}
+          renderLeftIcon={() => (
+            <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
+          )}
+        />
+      </View>
+      {/* <Image
         source={require('../../assets/images/addLink_withoutShadow.png')}
         style={styles.bookmarksIllustration}
         resizeMode="contain"
+      /> */}
+      <Icon
+        name="link"
+        type="font-awesome"
+        size={100}
+        color="#13C66A"
+        style={{ marginTop: 50, marginBottom: 50 }}
       />
       <Button
         iconContainerStyle={{ marginRight: 10 }}

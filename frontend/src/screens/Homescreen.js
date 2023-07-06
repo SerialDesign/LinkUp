@@ -199,7 +199,8 @@ const Homescreen = ({ navigation }) => {
       />
       <View style={styles.buttonsContainer}>
         <Button
-          title="Bibliothek hinzufügen"
+          // title="Bibliothek hinzufügen"
+          title="Linksammlung hinzufügen"
           icon={{
             name: 'add-to-photos',
             type: 'material',

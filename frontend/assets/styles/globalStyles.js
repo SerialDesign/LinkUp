@@ -1,6 +1,11 @@
 import { StyleSheet } from 'react-native'
 
 const globalStyles = StyleSheet.create({
+  inputContainer: {
+    marginTop: 50,
+    marginHorizontal: 30,
+    marginVertical: 20
+  },
   primaryInput: {
     borderWidth: 1,
     borderColor: 'gray',
@@ -24,6 +29,13 @@ const globalStyles = StyleSheet.create({
 
   qrCodeButton: {
     backgroundColor: '#4D13C6',
+    borderColor: 'transparent',
+    borderWidth: 0,
+    borderRadius: 10
+  },
+
+  deleteButton: {
+    backgroundColor: '#FF0000',
     borderColor: 'transparent',
     borderWidth: 0,
     borderRadius: 10

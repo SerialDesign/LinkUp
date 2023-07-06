@@ -66,6 +66,83 @@ app.post('/:userId/library/create', (req, res) => {
   })
 })
 
+// app.put('/:userId/library/:libraryId', (req, res) => {
+//   const { userId, libraryId } = req.params
+//   const { libraryName, libraryDesc } = req.body
+
+//   fs.readFile(DB_FILE, (err, data) => {
+//     if (err) {
+//       console.error(err)
+//       return res.status(500).send('Error reading from database')
+//     }
+
+//     let database = JSON.parse(data)
+
+//     // Find the library in the database
+//     const libraryIndex = database.findIndex(
+//       (lib) => lib.userId === userId && lib.libraryId === libraryId
+//     )
+
+//     if (libraryIndex !== -1) {
+//       // Update the library data
+//       database[libraryIndex].libraryName = libraryName
+//       database[libraryIndex].libraryDesc = libraryDesc
+
+//       // Write the updated data back to the database
+//       fs.writeFile(DB_FILE, JSON.stringify(database), (err) => {
+//         if (err) {
+//           console.error(err)
+//           return res.status(500).send('Error writing to database')
+//         }
+
+//         res.send(`Library updated with ID: ${libraryId}`)
+//       })
+//     } else {
+//       // Return a not found response if the library was not found
+//       res.status(404).send('Library not found')
+//     }
+//   })
+// })
+
+app.put('/:userId/library/:libraryId', (req, res) => {
+  const { userId, libraryId } = req.params
+  const { libraryName, libraryDesc } = req.body
+
+  fs.readFile(DB_FILE, (err, data) => {
+    if (err) {
+      console.error(err)
+      return res.status(500).send('Error reading from database')
+    }
+
+    let database = JSON.parse(data)
+
+    // Find the library in the database
+    const libraryIndex = database.findIndex(
+      (lib) => lib.userId === userId && lib.libraryId === libraryId
+    )
+
+    if (libraryIndex !== -1) {
+      // Update the library data
+      database[libraryIndex].libraryName = libraryName
+      database[libraryIndex].libraryDesc = libraryDesc
+
+      // Write the updated data back to the database
+      fs.writeFile(DB_FILE, JSON.stringify(database), (err) => {
+        if (err) {
+          console.error(err)
+          return res.status(500).send('Error writing to database')
+        }
+
+        // Return the updated library data as JSON
+        res.json(database[libraryIndex])
+      })
+    } else {
+      // Return a not found response if the library was not found
+      res.status(404).send('Library not found')
+    }
+  })
+})
+
 app.put('/:userId/library/:libraryId/favorite', (req, res) => {
   const userId = req.params.userId
   const libraryId = req.params.libraryId
@@ -259,6 +336,9 @@ app.get('/:userId/library/:libraryId/links', (req, res) => {
   })
 })
 
+/// ------------------ NOT IN USE YET ------------------
+// Todo: get all favorite links in a library
+// Get all favorited links in a library (NOT IN USE YET)
 app.get('/:userId/library/:libraryId/links/favorited', (req, res) => {
   fs.readFile(DB_FILE, (err, data) => {
     if (err) {
@@ -282,6 +362,8 @@ app.get('/:userId/library/:libraryId/links/favorited', (req, res) => {
   })
 })
 
+// Todo: favorite a link
+// Favorite a link (NOT IN USE YET)
 app.put('/:userId/library/:libraryId/link/:linkId/favorite', (req, res) => {
   const userId = req.params.userId
   const libraryId = req.params.libraryId
@@ -324,6 +406,8 @@ app.put('/:userId/library/:libraryId/link/:linkId/favorite', (req, res) => {
   })
 })
 
+// Todo: search libraries over backend (at the moment only frontend)
+// search libraries
 app.get('/:userId/libraries/search', (req, res) => {
   const query = req.query.query.toLowerCase()
 
@@ -347,6 +431,7 @@ app.get('/:userId/libraries/search', (req, res) => {
     res.send(filteredDatabase)
   })
 })
+/// ------------------ NOT IN USE YET ------------------
 
 // Health check endpoint
 app.get('/health', (_req, res) => {

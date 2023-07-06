@@ -192,7 +192,7 @@ export default function CreateLibrary({ navigation }) {
   return (
     <View>
       <View>
-        <View style={styles.buttonContainer}>
+        <View style={globalStyles.inputContainer}>
           <Input
             placeholder="Name der Linksammlung"
             onChangeText={setLibraryName}
@@ -215,12 +215,12 @@ export default function CreateLibrary({ navigation }) {
           clearButtonMode="while-editing"
           style={globalStyles.inputDescription}
         /> */}
-          <Image
-            source={require('../../assets/images/addLink_withoutShadow.png')}
-            style={styles.bookmarksIllustration}
-            resizeMode="contain"
-          />
         </View>
+        <Image
+          source={require('../../assets/images/addLink_withoutShadow.png')}
+          style={styles.bookmarksIllustration}
+          resizeMode="contain"
+        />
         <Button
           title=""
           radius={'sm'}
@@ -256,7 +256,7 @@ export default function CreateLibrary({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  buttonContainer: {
+  inputContainer: {
     marginTop: 50,
     marginHorizontal: 30,
     marginVertical: 20
