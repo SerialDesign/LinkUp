@@ -138,11 +138,11 @@ const Library = ({ navigation, route }) => {
     <View style={styles.container}>
       {/* // Library info & icon section */}
       <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-        <View style={{ width: 'auto' }}>
+        <View style={{ flex: 0.85 }}>
           <Text style={styles.title}>{library.libraryName}</Text>
           <Text style={styles.description}>{library.libraryDesc}</Text>
         </View>
-        <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', marginLeft: 15 }}>
+        <View style={{ flex: 0.15, flexDirection: 'row', alignItems: 'center', marginLeft: 15 }}>
           {/* Todo: implement delete functionality on separate screen, code below only for testing purposes (to test faster..) 
           <TouchableOpacity
             onPress={() => navigation.navigate('DeleteConfirmation', { userId, libraryId })}

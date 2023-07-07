@@ -24,7 +24,7 @@ export default function QRCodeScanner({ navigation }) {
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true)
-    alert(`Barcode vom Typ ${type} und Daten [${data}] wurden gescannt!`)
+    // alert(`Barcode vom Typ ${type} und Daten [${data}] wurden gescannt!`)
     // navigate to create library screen and pass data to import library
     navigation.navigate('CreateLibrary', { data, userId })
   }

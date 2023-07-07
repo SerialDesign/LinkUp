@@ -232,7 +232,7 @@ const Homescreen = ({ navigation }) => {
           containerStyle={styles.buttonCenterLayouting}
           onPress={() => navigation.navigate('AddLink', { userId })}
         >
-          <Text style={{ fontWeight: '700', fontSize: '18', textAlign: 'left', color: 'white' }}>
+          <Text style={{ fontWeight: '700', fontSize: 18, textAlign: 'left', color: 'white' }}>
             Link{'\n'}hinzufügen
           </Text>
         </Button>
@@ -430,7 +430,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: 'lightgrey'
+    borderColor: 'lightgrey',
+    fontSize: 18
   },
 
   starContainerActive: {
