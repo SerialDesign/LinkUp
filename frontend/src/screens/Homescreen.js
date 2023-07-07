@@ -87,9 +87,13 @@ const Homescreen = ({ navigation }) => {
         <Text style={styles.collectionDesc}>{library.libraryDesc}</Text>
         <TouchableOpacity onPress={() => favorizeLibrary(library.libraryId)}>
           {library.favorited ? (
-            <Icon name="star" type="material" size={20} color="yellow" />
+            <View style={[styles.starIconContainer, styles.starContainerActive]}>
+              <Icon name="star" type="material" size={20} color="yellow" />
+            </View>
           ) : (
-            <Icon name="star" type="material" size={20} color="grey" />
+            <View style={styles.starIconContainer}>
+              <Icon name="star" type="material" size={20} color="grey" />
+            </View>
           )}
         </TouchableOpacity>
       </TouchableOpacity>
@@ -394,6 +398,18 @@ const styles = StyleSheet.create({
     borderColor: '#000000',
     borderWidth: 1,
     marginLeft: 12
+  },
+
+  starIconContainer: {
+    width: 30,
+    height: 30,
+    borderRadius: 20,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'lightgrey',
+    marginLeft: 130
   },
 
   starIcon: {
