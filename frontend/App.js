@@ -46,7 +46,7 @@ export default function App() {
         // initialRouteName="FooterNav"
       >
         {/* Todo: try to bring FooterNav to Homescreen / delete here later.. maybe initialRouteName needed */}
-        <Stack.Screen name="FooterNav" options={{ title: 'Login' }} component={FooterNav} />
+        {/* <Stack.Screen name="FooterNav" options={{ title: 'Login' }} component={FooterNav} /> */}
 
         <Stack.Screen name="Login" options={{ title: 'Login' }} component={LoginScreen} />
         {/* name = Aufruf in LoginScreen, nun abgeändert in Homescreen und mit options Title vergeben, damit code einheitlich in English

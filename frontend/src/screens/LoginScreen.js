@@ -43,7 +43,7 @@ export default function LoginScreen() {
           style={styles.input}
           onChangeText={onChangeUser}
           value={userId === '' ? null : userId}
-          placeholder="username"
+          placeholder="Benutzername"
           focused={true}
           ref={loginLibRef}
           onSubmitEditing={login}

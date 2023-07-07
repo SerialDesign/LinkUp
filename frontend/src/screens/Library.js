@@ -215,7 +215,7 @@ const Library = ({ navigation, route }) => {
               </TouchableOpacity>
               <View style={{ flexDirection: 'row' }}>
                 <TouchableOpacity onPress={() => handleDeleteLink(item.linkId)}>
-                  <Icon name="delete" type="material" size={20} color="red" />
+                  <Icon name="delete" type="material" size={20} color="#bb0000" />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => handleShare(item.url, item.description)}>
                   <Icon name="share" type="material" size={20} color="#4D13C6" />

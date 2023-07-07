@@ -292,9 +292,11 @@ const styles = StyleSheet.create({
   collectionBox: {
     width: 300,
     height: 150,
+    borderColor: '#eee',
+    borderWidth: 1,
     borderRadius: 10,
     justifyContent: 'center',
-    alignItems: 'center',
+    // alignItems: 'center',
     margin: 10,
     elevation: 5
   },
@@ -302,7 +304,17 @@ const styles = StyleSheet.create({
     fontFamily: 'Rubik-Black',
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#000000'
+    color: '#000000',
+    textAlign: 'left',
+    marginLeft: 20,
+    marginBottom: 10
+  },
+  collectionDesc: {
+    textAlign: 'left',
+    marginLeft: 20,
+    marginRight: 20,
+    marginBottom: 10,
+    color: '#525F7F'
   },
   title: {
     flex: 0.8,
@@ -383,6 +395,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginLeft: 12
   },
+
+  starIcon: {
+    borderWidth: 1,
+    borderColor: 'lightgrey'
+  },
+
   starButton: {
     flex: 0.2,
     marginLeft: 10
