@@ -1,4 +1,4 @@
-import { View, StyleSheet, Image, Alert } from 'react-native'
+import { View, StyleSheet, Image, Alert, ScrollView } from 'react-native'
 import { Button, Icon } from '@rneui/themed'
 import { Input } from '@rneui/base'
 import { useState } from 'react'
@@ -89,7 +89,7 @@ export default function EditLibrary({ navigation }) {
   }
 
   return (
-    <View>
+    <ScrollView>
       <View>
         <View style={globalStyles.inputContainer}>
           <Input
@@ -150,7 +150,7 @@ export default function EditLibrary({ navigation }) {
           onPress={() => navigation.navigate('DeleteConfirmation', { userId, libraryId })}
         ></Button>
       </View>
-    </View>
+    </ScrollView>
   )
 }
 

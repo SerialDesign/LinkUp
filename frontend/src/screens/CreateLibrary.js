@@ -1,4 +1,4 @@
-import { View, StyleSheet, Image, Alert } from 'react-native'
+import { View, StyleSheet, Image, Alert, ScrollView } from 'react-native'
 import { Button, Icon } from '@rneui/themed'
 import { Input } from '@rneui/base'
 import { useState } from 'react'
@@ -206,7 +206,7 @@ export default function CreateLibrary({ navigation }) {
   }
 
   return (
-    <View>
+    <ScrollView>
       <View>
         <View style={globalStyles.inputContainer}>
           <Input
@@ -267,7 +267,7 @@ export default function CreateLibrary({ navigation }) {
           onPress={() => navigation.navigate('QRCodeScanner', { userId })}
         ></Button>
       </View>
-    </View>
+    </ScrollView>
   )
 }
 
