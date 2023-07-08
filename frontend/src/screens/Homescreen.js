@@ -64,14 +64,33 @@ const Homescreen = ({ navigation }) => {
     return <Text>Loading...</Text>
   }
 
-  const filteredLibraries = libraries.filter((library) => {
-    return (
-      (!showFavorited || library.favorited) &&
-      (library.libraryName.toLowerCase().includes(search.toLowerCase()) ||
-        library.libraryDesc.toLowerCase().includes(search.toLowerCase()) ||
-        library.favorited)
-    )
-  })
+  const filteredLibraries = libraries
+    .filter((library) => {
+      const matchesSearchTerm =
+        library.libraryName.toLowerCase().includes(search.toLowerCase()) ||
+        library.libraryDesc.toLowerCase().includes(search.toLowerCase())
+
+      const isFavorited = library.favorited
+
+      if (showFavorited) {
+        return isFavorited
+      } else {
+        return matchesSearchTerm
+      }
+    })
+    // Sort libraries alphabetically by libraryName
+    .sort((a, b) => {
+      // case-insensitive string comparison
+      const nameA = a.libraryName.toLowerCase()
+      const nameB = b.libraryName.toLowerCase()
+      if (nameA < nameB) {
+        return -1
+      }
+      if (nameA > nameB) {
+        return 1
+      }
+      return 0 // names must be equal
+    })
 
   const renderLibraryBoxes = () => {
     return filteredLibraries.map((library, index) => (
