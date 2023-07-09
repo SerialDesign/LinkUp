@@ -30,3 +30,9 @@
 - Find out your local IP address (e.g. via `ifconfig | grep "inet " | grep -v 127.0.0.1` on macOS)
 - Overwrite the [`app.json`](./frontend/app.json) file with your IP address from the previous step
 - Start the app via `bash ./scripts/start-app.sh -i`
+
+## Testing
+
+1. be in the backend folder of the project
+2. run `npm test` or `npm run test`
+3. the tests should run and pass - you see the results in the terminal

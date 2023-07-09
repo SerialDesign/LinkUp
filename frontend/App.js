@@ -125,9 +125,9 @@ export default function App() {
         <Stack.Screen
           name="ShareScreen"
           options={{
-            title: 'Teilen',
+            title: 'Linksammlung teilen',
             headerStyle: {
-              backgroundColor: '#0094EF'
+              backgroundColor: '#4D13C6'
             }
           }}
           component={ShareScreen}
