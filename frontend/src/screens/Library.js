@@ -1,4 +1,13 @@
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Linking, Share } from 'react-native'
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  Linking,
+  Share,
+  Modal
+} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { checkIfUserIdHasValue } from '../helper'
 import { Button, Icon } from '@rneui/themed'
@@ -7,12 +16,16 @@ import globalStyles from '../../assets/styles/globalStyles'
 // import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { useIsFocused } from '@react-navigation/native'
 import { SearchBar } from '@rneui/themed'
+import { B } from '../helper'
 
 const Library = ({ navigation, route }) => {
   const [library, setLibrary] = useState(null)
   const userId = route.params.userId
   const libraryId = route.params.libraryId
   const [search, setSearch] = useState('')
+  // modal for delete confirmation
+  const [isModalVisible, setModalVisible] = useState(false)
+  const [selectedLink, setSelectedLink] = useState({ linkId: null, url: '', description: '' })
 
   checkIfUserIdHasValue(userId)
 
@@ -72,11 +85,22 @@ const Library = ({ navigation, route }) => {
     )
   }
 
-  const handleLinkPress = (link) => {
-    Linking.openURL(link)
+  const handleLinkPress = async (link) => {
+    const supported = await Linking.canOpenURL(link)
+
+    if (supported) {
+      Linking.openURL(link)
+    } else {
+      console.log(`Don't know how to open this URL: ${link}`)
+    }
   }
 
-  const handleDeleteLink = (linkId) => {
+  const handleDeleteLink = (link) => {
+    setSelectedLink({ linkId: link.linkId, url: link.url, description: link.description })
+    setModalVisible(true)
+  }
+
+  const confirmDeleteLink = (linkId) => {
     console.log('Deleting link:', linkId)
 
     // const endpointUrl = `http://localhost:8000/${userId}/library/${library.libraryId}/links/delete`
@@ -90,18 +114,12 @@ const Library = ({ navigation, route }) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        linkId: linkId
+        linkId: selectedLink.linkId
       })
     })
       .then(() => {
-        // Remove the link from the library.links array
-        const updatedLinks = library.links.filter((link) => link.linkId !== linkId)
-
-        // Update the state with the new links array
-        setLibrary({
-          ...library,
-          links: updatedLinks
-        })
+        setModalVisible(false)
+        getAllLinksOfLibrary() // Refresh the list here
       })
       .catch((error) => {
         console.error(error)
@@ -167,20 +185,9 @@ const Library = ({ navigation, route }) => {
         placeholder="Suche nach Links..."
         onChangeText={updateSearch}
         value={search}
-        containerStyle={{
-          width: '100%',
-          backgroundColor: 'white',
-          borderTopColor: 'transparent',
-          borderBottomColor: 'transparent',
-          paddingHorizontal: 0
-        }}
-        inputContainerStyle={{
-          backgroundColor: '#F5F5F5',
-          borderRadius: 8
-        }}
-        inputStyle={{
-          color: 'black'
-        }}
+        containerStyle={styles.searchBarContainer}
+        inputContainerStyle={styles.searchBarInputContainer}
+        inputStyle={styles.searchBarInput}
       />
 
       {/* // Links section */}
@@ -210,15 +217,23 @@ const Library = ({ navigation, route }) => {
               activeOpacity={0.7}
             >
               <TouchableOpacity>
-                <Text style={styles.link}>{item.description}</Text>
-                <Text style={styles.link}>({item.url})</Text>
+                <B>
+                  <Text style={styles.link}>{item.description}</Text>
+                </B>
+                <Text style={styles.link}>{item.url}</Text>
               </TouchableOpacity>
               <View style={{ flexDirection: 'row' }}>
-                <TouchableOpacity onPress={() => handleDeleteLink(item.linkId)}>
-                  <Icon name="delete" type="material" size={20} color="#bb0000" />
+                <TouchableOpacity onPress={() => handleDeleteLink(item)}>
+                  <Icon name="delete" type="material" size={25} color="#bb0000" />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => handleShare(item.url, item.description)}>
-                  <Icon name="share" type="material" size={20} color="#4D13C6" />
+                  <Icon
+                    name="share"
+                    type="material"
+                    size={25}
+                    color="#4D13C6"
+                    style={styles.iconButton}
+                  />
                 </TouchableOpacity>
               </View>
             </TouchableOpacity>
@@ -244,6 +259,37 @@ const Library = ({ navigation, route }) => {
         containerStyle={styles.buttonCenterLayouting}
         onPress={() => navigation.navigate('AddLink', { userId, libraryId })}
       />
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isModalVisible}
+        onRequestClose={() => {
+          setModalVisible(!isModalVisible)
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>
+              Bist du sicher, dass du den Link <B>{selectedLink?.description}</B> (
+              {selectedLink?.url}) löschen willst?
+            </Text>
+            <View style={styles.modalButtonContainer}>
+              <Button
+                onPress={confirmDeleteLink}
+                title="Ja, Link löschen"
+                color="#bb0000"
+                style={styles.modalButton}
+              />
+              <Button
+                onPress={() => setModalVisible(!isModalVisible)}
+                title="Abbrechen"
+                color="#000"
+                style={styles.modalButton}
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   )
 }
@@ -286,10 +332,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'left'
   },
-  id: {
-    fontSize: 16,
-    marginBottom: 10
-  },
   sectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
@@ -297,8 +339,23 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
 
+  searchBarContainer: {
+    width: '100%',
+    backgroundColor: 'white',
+    borderTopColor: 'transparent',
+    borderBottomColor: 'transparent',
+    paddingHorizontal: 0
+  },
+  searchBarInputContainer: {
+    backgroundColor: '#F5F5F5',
+    borderRadius: 8
+  },
+  searchBarInput: {
+    color: 'black'
+  },
   link: {
-    fontSize: 16
+    fontSize: 16,
+    marginTop: 5
   },
   noLinksText: {
     fontSize: 16,
@@ -310,6 +367,44 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     justifyContent: 'center',
     alignSelf: 'center'
+  },
+  iconButton: {
+    marginLeft: 10
+  },
+
+  // modal styles
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center'
+  },
+  modalButtonContainer: {
+    flexDirection: 'row',
+    height: 70
+  },
+  modalButton: {
+    flex: 1,
+    margin: 10
   }
 })
 
