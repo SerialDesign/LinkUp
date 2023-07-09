@@ -41,6 +41,13 @@ const globalStyles = StyleSheet.create({
     borderRadius: 10
   },
 
+  cancelButton: {
+    backgroundColor: '#000',
+    borderColor: 'transparent',
+    borderWidth: 0,
+    borderRadius: 10
+  },
+
   buttonCenterLayouting: {
     width: 300,
     marginHorizontal: 50,

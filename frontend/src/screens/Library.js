@@ -278,14 +278,16 @@ const Library = ({ navigation, route }) => {
             <View style={styles.modalButtonContainer}>
               <Button
                 onPress={confirmDeleteLink}
-                title="Ja, Link löschen"
+                title="Link löschen"
                 color="#bb0000"
+                buttonStyle={globalStyles.deleteButton}
                 style={styles.modalButton}
               />
               <Button
                 onPress={() => setModalVisible(!isModalVisible)}
                 title="Abbrechen"
                 color="#000"
+                buttonStyle={globalStyles.cancelButton}
                 style={styles.modalButton}
               />
             </View>
@@ -400,6 +402,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: 'center'
   },
+
   modalButtonContainer: {
     flexDirection: 'row',
     height: 70
