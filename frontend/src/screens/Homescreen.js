@@ -102,19 +102,21 @@ const Homescreen = ({ navigation }) => {
         ]}
         onPress={() => handleCollectionPress(library.libraryId)}
       >
-        <Text style={styles.collectionTitle}>{library.libraryName}</Text>
+        <View style={styles.collectionHeaderContainer}>
+          <Text style={styles.collectionTitle}>{library.libraryName}</Text>
+          <TouchableOpacity onPress={() => favorizeLibrary(library.libraryId)}>
+            {library.favorited ? (
+              <View style={[styles.starIconContainer, styles.starContainerActive]}>
+                <Icon name="star" type="material" size={20} color="yellow" />
+              </View>
+            ) : (
+              <View style={styles.starIconContainer}>
+                <Icon name="star" type="material" size={20} color="grey" />
+              </View>
+            )}
+          </TouchableOpacity>
+        </View>
         <Text style={styles.collectionDesc}>{library.libraryDesc}</Text>
-        <TouchableOpacity onPress={() => favorizeLibrary(library.libraryId)}>
-          {library.favorited ? (
-            <View style={[styles.starIconContainer, styles.starContainerActive]}>
-              <Icon name="star" type="material" size={20} color="yellow" />
-            </View>
-          ) : (
-            <View style={styles.starIconContainer}>
-              <Icon name="star" type="material" size={20} color="grey" />
-            </View>
-          )}
-        </TouchableOpacity>
       </TouchableOpacity>
     ))
   }
@@ -223,7 +225,7 @@ const Homescreen = ({ navigation }) => {
       <View style={styles.buttonsContainer}>
         <Button
           // title="Bibliothek hinzufügen"
-          title="Linksammlung hinzufügen"
+          title="Linksammlung erstellen"
           icon={{
             name: 'add-to-photos',
             type: 'material',
@@ -313,6 +315,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF'
   },
   collectionBox: {
+    position: 'relative',
     width: 300,
     height: 150,
     borderColor: '#eee',
@@ -323,7 +326,13 @@ const styles = StyleSheet.create({
     margin: 10,
     elevation: 5
   },
+  collectionHeaderContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center' // Aligns items vertically in the center
+  },
   collectionTitle: {
+    flex: 0.8,
     fontFamily: 'Rubik-Black',
     fontSize: 18,
     fontWeight: 'bold',
@@ -344,7 +353,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: '#525F7F',
-    marginTop: 30,
+    marginTop: 20,
     marginLeft: 20,
     marginBottom: 20
   },
@@ -373,14 +382,15 @@ const styles = StyleSheet.create({
   },
   libraryColor: {
     backgroundColor: '#59B9F5',
-    borderRadius: 10
-    // borderWidth: 2,
-    // borderColor: '#3A8BCB'
+    borderRadius: 10,
+    borderWidth: 2,
+    // borderColor: '#00ffff'
+    borderColor: '#3A8BCB'
   },
   linkColor: {
     backgroundColor: '#13C66A',
-    // borderColor: '#0F9A57',
-    // borderWidth: 2,
+    borderColor: '#00a45f',
+    borderWidth: 2,
     borderRadius: 10
   },
   buttonCenterLayouting: {
@@ -409,17 +419,14 @@ const styles = StyleSheet.create({
     width: 175,
     height: 80,
     elevation: 5,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    borderStyle: 'solid',
-    borderColor: '#000000',
+    // borderStyle: 'solid',
+    // borderColor: '#000000',
     borderWidth: 1,
     marginLeft: 12
   },
 
   starIconContainer: {
+    justifyContent: 'flex-end',
     width: 30,
     height: 30,
     borderRadius: 20,
@@ -428,7 +435,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderColor: 'lightgrey',
-    marginLeft: 130
+    marginRight: 25,
+    marginBottom: 10
   },
 
   starIcon: {
