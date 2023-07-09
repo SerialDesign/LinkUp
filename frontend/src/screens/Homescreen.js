@@ -92,6 +92,9 @@ const Homescreen = ({ navigation }) => {
       return 0 // names must be equal
     })
 
+  // hasFavourited is needed to check if there are any favorited libraries --> if yes, show the star icon Button
+  const hasFavorited = filteredLibraries.some((library) => library.favorited)
+
   const renderLibraryBoxes = () => {
     return filteredLibraries.map((library, index) => (
       <TouchableOpacity
@@ -222,54 +225,58 @@ const Homescreen = ({ navigation }) => {
         inputStyle={{ backgroundColor: 'white' }}
         inputContainerStyle={{ backgroundColor: 'white' }}
       />
-      <View style={styles.buttonsContainer}>
-        <Button
-          // title="Bibliothek hinzufügen"
-          title="Linksammlung erstellen"
-          icon={{
-            name: 'add-to-photos',
-            type: 'material',
-            size: 18,
-            color: 'white'
-          }}
-          iconContainerStyle={{ marginRight: 10 }}
-          titleStyle={{ fontWeight: '700', textAlign: 'left' }}
-          buttonStyle={[styles.libraryColor, styles.buttonStyle]}
-          containerStyle={styles.buttonCenterLayouting}
-          onPress={() =>
-            navigation.navigate('CreateLibrary', { userId, refreshLibraries: fetchLibraries })
-          }
-        />
-        <Button
-          icon={{
-            name: 'link',
-            type: 'material',
-            size: 25,
-            color: 'white'
-          }}
-          iconContainerStyle={{ marginRight: 10 }}
-          titleStyle={{ fontWeight: '700' }}
-          buttonStyle={[styles.linkColor, styles.buttonStyle]}
-          containerStyle={styles.buttonCenterLayouting}
-          onPress={() => navigation.navigate('AddLink', { userId })}
-        >
-          <Text style={{ fontWeight: '700', fontSize: 18, textAlign: 'left', color: 'white' }}>
-            Link{'\n'}hinzufügen
-          </Text>
-        </Button>
-      </View>
+      {search.length <= 0 && (
+        <View style={styles.buttonsContainer}>
+          <Button
+            title="Linksammlung erstellen"
+            icon={{
+              name: 'add-to-photos',
+              type: 'material',
+              size: 18,
+              color: 'white'
+            }}
+            iconContainerStyle={{ marginRight: 10 }}
+            titleStyle={{ fontWeight: '700', textAlign: 'left' }}
+            buttonStyle={[styles.libraryColor, styles.buttonStyle]}
+            containerStyle={styles.buttonCenterLayouting}
+            onPress={() =>
+              navigation.navigate('CreateLibrary', { userId, refreshLibraries: fetchLibraries })
+            }
+          />
+          <Button
+            icon={{
+              name: 'link',
+              type: 'material',
+              size: 25,
+              color: 'white'
+            }}
+            iconContainerStyle={{ marginRight: 10 }}
+            titleStyle={{ fontWeight: '700' }}
+            buttonStyle={[styles.linkColor, styles.buttonStyle]}
+            containerStyle={styles.buttonCenterLayouting}
+            onPress={() => navigation.navigate('AddLink', { userId })}
+          >
+            <Text style={{ fontWeight: '700', fontSize: 18, textAlign: 'left', color: 'white' }}>
+              Link{'\n'}hinzufügen
+            </Text>
+          </Button>
+        </View>
+      )}
       <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10 }}>
         <Text style={styles.title}>Linksammlungen von {userId}</Text>
-        <TouchableOpacity onPress={toggleFavoritedFilter} style={styles.starButton}>
-          <View style={[styles.starContainer, showFavorited && styles.starContainerActive]}>
-            <Icon
-              name="star"
-              type="material"
-              size={30}
-              color={showFavorited ? 'yellow' : 'lightgrey'}
-            />
-          </View>
-        </TouchableOpacity>
+        {/* // Faviorite starButton only visible if there are any favorited libraries */}
+        {hasFavorited && (
+          <TouchableOpacity onPress={toggleFavoritedFilter} style={styles.starButton}>
+            <View style={[styles.starContainer, showFavorited && styles.starContainerActive]}>
+              <Icon
+                name="star"
+                type="material"
+                size={30}
+                color={showFavorited ? 'yellow' : 'lightgrey'}
+              />
+            </View>
+          </TouchableOpacity>
+        )}
       </View>
       <View style={styles.container}>{renderLibraryBoxes()}</View>
       <ImageBackground
