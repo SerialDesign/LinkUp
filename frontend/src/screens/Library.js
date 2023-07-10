@@ -148,11 +148,13 @@ const Library = ({ navigation, route }) => {
     }
   }
 
-  const filteredLinks = library.links.filter(
-    (link) =>
-      link.description.toLowerCase().includes(search.toLowerCase()) ||
-      link.url.toLowerCase().includes(search.toLowerCase())
-  )
+  const filteredLinks = library.links
+    .filter(
+      (link) =>
+        link.description.toLowerCase().includes(search.toLowerCase()) ||
+        link.url.toLowerCase().includes(search.toLowerCase())
+    )
+    .sort((a, b) => a.description.localeCompare(b.description))
 
   return (
     <View style={styles.container}>
