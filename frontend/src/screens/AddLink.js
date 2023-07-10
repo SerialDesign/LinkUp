@@ -49,39 +49,59 @@ export default function AddLink({ navigation }) {
       return
     }
 
-    //  old validation
-    // if (!validator.isURL(URLInput)) {
-    //   Alert.alert('Sorry!', 'Bitte eine gültige URL eingeben')
-    //   return
-    // }
-
-    console.log('Saving link to Library ')
-    // const endpointUrl = 'http://localhost:8000/library/8a4a10c8-6feb-42fb-b432-a24486475496/links/add'
-    // const endpointUrl = 'http://localhost:8000/' + userId + '/library/' + libraryId + '/links/add'
-    const endpointUrl =
-      Constants.expoConfig.extra.apiUrl + userId + '/library/' + libraryId + '/links/add'
-
-    console.log('🚀 ~ file: AddLink.js:109 ~ saveLinkToLibrary ~ endpointUrl:', endpointUrl)
-    //http://localhost:8000/userId/library/id1234/links/add"
-
-    const payload = {
-      links: [
-        {
-          url: URLInput,
-          description: URLDesc || URLInput // if no description is given, use the URL as description
+    // check if URL is reachable
+    fetch(URLInput)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('URL not reachable')
         }
-      ]
-    }
+        return response.text()
+      })
+      .then(() => {
+        // URL is reachable, proceed with the save operation
+        const endpointUrl =
+          Constants.expoConfig.extra.apiUrl + userId + '/library/' + libraryId + '/links/add'
 
-    fetch(endpointUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    })
+        const payload = {
+          links: [
+            {
+              url: URLInput,
+              description: URLDesc || URLInput // if URLDesc is not set, use URLInput
+            }
+          ]
+        }
 
-    navigation.navigate('Library', { libraryId, userId })
+        fetch(endpointUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        })
+          .then((response) => {
+            if (response.ok) {
+              navigation.navigate('Library', { libraryId, userId })
+            } else {
+              throw new Error('Save operation failed')
+            }
+          })
+          .catch((error) => {
+            // handle save operation error
+            console.error(error)
+            Alert.alert(
+              'Fehler!',
+              'Es gab einen Fehler beim Speichern des Links. Bitte versuchen Sie es später noch einmal.'
+            )
+          })
+      })
+      .catch((error) => {
+        // handle URL check error
+        //console.error(error)
+        Alert.alert(
+          'URL nicht erreichbar!',
+          'Die eingegebene URL ist nicht erreichbar. Bitte überprüfen Sie die URL und versuchen Sie es erneut.'
+        )
+      })
   }
 
   const fetchCopiedText = async () => {
@@ -92,7 +112,7 @@ export default function AddLink({ navigation }) {
   React.useEffect(() => {
     setTimeout(() => {
       URLInputRef.current?.focus()
-      fetchCopiedText()
+      //fetchCopiedText()
     }, 1000)
   }, [])
 
