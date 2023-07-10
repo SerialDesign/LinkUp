@@ -60,3 +60,19 @@ export const isValidURL = (url) => {
   }
   return true
 }
+
+// timeout for URL check - if URL is not reachable, throw an error within 1.5 seconds (1500ms)
+export function fetchWithTimeout(url, options, timeout = 1500) {
+  return new Promise((resolve, reject) => {
+    const controller = new AbortController()
+    options = { ...options, signal: controller.signal }
+
+    const timer = setTimeout(() => {
+      controller.abort()
+    }, timeout)
+
+    fetch(url, options)
+      .then(resolve, reject)
+      .finally(() => clearTimeout(timer))
+  })
+}

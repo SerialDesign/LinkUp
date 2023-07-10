@@ -8,7 +8,7 @@ import { useRoute } from '@react-navigation/native'
 import Constants from 'expo-constants'
 import globalStyles from '../../assets/styles/globalStyles'
 import { Alert } from 'react-native'
-import { isValidURL } from '../helper'
+import { isValidURL, fetchWithTimeout } from '../helper'
 // import Clipboard from '@react-native-clipboard/clipboard'
 
 export default function AddLink({ navigation }) {
@@ -50,7 +50,7 @@ export default function AddLink({ navigation }) {
     }
 
     // check if URL is reachable
-    fetch(URLInput)
+    fetchWithTimeout(URLInput)
       .then((response) => {
         if (!response.ok) {
           throw new Error('URL not reachable')
@@ -149,12 +149,14 @@ export default function AddLink({ navigation }) {
           onChangeText={(text) => setURLInput(text)}
           ref={URLInputRef}
           // onChangeText={(text) => setURLInput(text)}
+          clearButtonMode="while-editing"
           placeholder="URL"
         />
         <Input
           placeholder="Beschreibung (optional)"
           style={globalStyles.inputDescription}
           value={URLDesc}
+          clearButtonMode="while-editing"
           onChangeText={(text) => setURLDesc(text)}
         />
         <Dropdown
