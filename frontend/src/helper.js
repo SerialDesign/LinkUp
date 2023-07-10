@@ -10,6 +10,7 @@ export function checkIfUserIdHasValue(user) {
   }
 }
 
+// Get a random color for the library card background
 export function getRandomColor() {
   const colors = [
     '#FAFAA0',
@@ -28,6 +29,7 @@ export function getRandomColor() {
 // hack for making bold text in Text component
 export const B = (props) => <Text style={{ fontWeight: 'bold' }}>{props.children}</Text>
 
+// Check if a library is valid
 export const validateLibrary = (libraryName, libraryDesc) => {
   const errors = []
 
@@ -42,4 +44,19 @@ export const validateLibrary = (libraryName, libraryDesc) => {
   const isValid = errors.length === 0
 
   return { isValid, errors }
+}
+
+// Check if an URL is valid
+export const isValidURL = (url) => {
+  const regex =
+    /^(https?:\/\/)?((([a-z\d]([a-z\d-]*[a-z\d])*)\.)+[a-z]{2,}|((\d{1,3}\.){3}\d{1,3}))(:\d+)?(\/[-a-z\d%_.~+]*)*(\?[;&a-z\d%_.~+=-]*)?(\#[-a-z\d_]*)?$/i
+  if (!regex.test(url.toLowerCase())) {
+    Alert.alert('Sorry!', 'Bitte eine gültige URL eingeben')
+    return false
+  }
+  if (!url.toLowerCase().startsWith('https://')) {
+    Alert.alert('Sorry!', 'Die URL muss mit https:// beginnen')
+    return false
+  }
+  return true
 }

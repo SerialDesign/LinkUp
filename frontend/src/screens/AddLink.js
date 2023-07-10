@@ -1,14 +1,14 @@
-import { ScrollView, Clipboard, SafeAreaView, Image, StyleSheet, View } from 'react-native'
-import { Header, Text, Input } from '@rneui/themed'
+import { Clipboard, SafeAreaView, Image, StyleSheet, View } from 'react-native'
+import { Input } from '@rneui/themed'
 import { Dropdown } from 'react-native-element-dropdown'
 import AntDesign from '@expo/vector-icons/AntDesign'
 import { Button, Icon } from '@rneui/base'
 import React, { useEffect, useState } from 'react'
-import { Route, useRoute } from '@react-navigation/native'
+import { useRoute } from '@react-navigation/native'
 import Constants from 'expo-constants'
 import globalStyles from '../../assets/styles/globalStyles'
-import validator from 'validator'
 import { Alert } from 'react-native'
+import { isValidURL } from '../helper'
 // import Clipboard from '@react-native-clipboard/clipboard'
 
 export default function AddLink({ navigation }) {
@@ -35,15 +35,25 @@ export default function AddLink({ navigation }) {
   const [URLDesc, setURLDesc] = useState('')
 
   const saveLinkToLibrary = () => {
-    if (!URLInput || !libraryId) {
+    if (!URLInput) {
       Alert.alert('Sorry!', 'Bitte Felder ausfüllen')
       return
     }
 
-    if (!validator.isURL(URLInput)) {
-      Alert.alert('Sorry!', 'Bitte eine gültige URL eingeben')
+    if (!libraryId) {
+      Alert.alert('Sorry!', 'Bitte eine Linksammlung auswählen')
       return
     }
+
+    if (!isValidURL(URLInput)) {
+      return
+    }
+
+    //  old validation
+    // if (!validator.isURL(URLInput)) {
+    //   Alert.alert('Sorry!', 'Bitte eine gültige URL eingeben')
+    //   return
+    // }
 
     console.log('Saving link to Library ')
     // const endpointUrl = 'http://localhost:8000/library/8a4a10c8-6feb-42fb-b432-a24486475496/links/add'
@@ -54,14 +64,11 @@ export default function AddLink({ navigation }) {
     console.log('🚀 ~ file: AddLink.js:109 ~ saveLinkToLibrary ~ endpointUrl:', endpointUrl)
     //http://localhost:8000/userId/library/id1234/links/add"
 
-    // TODO: Validation URL, ansonsten Meldung ausgegben, dass keine URL..
-    // TODO: If https:// is missing. add it
-
     const payload = {
       links: [
         {
           url: URLInput,
-          description: URLDesc
+          description: URLDesc || URLInput // if no description is given, use the URL as description
         }
       ]
     }
