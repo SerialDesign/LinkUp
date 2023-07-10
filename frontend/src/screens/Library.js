@@ -96,26 +96,25 @@ const Library = ({ navigation, route }) => {
   }
 
   const handleDeleteLink = (link) => {
+    console.log('🚀 ***~ file: Library.js:99 ~ handleDeleteLink ~ link:', link)
+
     setSelectedLink({ linkId: link.linkId, url: link.url, description: link.description })
     setModalVisible(true)
   }
 
-  const confirmDeleteLink = (linkId) => {
-    console.log('Deleting link:', linkId)
+  const confirmDeleteLink = () => {
+    console.log('Deleting link:', selectedLink.linkId)
 
-    // const endpointUrl = `http://localhost:8000/${userId}/library/${library.libraryId}/links/delete`
     const endpointUrl =
-      Constants.expoConfig.extra.apiUrl + `${userId}/library/${library.libraryId}/links/delete`
-    console.log('🚀 ~ file: Library.js:48 ~ handleDeleteLink ~ endpointUrl:', endpointUrl)
+      Constants.expoConfig.extra.apiUrl +
+      `${userId}/library/${library.libraryId}/links/${selectedLink.linkId}/delete`
+    console.log('🚀 ~ file: Library.js:110 ~ handleDeleteLink ~ endpointUrl:', endpointUrl)
 
     fetch(endpointUrl, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        linkId: selectedLink.linkId
-      })
+      }
     })
       .then(() => {
         setModalVisible(false)

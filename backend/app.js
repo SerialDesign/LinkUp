@@ -469,7 +469,7 @@ app.delete('/:userId/library/:libraryId/links', (req, res) => {
 // DELETE Library
 app.delete('/:userId/library/:libraryId', (req, res) => {
   const libraryId = req.params.libraryId // Retrieve libraryId from URL parameter
-  console.log('🚀 ~ file: app.js:245 ~ app.delete ~ libraryId:', libraryId)
+  // console.log('🚀 ~ file: app.js:245 ~ app.delete ~ libraryId:', libraryId)
 
   fs.readFile(DB_FILE, (err, data) => {
     if (err) {
@@ -499,10 +499,10 @@ app.delete('/:userId/library/:libraryId', (req, res) => {
   })
 })
 
-app.delete('/:userId/library/:libraryId/links/delete', (req, res) => {
+app.delete('/:userId/library/:libraryId/links/:linkId/delete', (req, res) => {
   console.log('is in delete link endpoint')
-  const linkId = req.params.linkId // Retrieve linkId from URL parameter
-  console.log('🚀 ~ file: app.js:245 ~ app.delete ~ linkId:', linkId)
+  const linkId = req.params.linkId
+  // console.log('🚀 ~ file: app.js:245 ~ app.delete ~ linkId:', linkId)
 
   fs.readFile(DB_FILE, (err, data) => {
     if (err) {
@@ -512,13 +512,28 @@ app.delete('/:userId/library/:libraryId/links/delete', (req, res) => {
 
     let database = JSON.parse(data)
 
-    const library = database.find((library) => library.libraryId === req.params.libraryId)
+    // Log the entire database
+    // console.log('🚀 ~ Database: ', JSON.stringify(database, null, 2))
+
+    // Convert libraryId to string before finding it in the database
+    const libraryId = req.params.libraryId.toString()
+    const library = database.find((library) => library.libraryId === libraryId)
+
+    // Log libraryId and the found library
+    // console.log('🚀 ~ Looking for libraryId: ', libraryId)
+    // console.log('🚀 ~ Found library: ', JSON.stringify(library, null, 2))
 
     if (!library) {
       return res.status(404).send('Library not found')
     }
 
-    const linkIndex = library.links.findIndex((link) => link.id === linkId)
+    // Add this line to log all links of the library
+    // console.log('🚀 ~ Links in library: ', JSON.stringify(library.links, null, 2))
+
+    const linkIndex = library.links.findIndex((link) => link.linkId === linkId)
+
+    // Log the link index
+    // console.log('🚀 ~ Found link at index: ', linkIndex)
 
     if (linkIndex === -1) {
       return res.status(404).send('Link not found')
