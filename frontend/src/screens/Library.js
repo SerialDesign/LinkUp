@@ -226,8 +226,21 @@ const Library = ({ navigation, route }) => {
                 <Text style={styles.link}>{item.url}</Text>
               </TouchableOpacity>
               <View style={{ flexDirection: 'row' }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('EditLink', { userId, libraryId, linkData: item })
+                  }
+                >
+                  <Icon name="edit" type="material" size={25} color="#000" />
+                </TouchableOpacity>
                 <TouchableOpacity onPress={() => handleDeleteLink(item)}>
-                  <Icon name="delete" type="material" size={25} color="#bb0000" />
+                  <Icon
+                    name="delete"
+                    type="material"
+                    size={25}
+                    color="#bb0000"
+                    style={styles.iconButton}
+                  />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => handleShare(item.url, item.description)}>
                   <Icon
@@ -262,6 +275,8 @@ const Library = ({ navigation, route }) => {
         containerStyle={styles.buttonCenterLayouting}
         onPress={() => navigation.navigate('AddLink', { userId, libraryId })}
       />
+
+      {/* Modal for delete confirmation */}
       <Modal
         animationType="slide"
         transparent={true}

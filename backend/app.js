@@ -224,6 +224,46 @@ app.post('/:userId/library/:libraryId/links/add', (req, res) => {
   })
 })
 
+// Edit a link in a library
+app.put('/:userId/library/:libraryId/links/:linkId/edit', (req, res) => {
+  const updatedLink = req.body.link
+
+  fs.readFile(DB_FILE, (err, data) => {
+    if (err) {
+      console.error(err)
+      return res.status(500).send('Error reading from database')
+    }
+
+    let database = JSON.parse(data)
+
+    const library = database.find((library) => library.libraryId === req.params.libraryId)
+
+    if (!library) {
+      return res.status(404).send('Library not found')
+    }
+
+    const linkIndex = library.links.findIndex((link) => link.linkId === req.params.linkId)
+
+    if (linkIndex === -1) {
+      return res.status(404).send('Link not found')
+    }
+
+    // replace the link with the updated link
+    library.links[linkIndex] = { ...updatedLink, linkId: req.params.linkId }
+
+    fs.writeFile(DB_FILE, JSON.stringify(database), (err) => {
+      if (err) {
+        console.error(err)
+        return res.status(500).send('Error writing to database')
+      }
+
+      res.send(
+        `Link with ID: ${req.params.linkId} was updated in library with ID: ${library.libraryId}`
+      )
+    })
+  })
+})
+
 // GETs
 // Get a library by ID
 app.get('/:userId/library/:libraryId', (req, res) => {

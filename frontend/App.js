@@ -19,6 +19,7 @@ import ShareScreen from './src/screens/ShareScreen'
 import DeleteConfirmation from './src/components/DeleteConfirmation'
 import QRCodeScanner from './src/screens/QRCodeScanner'
 import EditLibrary from './src/screens/EditLibrary'
+import EditLink from './src/screens/EditLink'
 
 const MyTheme = {
   ...DefaultTheme,
@@ -143,6 +144,18 @@ export default function App() {
             }
           }}
           component={AddLink}
+        />
+
+        {/* Edit Link Screen*/}
+        <Stack.Screen
+          name="EditLink"
+          options={{
+            title: 'Link editieren',
+            headerStyle: {
+              backgroundColor: '#13C66A'
+            }
+          }}
+          component={EditLink}
         />
 
         {/* Additional Screens / Confirmation etc. */}
