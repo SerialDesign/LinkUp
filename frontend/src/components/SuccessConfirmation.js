@@ -10,6 +10,7 @@ const SuccessConfirmation = () => {
   const route = useRoute()
 
   const libraryId = route.params.libraryId
+  const userId = route.params.userId
   console.log('Library created:', libraryId)
 
   function deleteLibrary() {
@@ -39,7 +40,7 @@ const SuccessConfirmation = () => {
     <View style={styles.container}>
       {/* <Icon name="check-circle" type="font-awesome" size={100} color="#13C66A" /> */}
       <Image
-        source={require('../../assets/images/deletion_confirmation.png')}
+        source={require('../../assets/images/successful_confirmation.png')}
         style={styles.bookmarksIllustration}
       />
       <Text style={styles.successText}>Linksammlung erfolgreich erstellt!</Text>

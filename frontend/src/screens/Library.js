@@ -26,6 +26,7 @@ const Library = ({ navigation, route }) => {
   // modal for delete confirmation
   const [isModalVisible, setModalVisible] = useState(false)
   const [selectedLink, setSelectedLink] = useState({ linkId: null, url: '', description: '' })
+  const [initialLinkCount, setInitialLinkCount] = useState(0)
 
   checkIfUserIdHasValue(userId)
 
@@ -67,6 +68,7 @@ const Library = ({ navigation, route }) => {
         }
 
         setLibrary(libraryData)
+        setInitialLinkCount(data.links.length)
       })
       .catch((error) => {
         console.error(error)
@@ -199,71 +201,75 @@ const Library = ({ navigation, route }) => {
         <Text style={styles.linkCount}>Anzahl Links: {filteredLinks.length}</Text>
       </View>
 
-      {filteredLinks.length > 0 ? (
-        <FlatList
-          data={filteredLinks}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => (
-            // before search..
-            // {library.links.length > 0 ? (
-            //   <FlatList
-            //     data={library.links}
-            //     keyExtractor={(item, index) => index.toString()}
-            //     renderItem={({ item }) => (
+      {initialLinkCount > 0 ? (
+        filteredLinks.length > 0 ? (
+          <FlatList
+            data={filteredLinks}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => (
+              // before search..
+              // {library.links.length > 0 ? (
+              //   <FlatList
+              //     data={library.links}
+              //     keyExtractor={(item, index) => index.toString()}
+              //     renderItem={({ item }) => (
 
-            // Implemeent swipe to delete?
-            // <Swipeable renderRightActions={(progress) => renderRightActions(item, progress)}> -->  npx expo install react-native-gesture-handler@~2.9.0
+              // Implemeent swipe to delete?
+              // <Swipeable renderRightActions={(progress) => renderRightActions(item, progress)}> -->  npx expo install react-native-gesture-handler@~2.9.0
 
-            <TouchableOpacity
-              style={styles.linkContainer}
-              onPress={() => handleLinkPress(item.url)}
-              activeOpacity={0.7}
-            >
-              <TouchableOpacity>
-                <B>
-                  <Text style={styles.link}>{item.description}</Text>
-                </B>
-                <Text style={styles.link}>{item.url}</Text>
+              <TouchableOpacity
+                style={styles.linkContainer}
+                onPress={() => handleLinkPress(item.url)}
+                activeOpacity={0.7}
+              >
+                <TouchableOpacity>
+                  <B>
+                    <Text style={styles.link}>{item.description}</Text>
+                  </B>
+                  <Text style={styles.link}>{item.url}</Text>
+                </TouchableOpacity>
+                <View style={{ flexDirection: 'row' }}>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('EditLink', { userId, libraryId, linkData: item })
+                    }
+                  >
+                    <Icon name="edit" type="material" size={25} color="#000" />
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => handleDeleteLink(item)}>
+                    <Icon
+                      name="delete"
+                      type="material"
+                      size={25}
+                      color="#bb0000"
+                      style={styles.iconButton}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => handleShare(item.url, item.description)}>
+                    <Icon
+                      name="share"
+                      type="material"
+                      size={25}
+                      color="#4D13C6"
+                      style={styles.iconButton}
+                    />
+                  </TouchableOpacity>
+                </View>
               </TouchableOpacity>
-              <View style={{ flexDirection: 'row' }}>
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate('EditLink', { userId, libraryId, linkData: item })
-                  }
-                >
-                  <Icon name="edit" type="material" size={25} color="#000" />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => handleDeleteLink(item)}>
-                  <Icon
-                    name="delete"
-                    type="material"
-                    size={25}
-                    color="#bb0000"
-                    style={styles.iconButton}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => handleShare(item.url, item.description)}>
-                  <Icon
-                    name="share"
-                    type="material"
-                    size={25}
-                    color="#4D13C6"
-                    style={styles.iconButton}
-                  />
-                </TouchableOpacity>
-              </View>
-            </TouchableOpacity>
 
-            // </Swipeable>
-          )}
-        />
+              // </Swipeable>
+            )}
+          />
+        ) : (
+          // if no links found over search show this text
+          <View style={{ flex: 1 }}>
+            <Text style={styles.noLinksText}>Keine Links gefunden.</Text>
+          </View>
+        )
       ) : (
-        // before search..
-        // : (
-        //   <Text style={styles.noLinksText}>Diese Linksammlung enthält keine Links.</Text>
-        // )}
+        // if there are no links in the library show this text
         <View style={{ flex: 1 }}>
-          <Text style={styles.noLinksText}>Keine Links gefunden.</Text>
+          <Text style={styles.noLinksText}>Diese Linksammlung enthält noch keine Links.</Text>
         </View>
       )}
       <Button

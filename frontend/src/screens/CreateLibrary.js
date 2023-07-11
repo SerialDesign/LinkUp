@@ -9,6 +9,7 @@ import Constants from 'expo-constants'
 import globalStyles from '../../assets/styles/globalStyles'
 import { getRandomColor, validateLibrary } from '../helper'
 import { useEffect } from 'react'
+import SuccessConfirmation from '../components/SuccessConfirmation'
 
 export default function CreateLibrary({ navigation }) {
   const route = useRoute()
@@ -158,7 +159,8 @@ export default function CreateLibrary({ navigation }) {
       return
     }
 
-    navigation.navigate('Homescreen', { userId })
+    // navigation.navigate('Homescreen', { userId })
+    navigation.navigate('SuccessConfirmation', { userId })
   }
 
   const createLibraryHandler = async () => {
@@ -201,7 +203,8 @@ export default function CreateLibrary({ navigation }) {
         return
       }
 
-      navigation.navigate('Homescreen', { userId })
+      // navigation.navigate('Homescreen', { userId })
+      navigation.navigate('SuccessConfirmation', { userId })
     }
   }
 

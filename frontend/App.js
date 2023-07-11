@@ -20,6 +20,7 @@ import DeleteConfirmation from './src/components/DeleteConfirmation'
 import QRCodeScanner from './src/screens/QRCodeScanner'
 import EditLibrary from './src/screens/EditLibrary'
 import EditLink from './src/screens/EditLink'
+import SuccssConfirmation from './src/components/SuccessConfirmation'
 
 const MyTheme = {
   ...DefaultTheme,
@@ -27,6 +28,7 @@ const MyTheme = {
     ...DefaultTheme.colors,
     background: 'white'
   }
+  // headerBackTitle: 'Zurück'
 }
 
 const Stack = createNativeStackNavigator()
@@ -42,7 +44,8 @@ export default function App() {
             backgroundColor: '#333'
             // backgroundColor: '#11aa11'
           },
-          headerTintColor: '#fff'
+          headerTintColor: '#fff',
+          headerBackTitle: 'Zurück'
         }}
         // initialRouteName="FooterNav"
       >
@@ -91,6 +94,7 @@ export default function App() {
             // title: 'Bibliothek', //TODO: mit {libraryId} + Back button auf Deutsch setzen?
             headerStyle: {
               backgroundColor: '#CFECFE'
+              // backgroundColor: '#59B9F5'
             },
             headerTintColor: 'black'
             // Todo remove if not needed
@@ -168,6 +172,17 @@ export default function App() {
             }
           }}
           component={DeleteConfirmation}
+        />
+
+        <Stack.Screen
+          name="SuccessConfirmation"
+          options={{
+            title: 'Linksammlung erstellt',
+            headerStyle: {
+              backgroundColor: '#59B9F5'
+            }
+          }}
+          component={SuccssConfirmation}
         />
 
         {/* Clipboard Test.. */}
