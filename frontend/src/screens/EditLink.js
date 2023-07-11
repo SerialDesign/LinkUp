@@ -32,70 +32,8 @@ export default function EditLink({ navigation, route }) {
     getAllLibraries()
   }, [])
 
-  const saveLinkToLibrary = () => {
-    if (!URLInput) {
-      Alert.alert('Sorry!', 'Bitte Felder ausfdüllen')
-      return
-    }
-
-    if (!libraryId) {
-      Alert.alert('Sorry!', 'Bitte eine Linksammlung auswählen')
-      return
-    }
-
-    if (!isValidURL(URLInput)) {
-      return
-    }
-
-    // check if URL is reachable
-    fetchWithTimeout(URLInput)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('URL not reachable')
-        }
-        return response.text()
-      })
-      .then(() => {
-        // URL is reachable, proceed with the save operation
-        const endpointUrl =
-          Constants.expoConfig.extra.apiUrl + userId + '/library/' + libraryId + '/links/add'
-
-        const payload = {
-          links: [
-            {
-              url: URLInput,
-              description: URLDesc || URLInput // if URLDesc is not set, use URLInput
-            }
-          ]
-        }
-          .then((response) => {
-            if (response.ok) {
-              navigation.navigate('Library', { libraryId, userId })
-            } else {
-              throw new Error('Save operation failed')
-            }
-          })
-          .catch((error) => {
-            // handle save operation error
-            console.error(error)
-            Alert.alert(
-              'Fehler!',
-              'Es gab einen Fehler beim Speichern des Links. Bitte versuchen Sie es später noch einmal.'
-            )
-          })
-      })
-      .catch((error) => {
-        // handle URL check error
-        //console.error(error)
-        Alert.alert(
-          'URL nicht erreichbar!',
-          'Die eingegebene URL ist nicht erreichbar. Bitte überprüfen Sie die URL und versuchen Sie es erneut.'
-        )
-      })
-  }
-
   const updateLink = (updatedLink, userId, libraryId, linkId) => {
-    if (!URLInput) {
+    if (!updatedLink.url) {
       Alert.alert('Sorry!', 'Bitte Felder ausfüllen')
       return
     }
@@ -105,36 +43,57 @@ export default function EditLink({ navigation, route }) {
       return
     }
 
-    if (!isValidURL(URLInput)) {
+    if (!isValidURL(updatedLink.url)) {
       return
     }
 
-    const endpointUrl =
-      Constants.expoConfig.extra.apiUrl +
-      userId +
-      '/library/' +
-      libraryId +
-      '/links/' +
-      linkId +
-      '/edit'
-    console.log('🚀 ~ file: EditLink.js:114 ~ updateLink ~ endpointUrl:', endpointUrl)
-
-    fetch(endpointUrl, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ link: updatedLink })
-    })
+    fetchWithTimeout(updatedLink.url)
       .then((response) => {
-        if (response.ok) {
-          console.log(`Link with ID: ${linkId} was updated in library with ID: ${libraryId}`)
-          navigation.navigate('Library', { libraryId, userId }) // navigate back to library
-        } else {
-          throw new Error('Update operation failed')
+        if (!response.ok) {
+          throw new Error('URL not reachable')
         }
+        return response.text()
       })
-      .catch((error) => console.error('Error:', error))
+      .then(() => {
+        const endpointUrl =
+          Constants.expoConfig.extra.apiUrl +
+          userId +
+          '/library/' +
+          libraryId +
+          '/links/' +
+          linkId +
+          '/edit'
+
+        fetch(endpointUrl, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ link: updatedLink })
+        })
+          .then((response) => {
+            if (response.ok) {
+              console.log(`Link with ID: ${linkId} was updated in library with ID: ${libraryId}`)
+              navigation.navigate('Library', { libraryId, userId })
+            } else {
+              throw new Error('Update operation failed')
+            }
+          })
+          .catch((error) => {
+            // console.error('Error:', error)
+            Alert.alert(
+              'Fehler!',
+              'Es gab einen Fehler beim Aktualisieren des Links. Bitte versuchen Sie es später noch einmal.'
+            )
+          })
+      })
+      .catch((error) => {
+        // console.error('Error:', error)
+        Alert.alert(
+          'URL nicht erreichbar!',
+          'Die eingegebene URL ist nicht erreichbar. Bitte überprüfen Sie die URL und versuchen Sie es erneut.'
+        )
+      })
   }
 
   const getAllLibraries = () => {
