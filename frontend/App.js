@@ -22,13 +22,13 @@ import EditLibrary from './src/screens/EditLibrary'
 import EditLink from './src/screens/EditLink'
 import SuccssConfirmation from './src/components/SuccessConfirmation'
 
+// created my own theme to change background color of all screens to white
 const MyTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
     background: 'white'
   }
-  // headerBackTitle: 'Zurück'
 }
 
 const Stack = createNativeStackNavigator()
@@ -45,7 +45,7 @@ export default function App() {
             // backgroundColor: '#11aa11'
           },
           headerTintColor: '#fff',
-          headerBackTitle: 'Zurück'
+          headerBackTitleVisible: false
         }}
         // initialRouteName="FooterNav"
       >
@@ -91,24 +91,12 @@ export default function App() {
         <Stack.Screen
           options={({ navigation }) => ({
             title: '',
-            // title: 'Bibliothek', //TODO: mit {libraryId} + Back button auf Deutsch setzen?
+            title: 'Linksammlung',
             headerStyle: {
               backgroundColor: '#CFECFE'
               // backgroundColor: '#59B9F5'
             },
             headerTintColor: 'black'
-            // Todo remove if not needed
-            // headerRight: () => (
-            //   <TouchableOpacity
-            //     style={{ marginRight: 10 }}
-            //     onPress={
-            //       () => navigation.navigate('ShareScreen')
-            //       // , { libraryName: 'Library Name cannot be passed here..' }
-            //     }
-            //   >
-            //     <Image source={require('./assets/icon.png')} style={{ width: 24, height: 24 }} />
-            //   </TouchableOpacity>
-            // )
           })}
           name="Library"
           component={Library}

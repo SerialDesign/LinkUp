@@ -216,7 +216,7 @@ const Homescreen = ({ navigation }) => {
   }
 
   return (
-    <ScrollView style={styles.scrollContainer}>
+    <ScrollView>
       <SearchBar
         placeholder="Suche..."
         onChangeText={updateSearch}
@@ -312,9 +312,6 @@ const Homescreen = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
-  scrollContainer: {
-    backgroundColor: '#FFFFFF'
-  },
   container: {
     flex: 1,
     justifyContent: 'center',

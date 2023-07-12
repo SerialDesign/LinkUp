@@ -64,8 +64,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    backgroundColor: 'white'
+    paddingHorizontal: 16
   },
   // title: {
   //   fontSize: 30,
