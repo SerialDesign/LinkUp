@@ -34,6 +34,10 @@ export default function AddLink({ navigation }) {
   const [URLInput, setURLInput] = useState('')
   const [URLDesc, setURLDesc] = useState('')
 
+  // for showing the alert to redirect to create library screen if no libraries are found
+  const [hasAlertBeenShown, setHasAlertBeenShown] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+
   const saveLinkToLibrary = () => {
     if (!URLInput) {
       Alert.alert('Sorry!', 'Bitte Felder ausfüllen')
@@ -104,10 +108,14 @@ export default function AddLink({ navigation }) {
       })
   }
 
-  const fetchCopiedText = async () => {
-    const text = await Clipboard.getString()
-    setURLInput(text)
+  const navigateToCreateLibrary = () => {
+    navigation.navigate('CreateLibrary', { userId })
   }
+
+  // const fetchCopiedText = async () => {
+  //   const text = await Clipboard.getString()
+  //   setURLInput(text)
+  // }
 
   React.useEffect(() => {
     setTimeout(() => {
@@ -117,7 +125,6 @@ export default function AddLink({ navigation }) {
   }, [])
 
   const getAllLibraries = () => {
-    // const endpointUrl = 'http://localhost:8000/' + userId + '/libraries'
     const endpointUrl = Constants.expoConfig.extra.apiUrl + userId + '/libraries'
 
     fetch(endpointUrl)
@@ -131,12 +138,30 @@ export default function AddLink({ navigation }) {
         })
 
         setLibraries(libraries)
+        setIsLoading(false) // data has been fetched, so set loading to false
       })
   }
 
   useEffect(() => {
     getAllLibraries()
   }, [])
+
+  useEffect(() => {
+    if (!isLoading && libraries.length === 0 && !hasAlertBeenShown) {
+      setHasAlertBeenShown(true)
+      Alert.alert(
+        'Keine Linksammlungen',
+        'Tut mir leid, aber du hast noch keine Linksammlungen. Möchtest du jetzt deine erste Linksammlung erstellen?',
+        [
+          {
+            text: 'Abbrechen'
+            // onPress: () => console.log('Cancel Pressed')
+          },
+          { text: 'Ja!', onPress: navigateToCreateLibrary, style: 'cancel' }
+        ]
+      )
+    }
+  }, [libraries, hasAlertBeenShown, isLoading])
 
   return (
     <SafeAreaView style={{ backgroundColor: 'white', flex: 1 }}>
