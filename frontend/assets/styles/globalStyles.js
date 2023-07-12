@@ -1,6 +1,9 @@
 import { StyleSheet } from 'react-native'
 
 const globalStyles = StyleSheet.create({
+  width100: {
+    width: '100%'
+  },
   inputContainer: {
     marginTop: 50,
     marginHorizontal: 30,

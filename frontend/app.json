@@ -8,6 +8,7 @@
       // "apiUrl": "http://localhost:8000"
       // "apiUrl": "http://192.168.217.115:8000/"
       // "apiUrl": "http://172.20.10.2:8000/" // hotspot
+      // "apiUrl": "http://172.20.10.4:8000/" // hotspot 2
       // "apiUrl": "http://192.168.1.6:8000/" // gf network
       // "apiUrl": "http://172.16.17.159:8000/" // SAE network
     },
